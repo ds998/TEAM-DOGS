@@ -1,2 +1,2 @@
 # TEAM-DOGS
-Timski projekat za projekat iz predmeta PSI.
+Timski projekat iz predmeta PSI.
