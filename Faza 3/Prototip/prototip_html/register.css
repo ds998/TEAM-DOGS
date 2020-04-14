@@ -1,0 +1,54 @@
+.outerDiv{
+    background:lightgray;
+}
+.midDiv{
+  background:white;
+  align-items: center;
+}
+h1{
+  font-family: "Calibri Light";
+  font-size: 56;
+  letter-spacing: 1px;
+  padding-top: 25px;
+  text-align: center;
+  padding-bottom: 25px;
+}
+p{
+  font-family: "Calibri Light", sans-serif;
+}
+label{
+  font-family: "Calibri Light", sans-serif;
+  font-size: 21;
+}
+.lgspace{
+  background: lightgray;
+  height: 100px;
+}
+.xsspace{
+  background: lightgray;
+  height: 50px;
+}
+.forms{
+  text-align: center;
+}
+.alignright{
+  text-align: right;
+  align-content: right;
+}
+.alignleft{
+  text-align: left;
+  align-content: left;
+}
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+body{
+  background-color: lightgray;
+}
+.paddingTop25{
+  padding-top: 25px;
+}
+.paddingTop {
+    padding-top: 10px;
+}
