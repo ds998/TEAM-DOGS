@@ -1,0 +1,18 @@
+/* body {
+  min-width: 570px;
+} */
+
+/* navbar */
+
+.bg-dark {
+  background-color: #282828 !important;
+}
+
+.nav-item {
+  font-family: Calibri, Arial, Helvetica, sans-serif;
+  font-size: 23px;
+}
+
+.top-buffer {
+  margin-top: 20px;
+}
