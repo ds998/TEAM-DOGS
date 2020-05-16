@@ -1,10 +1,18 @@
 class Deck {
     static defaultValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'];
-    static suits = ['Clubs', 'Diamonds', 'Spades', 'Hearts'];
+    static defaultSuits = ['Clubs', 'Diamonds', 'Spades', 'Hearts'];
+    static types = {
+        LIMITED: 1,
+        INFINITE: 2,
+        SHUFFLE_DISCARD: 3
+    }
 
-    constructor(values = Deck.defaultValues, suits = Deck.suits) {
+    constructor(controller, num_decks = 1, values = Deck.defaultValues, suits = Deck.defaultSuits, type = Deck.types.INFINITE) {
         this.values = values;
         this.suits = suits;
+        this.num = num_decks;
+        this.type = type;
+        this.myController=controller;
 
         this.cards = [];
         this.dealt_cards = [];
@@ -27,7 +35,8 @@ class Deck {
 
         for (let s = 0; s < this.suits.length; s++) {
             for (let v = 0; v < this.values.length; v++) {
-                this.cards.push(card(this.suits[s], this.values[v]));
+                for (let i = 0; i < this.num; i++)
+                    this.cards.push(card(this.suits[s], this.values[v]));
             }
         }
     }
@@ -59,9 +68,29 @@ class Deck {
 
         let cards = []
         let dealt_card;
+        let skip = false;
+
+        if (num_cards == 0) num_cards = this.cards.length;
 
         for (let c = 0; c < num_cards; c++) {
-            if (this.cards.length == 0) break;
+            if (this.cards.length == 0) {
+                switch (this.type) {
+                    case Deck.types.LIMITED:
+                        skip = true;
+                        break;
+                    case Deck.types.INFINITE:
+                        this.generate_deck();
+                        this.shuffle();
+                        break;
+                    case Deck.types.SHUFFLE_DISCARD:
+                        this.add(this.myController.discard.deal(0));
+                        this.shuffle();
+                        break;
+                }
+            }
+
+            if (skip) break;
+
             dealt_card = this.cards.shift();
             cards.push(dealt_card);
             this.dealt_cards.push(dealt_card);
@@ -71,7 +100,7 @@ class Deck {
     }
 
     add(newCards) {
-        for(let c=newCards.length-1; c>=0;c--)
+        for (let c = newCards.length - 1; c >= 0; c--)
             this.cards.push(newCards[c]);
     }
 

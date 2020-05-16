@@ -34,6 +34,7 @@ class Player {
 
         for (let c = 0; c < num_cards; c++) {
             dealtCard = this.hand.shift();
+            if (dealtCard == null) break;
             cards.push(dealtCard);
 
             if (!sendSignal) continue;

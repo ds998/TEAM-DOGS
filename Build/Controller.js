@@ -1,17 +1,19 @@
 class Controller {
     static controller = null;
 
-    static getController(numPlayers = null, rules = null) {
-        if (Controller.controller == null && numPlayers != null && rules != null)
-            Controller.controller = new Controller(numPlayers, rules);
+    static getController(numPlayers, rules, deck_template) {
+        if (Controller.controller == null && numPlayers != null && rules != null && deck_template!=null)
+            Controller.controller = new Controller(numPlayers, rules, deck_template);
         return Controller.controller;
     }
 
-    constructor(numPlayers, rules) {
+    constructor(numPlayers, rules, deck_template) {
         //Deck
-        this.deck = new Deck();
+        this.deck = new Deck(this, deck_template.num, deck_template.vales, deck_template.suits, deck_template.type);
         this.deck.generate_deck();
         this.deck.shuffle();
+
+        this.discard = new Deck(this, deck_template.num, deck_template.vales, deck_template.suits, Deck.types.LIMITED);
 
         //Discard pile
         this.discardPile = new Deck();
@@ -60,6 +62,20 @@ class Controller {
             if (i==0) $("#p1").val(hand);
             else $("#p2").val(hand);
         }
+
+        let deck='';
+        this.discard.cards.forEach(card => {
+            deck += card.name + '\n';
+        });
+
+        $("#discard").val(deck);
+
+        deck='';
+        this.deck.cards.forEach(card => {
+            deck += card.name + '\n';
+        });
+
+        $("#deck").val(deck);
     }
 
     playerDrawCard(pl, num_cards = 1, sendSignal = true) {
@@ -68,7 +84,7 @@ class Controller {
 
     playerPlayCard(pl, num_cards = 1, sendSignal = true) {
         let cardsPlayed = this.players[pl].deal(num_cards, sendSignal);
-        if (cardsPlayed) this.deck.add(cardsPlayed);
+        if (cardsPlayed.length) this.discard.add(cardsPlayed);
     }
 
     getNextPlayer(player) {
