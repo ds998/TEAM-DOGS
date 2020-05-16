@@ -1,18 +1,32 @@
-/* body {
-  min-width: 570px;
-} */
+body {
+  background-color: #F3F6F5;
+} 
+
+body.dark-mode {
+  background-color: #3F393E;
+}
 
 /* navbar */
 
 .bg-dark {
-  background-color: #282828 !important;
+  background-color: #3F393E !important;
 }
 
 .nav-item {
   font-family: Calibri, Arial, Helvetica, sans-serif;
-  font-size: 23px;
+  font-size: 22px;
+  padding-right: 3px;
+  padding-left: 3px;
 }
 
 .top-buffer {
   margin-top: 20px;
+}
+
+.nav-item.active{
+  color: #000;
+  background: #f69d52;
+  border-radius: 4px;
+  padding-right: 5px;
+  padding-left: 5px
 }
