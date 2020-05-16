@@ -1,0 +1,28 @@
+
+/* Bootstrap Button color change */
+
+.btn-primary {
+    background-color: #f69d52;
+    border-color: #d18140;
+  }
+  
+  .btn-primary:hover {
+    background-color: #f7b37d;
+    border-color: #d18140;
+  }
+  
+  .btn-primary:active, .btn-primary:focus {
+    background-color: #f7b37d !important;
+    border-color: #d18140 !important;
+    box-shadow: 0 0 0 2px rgba(247, 187, 97, 0.5)	!important;
+  }
+  
+  .login-area{
+    padding-left: 5px;
+  }
+  
+  .myCheckbox {
+    padding-left: 25px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
