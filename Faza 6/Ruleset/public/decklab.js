@@ -20,6 +20,7 @@ if (document.readyState == 'loading') {
     setup();
 }
 var selected = null;
+var selectedInput = null;
 
 $(document).ready(function () {
     $('tr').click(function () {
@@ -27,10 +28,14 @@ $(document).ready(function () {
         if ($(this).text().includes("+ Add card")) {
             $(this).css('background', 'brown');
         } else {
-            if (selected)  $(selected).css('background', '');
+            if (this != selected && selected != null)  {
+                $(selectedInput).prop("disabled", true);
+                $(selected).css('background', '');
+            }
             selected = this;
-            $(selected).cells[1].children[0].prop("disabled", false);
-            $(selected).css('background', '#f69d52');
+            selectedInput = selected.cells[1].children[0];
+            $(selectedInput).prop("disabled", false);
+            $(selected).css('background', '#875B50');
         }
     });
 });
