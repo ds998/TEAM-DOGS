@@ -1,29 +1,29 @@
 const TargetFunctions = [];
 
-TargetFunctions[targets.NEXT] = function (rule, event) {
-    return Controller.getController().getNextPlayer(event.player);
+TargetFunctions[targets.NEXT] = function (controller, rule, event) {
+    return controller.getNextPlayer(event.player);
 }
 
-TargetFunctions[targets.PREV] = function (rule, event) {
-    return Controller.getController().getPreviousPlayer(event.player);
+TargetFunctions[targets.PREV] = function (controller, rule, event) {
+    return controller.getPreviousPlayer(event.player);
 }
 
-TargetFunctions[targets.CHOOSE] = function (rule, event) {
+TargetFunctions[targets.CHOOSE] = function (controller, rule, event) {
     return event.player.choosePlayer(rule.detail.target_can_be_cur);
 }
 
-TargetFunctions[targets.RANDOM] = function (rule, event) {
-    return Controller.getController().randomPlayer(rule.detail.target_can_be_cur);
+TargetFunctions[targets.RANDOM] = function (controller, rule, event) {
+    return controller.randomPlayer(rule.detail.target_can_be_cur);
 }
 
-TargetFunctions[targets.CURRENT] = function (rule, event) {
+TargetFunctions[targets.CURRENT] = function (controller, rule, event) {
     return event.player;
 }
 
-TargetFunctions[targets.DECK] = function (rule, event) {
-    return Controller.getController().deck;
+TargetFunctions[targets.DECK] = function (controller, rule, event) {
+    return controller.deck;
 }
 
-TargetFunctions[targets.DISCARD_PILE] = function (rule, event) {
-    return Controller.getController().discardPile;
+TargetFunctions[targets.DISCARD_PILE] = function (controller, rule, event) {
+    return controller.discardPile;
 }
