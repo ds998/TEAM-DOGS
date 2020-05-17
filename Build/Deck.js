@@ -63,7 +63,7 @@ class Deck {
         }
     }
 
-    // deal a number cards
+    // deal a number of cards
     deal(num_cards = 1) {
 
         let cards = []

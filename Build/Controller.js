@@ -87,7 +87,23 @@ class Controller {
         if (cardsPlayed.length) this.discard.add(cardsPlayed);
     }
 
+
+    // TARGET FUNCTION IMPLEMENTATION
+    // Return the player after the player sent as a paramater
     getNextPlayer(player) {
         return this.players[(this.players.indexOf(player) + 1) % this.players.length];
     }
+
+    // Return the player after the player sent as a paramater
+    getPreviousPlayer(player) {
+        return this.players[(this.players.indexOf(player) - 1 + this.players.length) % this.players.length];
+    }
+
+    chooseOther(player) {
+        this.players[(this.players.indexOf(player) - 1 + this.players.length) % this.players.length];
+
+        return this.players[(this.players.indexOf(player) - 1 + this.players.length) % this.players.length];
+    }
+
+
 }
