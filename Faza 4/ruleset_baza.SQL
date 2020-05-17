@@ -47,9 +47,6 @@ ALTER TABLE `Lobby` ADD PRIMARY KEY (`idLobby`)
 ALTER TABLE `Lobby` ADD UNIQUE `idLobby` (`idLobby`)
 ;
 
-ALTER TABLE `Lobby` ADD UNIQUE `idDeck` (`idDeck`)
-;
-
 ALTER TABLE `Lobby` ADD UNIQUE `idSession` (`idSession`)
 ;
 
