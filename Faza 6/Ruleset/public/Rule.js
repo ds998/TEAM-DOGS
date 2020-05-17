@@ -28,10 +28,10 @@ types = {
 }
 
 triggers = {
-    PASSIVE: 0,
     ON_PLAY: 1,
     ON_DRAW: 2,
-    ON_DISCARD: 3
+    ON_DISCARD: 3,
+    PASSIVE: 4
 }
 
 targets = {

@@ -21,17 +21,6 @@ function setup() {
                 source: targets.DECK,
                 num_cards: 2
             }
-        },
-        {
-            cardMatcher: new CardMatcher('2','Diamonds'),
-            trigger: triggers.ON_PLAY,
-            type: types.DRAW_UNTIL_RULE,
-            detail: {
-                target: targets.NEXT,
-                target_can_be_cur: false,
-                source: targets.DECK,
-                target_card: new CardMatcher('','Diamonds')
-            }
         }
     ];
     var deck_template = {

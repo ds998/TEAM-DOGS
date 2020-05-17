@@ -69,7 +69,7 @@ include('Navbar.php');
             text-align:center;
             margin-left:auto;
             margin-right:auto;
-            margin-top:20%;
+            margin-top:20px;
             width:50%;
             height:100%;
         }
@@ -81,5 +81,6 @@ include('Navbar.php');
             background-color:gray;
         }
     </style>
+
 </html>
 

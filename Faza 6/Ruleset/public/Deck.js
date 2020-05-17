@@ -12,15 +12,15 @@ class Deck {
         this.suits = suits;
         this.num = num_decks;
         this.type = type;
-        this.myController = controller;
+        this.myController=controller;
 
         this.cards = [];
         this.dealt_cards = [];
-        this.cardEvents = null;
     }
 
     // generates a deck of cards
-    generate_deck(ruleset = null) {
+    generate_deck() {
+
         // creates card generator function
         let card = (suit, value) => {
             let name = value + ' of ' + suit;
@@ -28,31 +28,15 @@ class Deck {
             return {
                 'name': name,
                 'suit': suit,
-                'value': value,
-                'events': null
+                'value': value
             }
         }
 
-        if (ruleset) {
-            this.cardEvents = [];
-            for (let s = 0; s < this.suits.length; s++) {
-                for (let v = 0; v < this.values.length; v++) {
-                    for (let i = 0; i < this.num; i++) {
-                        let newCard = card(this.suits[s], this.values[v]);
-                        newCard.events = this.cardEvents[newCard.name] = ruleset.retEventMap(newCard);
-                        this.cards.push(newCard);
-                    }
-                }
-            }
-        } else {
-            for (let s = 0; s < this.suits.length; s++) {
-                for (let v = 0; v < this.values.length; v++) {
-                    for (let i = 0; i < this.num; i++) {
-                        let newCard = card(this.suits[s], this.values[v]);
-                        newCard.events = this.cardEvents[newCard.name];
-                        this.cards.push(newCard);
-                    }
-                }
+
+        for (let s = 0; s < this.suits.length; s++) {
+            for (let v = 0; v < this.values.length; v++) {
+                for (let i = 0; i < this.num; i++)
+                    this.cards.push(card(this.suits[s], this.values[v]));
             }
         }
     }
@@ -115,9 +99,9 @@ class Deck {
         return cards;
     }
 
-    add(new_cards) {
-        for (let c = new_cards.length - 1; c >= 0; c--)
-            this.cards.push(new_cards[c]);
+    add(newCards) {
+        for (let c = newCards.length - 1; c >= 0; c--)
+            this.cards.push(newCards[c]);
     }
 
     // return last dealt card
