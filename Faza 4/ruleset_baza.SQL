@@ -37,7 +37,7 @@ CREATE TABLE `Lobby`
 (
   `idLobby` Int NOT NULL,
   `idDeck` Int NOT NULL,
-  `userIP` Varchar(15) NOT NULL,
+  `idSession` Varchar(15) NOT NULL,
   `maxPlayers` Int NOT NULL DEFAULT 10,
   `lobbyName` Varchar(15) NOT NULL,
   `password` Varchar(10)
@@ -56,7 +56,7 @@ ALTER TABLE `Lobby` ADD UNIQUE `idLobby` (`idLobby`)
 ALTER TABLE `Lobby` ADD UNIQUE `idDeck` (`idDeck`)
 ;
 
-ALTER TABLE `Lobby` ADD UNIQUE `userIP` (`userIP`)
+ALTER TABLE `Lobby` ADD UNIQUE `idSession` (`idSession`)
 ;
 
 -- Table User_Decks
