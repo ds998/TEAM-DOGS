@@ -1,12 +1,6 @@
-﻿/*
-Created: 14.4.2020.
-Modified: 14.4.2020.
-Model: MySQL 8.0
-Database: MySQL 8.0
-*/
+﻿
 
--- Create tables section -------------------------------------------------
-
+-- Create tables section
 -- Table User
 
 CREATE TABLE `User`
