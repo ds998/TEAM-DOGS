@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Ruleset - Register</title>
+    <title>Ruleset - Login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
@@ -12,18 +12,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
 
     <link rel="stylesheet" href="Navbar.css" />
-    <link rel="stylesheet" href="Login.css" />
+    <link rel="stylesheet" href="Decklab.css" />
+    <script src="decklab.js"></script>
 </head>
 
 <body>
     <div class="header">
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-            <a class="navbar-brand " href="https://www.youtube.com/watch?v=EWMPVn1kgIQ">
-
-                <img class="logos" src="assets/navbar/logo.png" alt="Logo">
+            <a class="navbar-brand" href="https://www.youtube.com/watch?v=EWMPVn1kgIQ">
+                <img src="assets/navbar/logo.png" alt="Logo" style="height:35px">
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarElements"
@@ -36,7 +35,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="game.html">Play</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="decklab.html">Make Ruleset</a>
                     </li>
                     <li class="nav-item">
@@ -45,16 +44,43 @@
                     <li class="nav-item">
                         <a class="nav-link" href="login.html">Login</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="register.html">Register</a>
                     </li>
                 </ul>
             </div>
         </nav>
     </div>
+
     <container>
-        <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
-            <form>
+        <div class="col-sm-2">
+            <br>
+            <table class="table table-hover">
+                <thead>
+                  <tr class="deckTableRow">
+                    <th scope="col"># of Rules</th>
+                    <th scope="col">Card</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="deckTableRow">
+                    <th scope="row">0</th>
+                    <td><input type="text" class="cardName" size="15" maxlength="15" value="Ace" required disabled></td>
+                  </tr>
+                  <tr class="deckTableRow">
+                    <th scope="row">0</th>
+                    <td>2</td>
+                  </tr>
+                  <tr class="deckTableRow">
+                    <th scope="row">0</th>
+                    <td>3</td>
+                  </tr>
+                  <tr class="deckTableRow">
+                    <th scope="row" colspan="2" class="text-muted">+ Add card</th>
+                  </tr>
+                </tbody>
+              </table>
+            <!-- <form>
                 <br>
                 <div class="form-group">
                     <label for="inputEmail1">Email address</label>
@@ -82,7 +108,6 @@
                 </div>
 
                 <div class="g-recaptcha" data-sitekey="1234567890123456789012345678901234567890"></div>
-                <!-- Uroše, evo ti tutorial za reCAPTCHU: https://www.youtube.com/watch?time_continue=749&v=4cr85kvM8I0&feature=emb_logo -->
 
                 <br>
                 <div class="text-center"><button type="submit" class="btn btn-primary">Register</button></div>
@@ -90,7 +115,7 @@
                 <small id="haveAccount" class="form-text text-muted">Already have an account? <a
                         href="login.html">LOGIN</a></small>
 
-            </form>
+            </form> -->
         </div>
     </container>
 </body>

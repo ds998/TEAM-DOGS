@@ -8,9 +8,14 @@ class Controller {
     }
 
     constructor(numPlayers, rules, deck_template) {
+        
+        //Ruleset
+        this.ruleset = new Ruleset(rules, this);
+        this.ruleset.addEventHandlers();
+
         //Deck
         this.deck = new Deck(this, deck_template.num, deck_template.vales, deck_template.suits, deck_template.type);
-        this.deck.generate_deck();
+        this.deck.generate_deck(this.ruleset);
         this.deck.shuffle();
 
         this.discard = new Deck(this, deck_template.num, deck_template.vales, deck_template.suits, Deck.types.LIMITED);
@@ -22,11 +27,7 @@ class Controller {
         this.numPlayers = numPlayers;
         this.players = [];
         for (let i = 0; i < this.numPlayers; i++)
-            this.players.push(new Player());
-
-        //Ruleset
-        this.ruleset = new Ruleset(rules);
-        this.ruleset.addEventHandlers();
+            this.players.push(new Player(this));
 
         //Event handler
         this.handler = new EventTarget();
@@ -104,6 +105,4 @@ class Controller {
 
         return this.players[(this.players.indexOf(player) - 1 + this.players.length) % this.players.length];
     }
-
-
 }

@@ -1,0 +1,10 @@
+.deckTableRow:active {
+    background-color: aqua;
+    color:red;
+}
+
+.cardName {
+    background-color: transparent;
+    border: none;
+    color: black;
+}
