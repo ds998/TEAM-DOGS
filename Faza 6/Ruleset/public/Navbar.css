@@ -3,7 +3,7 @@ body {
 }
 
 body.dark-mode {
-  background-color: #363041;
+  background-color: #3F393E;
 }
 
 /* navbar */
@@ -25,7 +25,7 @@ body.dark-mode {
 
 .nav-item.active {
   color: #000;
-  background: #F69D52;
+  background: #f69d52;
   border-radius: 6px;
   padding-right: 5px;
   padding-left: 5px

@@ -8,4 +8,8 @@ class UserModel extends Model
         protected $primaryKey = 'idUser';
         protected $returnType = 'object';
         protected $allowedFields = ['username','email','password','salt'];
+
+        public function findName($username){
+                return $this->where('username',$username)->findAll();
+        }
 }

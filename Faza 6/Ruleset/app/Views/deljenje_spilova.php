@@ -20,14 +20,34 @@ include('Navbar.php');
     </head>
     <body>
         <div class="container-fluid">
-            <div id="form_share">
-                <form name="form_share_deck" action="<?php  ?>" method="POST">
+            <div id="share_form">
+                <form name="shareform" class="form-inline d-flex justify-content-center md-form form-sm mt-0" action="<?= site_url("$controller/share_deck_submit/{$deck_id}") ?>">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <input class="form-control form-control-sm ml-3 w-75" name="share_textbox" type="text" placeholder="Name of the user">
+                    <?php 
+                    if(!empty($message)) 
+                        echo "<font color='red'>".$message."</font><br?";
+                    ?>
+                    <div class="share_button"><input type="submit" name="share_submit" class="btn btn-primary" value="Share Request"></div>
                 </form>
+                
             </div>
         </div>
         <style>
             .container-fluid{
-                height:100%;
+                height:50%;
+                text-align:center;
+                
+            }
+            #share_form{
+                width:30%;
+                margin-top:20%;
+                height:70%;
+                margin-left:auto;
+                margin-right:auto;
+            }
+            .share_button{
+                padding-top:20px;
             }
         </style>
         
