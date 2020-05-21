@@ -1,15 +1,40 @@
-body {
-  background-color: #F3F6F5;
+:root {
+  --main-bg-color: #F3F6F5;
+
+  --main-brand-color: #F69D52;
+
+  /* ex. Used for button borrders */
+  --border-brand-color: #d18140;
+
+  /* ex. Used for button box shadow when pressed */
+  --shadow-brand-color: #f7bb61c7;
+
+  /* ex. Used for button hover */
+  --hover-brand-color: #f7B37D;
+
+  --navbar-color: #232223;
+
+  /* Color of text apearing on top of the brand color */
+  --text-brand-color: black;
+
+  /* Color of text apearing on top of the navbar color */
+  --text-navbar-color: white;
+
+  /* Color of input boxes apearing on top of the navbar color */
+  --input-bg-navbar-color: rgba(255, 255, 255, 0.4);
+
+  /* Color of input boxes apearing on top of the navbar color */
+  --input-bg-brand-color: rgba(255, 255, 255, 0.4);
 }
 
-body.dark-mode {
-  background-color: #363041;
+body {
+  background-color: var(--main-bg-color);
 }
 
 /* navbar */
 
 .bg-dark {
-  background-color: #232223 !important;
+  background-color: var(--navbar-color) !important;
 }
 
 .nav-item {
@@ -25,7 +50,7 @@ body.dark-mode {
 
 .nav-item.active {
   color: #000;
-  background: #F69D52;
+  background: var(--main-brand-color);
   border-radius: 6px;
   padding-right: 5px;
   padding-left: 5px

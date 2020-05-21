@@ -19,7 +19,7 @@
 
 <body>
     <div class="header">
-        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
             <a class="navbar-brand" href="https://www.youtube.com/watch?v=EWMPVn1kgIQ">
                 <img src="assets/navbar/logo.png" alt="Logo" style="height:35px">
             </a>

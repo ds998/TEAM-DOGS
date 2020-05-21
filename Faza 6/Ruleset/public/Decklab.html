@@ -2,6 +2,8 @@
 
 <head>
     <title>Ruleset - Login</title>
+    <meta charset="UTF-8">
+    <link rel ="shortcut icon" type="image/png" href="assets/navbar/corgi_pixel.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
@@ -20,7 +22,7 @@
 
 <body class="">
     <div class="header">
-        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
             <a class="navbar-brand" href="https://www.youtube.com/watch?v=EWMPVn1kgIQ">
                 <img src="assets/navbar/logo.png" alt="Logo" style="height:35px">
             </a>
@@ -60,7 +62,7 @@
                     <table id="cardTable" class="table table-hover table-dark">
                         <thead>
                             <tr class="deckTableRowHeader">
-                                <th scope="col"># of Rules</th>
+                                <th scope="col" class='numRulesCol'># of Rules</th>
                                 <th scope="col">Card</th>
                             </tr>
                         </thead>
@@ -76,7 +78,7 @@
             <div class="col-sm-8">
                 <table id="ruleTable" class="table table-hover table-bordered table-dark">
                     <thead>
-                        <tr class="deckTableRowHeader">
+                        <tr class="rulesTableRowHeader">
                             <th scope="col" colspan="2">Rules</th>
                         </tr>
                     </thead>
@@ -89,26 +91,33 @@
                                     <option value="3">Skip</option>
                                     <option value="4">Change Global Rule</option>
                                     <option value="5">View Card</option>
+                                    <option value="6">Jump-in</option>
                                 </select>
                             </td>
                             <!-- <td class="align-middle">
+                                &nbsp;This card can jump-in on any&nbsp;
+
                                 <select class="custom-select triggerSelect">
-                                    <option selected value="1">On play</option>
-                                    <option value="2">On draw</option>
-                                    <option value="3">On discard</option>
+                                    <option selected value="1">Card</option>
+                                    <option value="2">Ace</option>
+                                    <option value="3">2</option>
+                                    <option value="4">3</option>
+                                    <option value="5">4</option>
+                                    <option value="6">...</option>
                                 </select>
+
+                                &nbsp;of&nbsp;
 
                                 <select class="custom-select targetSelect">
-                                    <option selected value="1">Next Player</option>
-                                    <option value="2">Previous Player</option>
-                                    <option value="3">Player of choice</option>
-                                    <option value="4">Random Player</option>
-                                    <option value="5">Player who used this card</option>
+                                    <option selected value="1">any suit</option>
+                                    <option value="2">the same suit</option>
+                                    <option value="3">a different suit</option>
+                                    <option value="4">Hearts</option>
+                                    <option value="5">Clubs</option>
+                                    <option value="6">Diamonds</option>
+                                    <option value="7">Spades</option>
                                 </select>
-
-                                &nbsp;draws
-                                <input type="number" class="inputNumber" min="1" max="99" value="1" required>
-                                card/s.
+                                .
                             </td> -->
                         </tr>
                         <tr class="deckTableRow addRuleRow">
