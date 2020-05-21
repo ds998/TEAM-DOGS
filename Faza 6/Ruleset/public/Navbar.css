@@ -56,12 +56,6 @@ body {
   padding-left: 5px
 }
 
-.logos {
-  height: 35px;
-  position: relative;
-  display: inline-block;
-}
-
 /* ----------------- LOGO ----------------- */
 
 #logoRuleImage {
@@ -78,5 +72,5 @@ body {
 }
 
 .logoImage {
-  height: 35px;
+  height: 36px;
 }
