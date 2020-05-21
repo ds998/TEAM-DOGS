@@ -1,0 +1,124 @@
+<html>
+
+<head>
+    <title>Ruleset - Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+
+    <link rel="stylesheet" href="Navbar.css" />
+    <link rel="stylesheet" href="Decklab.css" />
+    <script src="decklab.js"></script>
+</head>
+
+<body class="">
+    <div class="header">
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <a class="navbar-brand" href="https://www.youtube.com/watch?v=EWMPVn1kgIQ">
+                <img src="assets/navbar/logo.png" alt="Logo" style="height:35px">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarElements"
+                aria-controls="navbarElements" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarElements">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="game.html">Play</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="decklab.html">Make Ruleset</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.google.com/search?q=Ruleset">Find Ruleset</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-fluid">
+        <br>
+        <div class="row">
+            <div class="col-sm-4 col-lg-3 col-xl-3">
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table id="cardTable" class="table table-hover table-dark">
+                        <thead>
+                            <tr class="deckTableRowHeader">
+                                <th scope="col"># of Rules</th>
+                                <th scope="col">Card</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="deckTableRow addCard">
+                                <th s cope="row" colspan="2" class="text-muted">+ Add card</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-sm-8">
+                <table id="ruleTable" class="table table-hover table-bordered table-dark">
+                    <thead>
+                        <tr class="deckTableRowHeader">
+                            <th scope="col" colspan="2">Rules</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="testingAtest">
+                            <td class="align-middle fit">
+                                <select class="custom-select ruleSelect">
+                                    <option selected value="1">Draw</option>
+                                    <option value="2">Draw until</option>
+                                    <option value="3">Skip</option>
+                                    <option value="4">Change Global Rule</option>
+                                    <option value="5">View Card</option>
+                                </select>
+                            </td>
+                            <!-- <td class="align-middle">
+                                <select class="custom-select triggerSelect">
+                                    <option selected value="1">On play</option>
+                                    <option value="2">On draw</option>
+                                    <option value="3">On discard</option>
+                                </select>
+
+                                <select class="custom-select targetSelect">
+                                    <option selected value="1">Next Player</option>
+                                    <option value="2">Previous Player</option>
+                                    <option value="3">Player of choice</option>
+                                    <option value="4">Random Player</option>
+                                    <option value="5">Player who used this card</option>
+                                </select>
+
+                                &nbsp;draws
+                                <input type="number" class="inputNumber" min="1" max="99" value="1" required>
+                                card/s.
+                            </td> -->
+                        </tr>
+                        <tr class="deckTableRow addRuleRow">
+                            <th scope="row" colspan="2" class="text-muted">+ Add Rule</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

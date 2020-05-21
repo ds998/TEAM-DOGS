@@ -1,0 +1,98 @@
+.cardName {
+    background-color: transparent;
+    border: none;
+    color: white;
+    border-radius: 3px;
+    outline: none;
+    padding-left: 3px;
+    cursor: pointer;
+}
+
+.cardName.selectedRow {
+    color: black;
+}
+
+.cardName:focus {
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 1px 1px;
+    cursor: text;
+}
+
+.table {
+    background-color: #232223;
+    color: white;
+    cursor: default;
+}
+
+.custom-select {
+   margin-bottom: 1px;
+   margin-top: 1px;
+}
+
+.custom-select:active,
+.custom-select:focus {
+    border-color: #d18140 !important;
+    box-shadow: 0 0 0 2px rgba(247, 187, 97, 0.78) !important;
+}
+
+.deckTableRow.selectedRow {
+    background: #F79E55 !important;
+    color: black !important;
+}
+
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+    color: white;
+    cursor: pointer;
+}
+
+.table-hover tbody tr.selectedRow:hover td,
+.table-hover tbody tr.selectedRow:hover th {
+    color: black;
+    cursor: pointer;
+}
+
+.inputNumber{
+    width: 40px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    border-radius: 3px;
+    outline: none;
+    padding-left: 3px;
+    cursor: pointer;
+}
+
+.inputNumber:focus {
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 1px 1px;
+    cursor: text;
+}
+
+.ruleSelect {
+    width: 190px;
+}
+
+.triggerSelect {
+    width: 140px;
+}
+
+.table td.fit, 
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.targetSelect {
+    width: 220px;
+}
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 20%;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
