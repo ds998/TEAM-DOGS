@@ -23,7 +23,8 @@
     <div class="header">
         <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
             <a class="navbar-brand" href="https://www.youtube.com/watch?v=EWMPVn1kgIQ">
-                <img src="assets/navbar/logo.png" alt="Logo" style="height:35px">
+                <img id='logoRuleImage' src="assets/navbar/rule_icon.png" alt="Logo" class='logoImage'>
+                <img id='logoSetImage' src="assets/navbar/set_icon.png" alt="Logo" class='logoImage'>
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarElements"

@@ -31,7 +31,7 @@ body {
   background-color: var(--main-bg-color);
 }
 
-/* navbar */
+/* ----------------- Navbar ----------------- */
 
 .bg-dark {
   background-color: var(--navbar-color) !important;
@@ -60,4 +60,23 @@ body {
   height: 35px;
   position: relative;
   display: inline-block;
+}
+
+/* ----------------- LOGO ----------------- */
+
+#logoRuleImage {
+  /* Get filter you need to aplly on this link:
+     https://codepen.io/sosuke/pen/Pjoqqp */
+  filter: invert(80%) sepia(78%) saturate(3407%) hue-rotate(323deg) brightness(103%) contrast(93%);
+}
+
+#logoSetImage {
+  /* Get filter you need to aplly on this link:
+     https://codepen.io/sosuke/pen/Pjoqqp */
+  margin-left: -6;
+  filter: invert(71%) sepia(13%) saturate(271%) hue-rotate(160deg) brightness(92%) contrast(86%);
+}
+
+.logoImage {
+  height: 35px;
 }
