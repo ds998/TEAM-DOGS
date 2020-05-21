@@ -9,7 +9,8 @@ CREATE TABLE `User`
   `username` Varchar(15) NOT NULL,
   `email` Varchar(25) NOT NULL,
   `passwordHash` Varchar(45) NOT NULL,
-  `salt` Varchar(10) NOT NULL
+  `salt` Varchar(10) NOT NULL,
+  `isGuest` int
 )
 ;
 
@@ -19,7 +20,7 @@ ALTER TABLE `User` ADD PRIMARY KEY (`idUser`)
 ALTER TABLE `User` ADD UNIQUE `username` (`username`)
 ;
 
-ALTER TABLE `User` ADD UNIQUE `Attribute1` (`email`)
+ALTER TABLE `User` ADD UNIQUE `email` (`email`)
 ;
 
 ALTER TABLE `User` ADD UNIQUE `idUser` (`idUser`)
@@ -31,8 +32,9 @@ CREATE TABLE `Lobby`
 (
   `idLobby` Int NOT NULL AUTO_INCREMENT,
   `idDeck` Int NOT NULL,
-  `idSession` Varchar(15) NOT NULL,
+  `idUser` Varchar(15) NOT NULL,
   `maxPlayers` Int NOT NULL DEFAULT 10,
+  `PlayerList` VARCHAR(120),
   `lobbyName` Varchar(15) NOT NULL,
   `password` Varchar(10)
 )
@@ -46,6 +48,8 @@ ALTER TABLE HDecks CHANGE idDeck FOREIGN KEY;
 ALTER TABLE `Deck` ADD CONSTRAINT `Relationship5` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
+ALTER TABLE `Lobby` ADD CONSTRAINT `Relationship420` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
 
 CREATE INDEX `IX_Relationship6` ON `Lobby` (`idDeck`)
 ;
@@ -56,7 +60,7 @@ ALTER TABLE `Lobby` ADD PRIMARY KEY (`idLobby`)
 ALTER TABLE `Lobby` ADD UNIQUE `idLobby` (`idLobby`)
 ;
 
-ALTER TABLE `Lobby` ADD UNIQUE `idSession` (`idSession`)
+ALTER TABLE `Lobby` ADD UNIQUE `idUser` (`idUser`)
 ;
 
 -- Table User_Decks
