@@ -10,11 +10,9 @@ CREATE TABLE `User`
   `email` Varchar(25) NOT NULL,
   `passwordHash` Varchar(45) NOT NULL,
   `salt` Varchar(10) NOT NULL,
-  `isGuest` int
+  `isGuest` int,
+   PRIMARY KEY(`idUser`)
 )
-;
-
-ALTER TABLE `User` ADD PRIMARY KEY (`idUser`)
 ;
 
 ALTER TABLE `User` ADD UNIQUE `username` (`username`)
@@ -32,29 +30,50 @@ CREATE TABLE `Lobby`
 (
   `idLobby` Int NOT NULL AUTO_INCREMENT,
   `idDeck` Int NOT NULL,
-  `idUser` Varchar(15) NOT NULL,
+  `idUser` Int NOT NULL,
   `maxPlayers` Int NOT NULL DEFAULT 10,
   `PlayerList` VARCHAR(120),
   `lobbyName` Varchar(15) NOT NULL,
-  `password` Varchar(10)
+  `password` Varchar(10),
+   PRIMARY KEY(`idLobby`)
 )
 ;
-CREATE TABLE HDecks(
-    idDeck int not null,
-	orderNum int not null
-);
 
-ALTER TABLE HDecks CHANGE idDeck FOREIGN KEY;
-ALTER TABLE `Deck` ADD CONSTRAINT `Relationship5` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
+-- Table Deck
+
+CREATE TABLE `Deck`
+(
+  `idDeck` Int NOT NULL AUTO_INCREMENT,
+  `idUser` Int NOT NULL,
+  `cardRules` Varchar(210) NOT NULL,
+  `Cards` Varchar(120) NOT NULL,
+  `globalRules` Varchar(20) NOT NULL,
+  `Rating` Double,
+  `numberOfPlays` Int,
+  `numberOfRatings` Int,
+   PRIMARY KEY(`idDeck`)
+)
 ;
 
+CREATE INDEX `IX_Relationship5` ON `Deck` (`idUser`)
+;
+
+ALTER TABLE `Deck` ADD UNIQUE `idDeck` (`idDeck`)
+;
+
+CREATE TABLE `HDecks`(
+    `idDeck` int not null,
+	`orderNum` int not null
+);
+
+ALTER TABLE `HDecks` ADD CONSTRAINT `Relationship5` FOREIGN KEY (`idDeck`) REFERENCES `Deck` (`idDeck`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+ALTER TABLE `Deck` ADD CONSTRAINT `Relationship5698` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
 ALTER TABLE `Lobby` ADD CONSTRAINT `Relationship420` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
 CREATE INDEX `IX_Relationship6` ON `Lobby` (`idDeck`)
-;
-
-ALTER TABLE `Lobby` ADD PRIMARY KEY (`idLobby`)
 ;
 
 ALTER TABLE `Lobby` ADD UNIQUE `idLobby` (`idLobby`)
@@ -77,30 +96,6 @@ CREATE TABLE `User_Decks`
 ALTER TABLE `User_Decks` ADD PRIMARY KEY (`idDeck`, `idUser`)
 ;
 
--- Table Deck
-
-CREATE TABLE `Deck`
-(
-  `idDeck` Int NOT NULL AUTO_INCREMENT,
-  `idUser` Int NOT NULL,
-  `cardRules` Varchar(210) NOT NULL,
-  `Cards` Varchar(120) NOT NULL,
-  `globalRules` Varchar(20) NOT NULL,
-  `Rating` Double,
-  `numberOfPlays` Int,
-  `numberOfRatings` Int
-)
-;
-
-CREATE INDEX `IX_Relationship5` ON `Deck` (`idUser`)
-;
-
-ALTER TABLE `Deck` ADD PRIMARY KEY (`idDeck`)
-;
-
-ALTER TABLE `Deck` ADD UNIQUE `idDeck` (`idDeck`)
-;
-
 -- Table Admins
 
 CREATE TABLE `Admins`
@@ -120,13 +115,11 @@ ALTER TABLE `User_Decks` ADD CONSTRAINT `User to Deck` FOREIGN KEY (`idUser`) RE
 ALTER TABLE `User_Decks` ADD CONSTRAINT `I` FOREIGN KEY (`idDeck`) REFERENCES `Deck` (`idDeck`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
-ALTER TABLE `Deck` ADD CONSTRAINT `Relationship5` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
+ALTER TABLE `Deck` ADD CONSTRAINT `Relationship5789` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
-ALTER TABLE `Lobby` ADD CONSTRAINT `Relationship6` FOREIGN KEY (`idDeck`) REFERENCES `Deck` (`idDeck`) ON DELETE NO ACTION ON UPDATE NO ACTION
+ALTER TABLE `Lobby` ADD CONSTRAINT `Relationship6hil` FOREIGN KEY (`idDeck`) REFERENCES `Deck` (`idDeck`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
-ALTER TABLE `Admins` ADD CONSTRAINT `Relationship7` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
+ALTER TABLE `Admins` ADD CONSTRAINT `Relationship7ko` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
-
-
