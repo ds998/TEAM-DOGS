@@ -1,8 +1,3 @@
-<?php 
-
-include('Navbar.php');
-?>
-
 <html>
     <head>
         <title>Pregled svih lobby-a</title>
@@ -99,7 +94,23 @@ include('Navbar.php');
            return;
        }
        function join_lobby(tcell){
-           
+           var id=tcell.id;
+           var controller="<?php echo $controller; ?>";
+           var args=JSON.stringify({'lobbyName:':id,'controller':controller});
+           $.ajax({
+                   contentType:'application/json;charset=utf-8'
+                   dataType:'text',
+                   type:'GET',
+                   url:'/help/RedirectLobbyPage'
+                   data:args,
+                   success:function(data){
+                        location.href=data;
+                        return;
+
+                   }
+           });
+           return;
+
        }
     </script>
 

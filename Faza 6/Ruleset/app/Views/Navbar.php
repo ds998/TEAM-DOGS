@@ -16,15 +16,15 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
 
-    <link rel="stylesheet" href="Navbar.css" />
+    <link rel="stylesheet" href="<?php echo base_url('/public/Navbar.css'); ?>" />
 </head>
 
 <body>
     <div class="header">
         <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
             <a class="navbar-brand" href="https://www.youtube.com/watch?v=EWMPVn1kgIQ">
-                <img id='logoRuleImage' src="assets/navbar/rule_icon.png" alt="Logo" class='logoImage'>
-                <img id='logoSetImage' src="assets/navbar/set_icon.png" alt="Logo" class='logoImage'>
+                <img id='logoRuleImage' src="<?php echo base_url('/public/navbar/rule_icon.png'); ?>" alt="Logo" class='logoImage'>
+                <img id='logoSetImage' src="<?php echo base_url('/public/navbar/set_icon.png'); ?>" alt="Logo" class='logoImage'>
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarElements"
@@ -38,13 +38,13 @@
                         <a class="nav-link" href="https://www.crazygames.com/game/uno-online">Play</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="login.html">Login</a>
+                        <a class="nav-link" href="<?php echo base_url('/public/login.html'); ?>">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="register.html">Register</a>
+                        <a class="nav-link" href="<?php echo base_url('/public/register.html'); ?>">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="decklab.html">Make Ruleset</a>
+                        <a class="nav-link" href="<?php echo base_url('/public/decklab.html'); ?>">Make Ruleset</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="https://www.google.com/search?q=Ruleset">Find Ruleset</a>

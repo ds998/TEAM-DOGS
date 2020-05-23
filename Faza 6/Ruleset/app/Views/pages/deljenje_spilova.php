@@ -1,8 +1,3 @@
-<?php 
-
-include('Navbar.php');
-?>
-
 <html>
     <head>
         <title>Deljenje spilova</title>
