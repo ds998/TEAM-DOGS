@@ -12,13 +12,13 @@ class Controller extends BaseController
         $userModel=new UserModel();
         $data=[
             'username' =>null,
-            'email'=> $this->session->sessionId(),
+            'email'=> session_id(),
             'passwordHash'=>'who cares',
             'salt'=>'yes',
             'isGuest'=>1
         ];
         $userModel->insert($data);
-        $user=$userModel->findByMail($this->session->sessionId());
+        $user=$userModel->findByMail(session_id());
         
         $this->session->set('user',$user);//ovde treba da se stavi identitet gosta
         return $this->all_lobbies();
@@ -35,7 +35,7 @@ class Controller extends BaseController
     public function join_lobby($idLobby,$error=null){
         $lobby_model=new LobbyModel();
         $lobby=$lobby_model->find($idLobby);
-        return $this->show('join_lobby',['lobby'=>$lobby,'controller'=>$this->session->get('controller'),'error'=>$error]);
+        return $this->show('prikljucivanje_lobby-u',['lobby'=>$lobby,'controller'=>$this->session->get('controller'),'error'=>$error]);
     }
 
     public function joining_lobby($idLobby){

@@ -29,14 +29,11 @@
                 </div>
             </div>
             <div class="right col-sm-8 col-md-8 col-lg-8">
-                <table id="lobby_table">
-                    <?php 
-                        foreach ($lobbies as $lobby) {
-                             echo "<tr><td id='{$lobby->lobbyName}' onclick='join_lobby(this);'>{$lobby->lobbyName}</td></tr>";
-                        }
-                    ?>
-
-                </table>
+                <?php 
+                    foreach ($lobbies as $lobby) {
+                        echo "<div class='lobby_div' id='{$lobby->idLobby}' onclick='join_lobby(this);'>{$lobby->lobbyName}</div>";
+                    }
+                ?>
             </div>
         </div>
         </div>
@@ -52,8 +49,11 @@
         }
         .right{
             overflow-x:hidden;
-            overflow-y:auto;
+            overflow-y:scroll;
             height:100%;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
         }
         #searchForm{
             padding-top:30%;
@@ -64,22 +64,16 @@
         .menuButton{
             padding-top:80%;
         }
-        #lobby_table{
-            text-align:center;
-            margin-left:auto;
-            margin-right:auto;
-            width:50%;
-            height:100%;
-            overflow:hidden;
-        }
-        #lobby_table td{
-            border-bottom:150px solid #fff;
+        .lobby_div{
             line-height:100px;
-            overflow:hidden;
+            text-align:center;
+            margin-top:100px;
+            height:100px;
+            width:250px;
             background-color:gray;
         }
-        #lobby_table td:first-child{
-            border-top:150px solid #fff;
+        .lobby_div:hover{
+            cursor:pointer;
         }
     </style>
     <script>
@@ -93,23 +87,13 @@
            }
            return;
        }
-       function join_lobby(tcell){
-           var id=tcell.id;
+       function join_lobby(divcell){
+           var id=divcell.id;
            var controller="<?php echo $controller; ?>";
-           var args=JSON.stringify({'lobbyName:':id,'controller':controller});
-           $.ajax({
-                   contentType:'application/json;charset=utf-8'
-                   dataType:'text',
-                   type:'GET',
-                   url:'/help/RedirectLobbyPage'
-                   data:args,
-                   success:function(data){
-                        location.href=data;
-                        return;
-
-                   }
-           });
+           console.log("<?php echo base_url(); ?>/"+controller+"/join_lobby/"+id);
+           location.href="<?php echo base_url(); ?>/"+controller+"/join_lobby/"+id;
            return;
+           
 
        }
     </script>
