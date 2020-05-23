@@ -5,6 +5,7 @@ use App\Models\UserDeckModel;
 class UserController extends Controller
 {
     public function index(){
+        
         $userModel=new UserModel();
         $user=$userModel->find(0);
         $this->session->set('user',$user);
@@ -15,7 +16,7 @@ class UserController extends Controller
     }
 
     public function share_a_deck($controller,$deck_id,$message=null){
-        return view('deljenje_spilova',['controller'=>$controller,'deck_id'=>$deck_id,'message'=>$message]);
+        return $this->show('deljenje_spilova',['controller'=>$controller,'deck_id'=>$deck_id,'message'=>$message]);
     }
 
     public function share_deck_submit($deck_id){
