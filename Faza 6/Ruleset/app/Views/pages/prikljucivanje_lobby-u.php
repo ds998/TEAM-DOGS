@@ -3,8 +3,8 @@
         <title>Prikljucivanje lobby-u</title>
     <!-- Version: 0.2 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" 
+       integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
@@ -100,17 +100,16 @@
                var id="<?php echo $lobby->idLobby; ?>";
                id=JSON.stringify({'idLobby:':id});
                $.ajax({
-                   contentType:'application/json;charset=utf-8'
+                   contentType:'application/json;charset=utf-8',
                    dataType:'text',
                    type:'GET',
-                   url:'/help/UpdateLobbyPage'
+                   url:'/help/UpdateLobbyPage',
                    data:id,
                    success:function(data){
                         var arr=data.split(",");
-                        $("#lobby_status").html(arr[0]);
-                        $("#lobby_in_game").html(arr[1]);
+                        $("#lobby_in_game").html(arr[0]);
                         var new_str="";
-                        for(int i=2;i<arr.length;i++){
+                        for(int i=1;i<arr.length;i++){
                             new_str+="<tr><td>"+arr[i]+"<td><tr>";
                         }
                         $("#lobby_table").html(new_str);

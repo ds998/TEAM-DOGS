@@ -17,8 +17,11 @@ class Controller extends BaseController
             'salt'=>'yes',
             'isGuest'=>1
         ];
-        $userModel->insert($data);
         $user=$userModel->findByMail(session_id());
+        if($user==null){
+            $userModel->insert($data);
+            $user=$userModel->findByMail(session_id());
+        }
         
         $this->session->set('user',$user);//ovde treba da se stavi identitet gosta
         return $this->all_lobbies();

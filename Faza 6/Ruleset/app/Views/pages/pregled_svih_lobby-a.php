@@ -3,8 +3,8 @@
         <title>Pregled svih lobby-a</title>
     <!-- Version: 0.2 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" 
+       integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
@@ -31,7 +31,7 @@
             <div class="right col-sm-8 col-md-8 col-lg-8">
                 <?php 
                     foreach ($lobbies as $lobby) {
-                        echo "<div class='lobby_div' id='{$lobby->idLobby}' onclick='join_lobby(this);'>{$lobby->lobbyName}</div>";
+                        echo "<div class='lobby_div' id='{$lobby->lobbyName}'>{$lobby->lobbyName}</div>";
                     }
                 ?>
             </div>
@@ -87,15 +87,32 @@
            }
            return;
        }
-       function join_lobby(divcell){
-           var id=divcell.id;
-           var controller="<?php echo $controller; ?>";
-           console.log("<?php echo base_url(); ?>/"+controller+"/join_lobby/"+id);
-           location.href="<?php echo base_url(); ?>/"+controller+"/join_lobby/"+id;
-           return;
-           
-
-       }
+       $(document).ready(function(){
+           $(".lobby_div").click(function(){
+                var id=$(this).id;
+                var controller="<?php echo $controller; ?>";
+                var stuff=JSON.stringify({'lobbyName':id,'controller':controller});
+                jQuery.support.cors = true;
+                request=$.ajax({
+                    contentType:'application/json;charset=utf-8',
+                    dataType:'text',
+                    type:'GET',
+                    url:"help/RedirectLobbyPage.php",
+                    data:stuff                   
+                });
+                request.done(function(data){
+                    location.href=data;
+                    return;
+                });
+                request.fail(function(xhr, status, errorThrown){
+                    alert( "Sorry, there was a problem!" );
+                    console.log( "Error: " + errorThrown );
+                    console.log( "Status: " + status );
+                    console.dir(xhr);
+                return;
+                });
+           });
+       });
     </script>
 
 </html>

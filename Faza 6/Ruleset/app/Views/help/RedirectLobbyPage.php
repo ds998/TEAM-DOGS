@@ -1,7 +1,7 @@
 <?php
 use App\Models\LobbyModel;
-if(isset($_GET['args']) && !empty($_GET['args'])) {
-    $largs = $_GET['args'];
+if(isset($_GET['stuff']) && !empty($_GET['stuff'])) {
+    $largs = $_GET['stuff'];
 }
 $arr=json_decode($largs);
 $controller=$arr->{'controller'};
