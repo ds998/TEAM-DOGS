@@ -45,6 +45,8 @@ CREATE TABLE `Deck`
 (
   `idDeck` Int NOT NULL AUTO_INCREMENT,
   `idUser` Int NOT NULL,
+  `deckName` Varchar(30) not null,
+  `deckDescription` Varchar(140),
   `cardRules` Varchar(210) NOT NULL,
   `Cards` Varchar(120) NOT NULL,
   `globalRules` Varchar(20) NOT NULL,
@@ -59,6 +61,25 @@ CREATE INDEX `IX_Relationship5` ON `Deck` (`idUser`)
 ;
 
 ALTER TABLE `Deck` ADD UNIQUE `idDeck` (`idDeck`)
+;
+create table `GameMove`(
+	`idLobby` int not null,
+	`cardsThrown` varchar(100) not null,
+	`sequenceNum` int,
+	`moveTime` int not null,
+);
+
+ALTER TABLE `GameMove` ADD CONSTRAINT `Relationship10` FOREIGN KEY (`idLobby`) REFERENCES `Lobby` (`idLobby``) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+create table `ChatMsg`(
+	`idLobby` int not null,
+	`username` varchar(30) not null,
+	`msg` varchar(50) not null,
+	`sequenceNum` int,
+);
+
+ALTER TABLE `ChatMsg` ADD CONSTRAINT `Relationship11` FOREIGN KEY (`idLobby`) REFERENCES `Lobby` (`idLobby``) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
 CREATE TABLE `HDecks`(
