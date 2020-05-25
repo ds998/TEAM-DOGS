@@ -65,7 +65,7 @@ ALTER TABLE `Deck` ADD UNIQUE `idDeck` (`idDeck`)
 create table `GameMove`(
 	`idLobby` int not null,
 	`cardsThrown` varchar(100) not null,
-	`sequenceNum` int,
+	`lastUser` int,
 	`moveTime` int not null,
 );
 
@@ -79,7 +79,7 @@ create table `ChatMsg`(
 	`sequenceNum` int,
 );
 
-ALTER TABLE `ChatMsg` ADD CONSTRAINT `Relationship11` FOREIGN KEY (`idLobby`) REFERENCES `Lobby` (`idLobby``) ON DELETE NO ACTION ON UPDATE NO ACTION
+ALTER TABLE `ChatMsg` ADD CONSTRAINT `Relationship11` FOREIGN KEY (`idLobby`) REFERENCES `Lobby` (`idLobby`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
 CREATE TABLE `HDecks`(
