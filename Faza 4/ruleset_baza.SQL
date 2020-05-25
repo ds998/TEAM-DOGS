@@ -72,7 +72,7 @@ create table `GameMove`(
 ALTER TABLE `GameMove` ADD CONSTRAINT `Relationship10` FOREIGN KEY (`idLobby`) REFERENCES `Lobby` (`idLobby``) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
-ALTER TABLE `GameMove` ADD CONSTRAINT `Relationship12` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser``) ON DELETE NO ACTION ON UPDATE NO ACTION
+ALTER TABLE `GameMove` ADD CONSTRAINT `Relationship12` FOREIGN KEY (`lastUserId`) REFERENCES `User` (`idUser``) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
 create table `ChatMsg`(
