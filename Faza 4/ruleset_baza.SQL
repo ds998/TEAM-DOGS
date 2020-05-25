@@ -65,7 +65,7 @@ ALTER TABLE `Deck` ADD UNIQUE `idDeck` (`idDeck`)
 create table `GameMove`(
 	`idLobby` int not null,
 	`cardsThrown` varchar(100) not null,
-	`lastUser` int,
+	`lastUserId` int not null,
 	`moveTime` int not null,
 );
 
