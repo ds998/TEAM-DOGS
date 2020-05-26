@@ -1,0 +1,43 @@
+/* Version: 2.0*/
+/* ----------------- NAVBAR ----------------- */
+
+/*Promenjena pozadina navbara*/
+.bg-dark {
+  background-color: var(--main-bg-color) !important;
+}
+
+.nav-item {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  padding-right: 3px;
+  padding-left: 3px;
+}
+
+/*Izbrisana pozadina za aktivnu stranicu u navbaru*/
+.nav-link:hover {
+   color: var(--main-brand-color) !important;
+}
+
+.top-buffer {
+  margin-top: 20px;
+}
+
+/* ----------------- LOGO ----------------- */
+
+/*Izmenjena boja logo-a; --main-brand-color*/
+#logoRuleImage {
+  /* Get filter you need to aplly on this link:
+  https://codepen.io/sosuke/pen/Pjoqqp */
+  filter: invert(67%) sepia(56%) saturate(1072%) hue-rotate(342deg) brightness(102%) contrast(89%);
+}
+
+#logoSetImage {
+  /* Get filter you need to aplly on this link:
+  https://codepen.io/sosuke/pen/Pjoqqp */
+  margin-left: -6;
+  filter: invert(67%) sepia(56%) saturate(1072%) hue-rotate(342deg) brightness(102%) contrast(89%);
+}
+
+.logoImage {
+  height: 36px;
+}
