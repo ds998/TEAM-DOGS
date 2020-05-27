@@ -16,4 +16,15 @@ class UserModel extends Model
         public function findByMail($email){
                 return $this->where('email',$email)->findAll();
         }
+
+        public function register($username, $email, $passwordHash, $salt){
+                $data=[
+                        'username' => $username,
+                        'email'=> $email,
+                        'passwordHash'=>$passwordHash,
+                        'salt'=>'yes',
+                        'isGuest'=>0
+                ];
+                $this->insert($data);
+        }
 }

@@ -10,8 +10,9 @@ class Controller extends BaseController
     public function index(){
         $this->session->set('controller','Controller');
         $userModel=new UserModel();
+        
         $data=[
-            'username' =>null,
+            'username' =>session_id(),
             'email'=> session_id(),
             'passwordHash'=>'who cares',
             'salt'=>'yes',
@@ -78,6 +79,11 @@ class Controller extends BaseController
         else{
             return redirect()->to(site_url("$controller/lozinka/{$idLobby}"));
         }
+    }
+    public function register($username, $email, $password){
+        $userModel = new UserModel();
+
+        $userModel->register($username, $email, password_hash($password, PASSWORD_BCRYPT), $salt);
     }
 
     public function lobby($idLobby,$error=null){
