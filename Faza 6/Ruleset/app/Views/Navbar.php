@@ -4,7 +4,7 @@
     <title>Ruleset by team DOGS</title>
     <!-- Version: 2.0 Maja-->
     <meta charset="UTF-8">
-    <link rel ="shortcut icon" type="image/png" href="assets/navbar/corgi_pixel.png">
+    <link rel ="shortcut icon" type="image/png" href="<?php echo base_url('assets/navbar/corgi_pixel.png'); ?>">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">

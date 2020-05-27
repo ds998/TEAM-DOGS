@@ -37,7 +37,7 @@
                 </table>
                 <?php  
                    if($error!=null){
-                       echo "<div id='errors'".$error."</div>";
+                       echo "<div id='errors'>".$error."</div>";
                    }
                    $user=$_SESSION["user"];
                    if($user->idUser==$lobby->idUser){

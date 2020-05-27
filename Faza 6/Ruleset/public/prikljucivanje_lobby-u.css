@@ -68,6 +68,6 @@ tr{
     color:var(--text-brand-color);
 }
 #errors{
-    padding-top:5px;
+    padding-top:80px;
     color:#e06377;
 }

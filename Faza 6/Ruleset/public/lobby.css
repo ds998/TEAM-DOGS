@@ -35,17 +35,14 @@ tr{
     display:table;
     table-layout:auto;
 }
-.deckButton{
-    margin-top:150px;
-}
-.joinButton{
-    margin-top:100px;
+.gameButton{
+    margin-top:30px;
 }   
 .exitButton{
     margin-top:30px;
 }
 #lobby_title{
-    margin-top:20px;
+    margin-bottom:100px;
     color:var(--text-brand-color);
 }
 #errors{

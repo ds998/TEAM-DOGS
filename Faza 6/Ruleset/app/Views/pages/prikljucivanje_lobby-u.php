@@ -57,7 +57,7 @@
                 </div>
                 <?php 
                    if(!empty($error)){
-                       echo "<div id='errors'".$error."</div>";
+                       echo "<div id='errors'>".$error."</div>";
                    }
                 ?>
                 <div class="joinButton">
@@ -69,8 +69,6 @@
             </div>
         </div>
         </div>
-        
-        
     </body>
 
 </html>
