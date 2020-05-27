@@ -1,9 +1,9 @@
 <html>
 
 <head>
-    <title>Ruleset - Login</title>
+    <title>Ruleset - Decklab</title>
     <meta charset="UTF-8">
-    <link rel ="shortcut icon" type="image/png" href="assets/navbar/corgi_pixel.png">
+    <link rel="shortcut icon" type="image/png" href="assets/navbar/corgi_pixel.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
@@ -17,12 +17,18 @@
 
     <link rel="stylesheet" href="Navbar.css" />
     <link rel="stylesheet" href="Decklab.css" />
+    <link rel="stylesheet" href="Login.css" />
+    <script src="base.js"></script>
+    <script src="Rule.js"></script>
+    <script src="Decklab_globals.js"></script>
+    <script src="Decklab_rules.js"></script>
     <script src="decklab.js"></script>
 </head>
 
 <body class="">
     <div class="header">
-        <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
+        <nav class="navbar bg-dark navbar-dark">
+            <!-- navbar-expand-lg -->
             <a class="navbar-brand" href="https://www.youtube.com/watch?v=EWMPVn1kgIQ">
                 <img id='logoRuleImage' src="assets/navbar/rule_icon.png" alt="Logo" class='logoImage'>
                 <img id='logoSetImage' src="assets/navbar/set_icon.png" alt="Logo" class='logoImage'>
@@ -58,74 +64,84 @@
     <div class="container-fluid">
         <br>
         <div class="row">
-            <div class="col-sm-4 col-lg-3 col-xl-3">
-                <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                    <table id="cardTable" class="table table-hover table-dark">
-                        <thead>
-                            <tr class="deckTableRowHeader">
-                                <th scope="col" class='numRulesCol'># of Rules</th>
-                                <th scope="col">Card</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="deckTableRow addCard">
-                                <th s cope="row" colspan="2" class="text-muted">+ Add card</th>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <div class="col-md-12 col-lg-3">
+                <table class="table table-dark">
+                    <tr class="topRow d-flex justify-content-between">
+                        <th class="d-flex flex-nowrap align-items-center"><input type="checkbox" checked>
+                            <img src="assets/decklab/clubs.png" class="suit blackSuit"></th>
+                        <th class="d-flex flex-nowrap align-items-center"><input type="checkbox" checked>
+                            <img src="assets/decklab/diamonds.png" class="suit redSuit"></th>
+                        <th class="d-flex flex-nowrap align-items-center"><input type="checkbox" checked>
+                            <img src="assets/decklab/spades.png" class="suit blackSuit"></th>
+                        <th class="d-flex flex-nowrap align-items-center"><input type="checkbox" checked>
+                            <img src="assets/decklab/hearts.png" class="suit redSuit"></th>
+                    </tr>
+                </table>
 
-            <div class="col-sm-8">
-                <table id="ruleTable" class="table table-hover table-bordered table-dark">
+
+                <table id="cardTable" class="table table-hover table-dark">
                     <thead>
-                        <tr class="rulesTableRowHeader">
-                            <th scope="col" colspan="2">Rules</th>
+                        <tr class="deckTableRowHeader topRow">
+                            <th scope="col" class='numRulesCol'># of Rules</th>
+                            <th scope="col">Card</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="testingAtest">
-                            <td class="align-middle fit">
-                                <select class="custom-select ruleSelect">
-                                    <option selected value="1">Draw</option>
-                                    <option value="2">Draw until</option>
-                                    <option value="3">Skip</option>
-                                    <option value="4">Change Global Rule</option>
-                                    <option value="5">View Card</option>
-                                    <option value="6">Jump-in</option>
-                                </select>
-                            </td>
-                            <!-- <td class="align-middle">
-                                &nbsp;This card can jump-in on any&nbsp;
-
-                                <select class="custom-select triggerSelect">
-                                    <option selected value="1">Card</option>
-                                    <option value="2">Ace</option>
-                                    <option value="3">2</option>
-                                    <option value="4">3</option>
-                                    <option value="5">4</option>
-                                    <option value="6">...</option>
-                                </select>
-
-                                &nbsp;of&nbsp;
-
-                                <select class="custom-select targetSelect">
-                                    <option selected value="1">any suit</option>
-                                    <option value="2">the same suit</option>
-                                    <option value="3">a different suit</option>
-                                    <option value="4">Hearts</option>
-                                    <option value="5">Clubs</option>
-                                    <option value="6">Diamonds</option>
-                                    <option value="7">Spades</option>
-                                </select>
-                                .
-                            </td> -->
+                        <tr class="deckTableRow addCard">
+                            <th s cope="row" colspan="2" class="text-muted">+ Add card</th>
                         </tr>
-                        <tr class="deckTableRow addRuleRow">
+                    </tbody>
+                </table>
+
+                <table class="table table-hover table-dark">
+                    <tr class="topRow d-flex globalRulesRow">
+                        <th class="d-flex flex-nowrap align-items-center">Global Rules</th>
+
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-md-12 col-lg-9">
+                <table id="ruleTable" class="table table-hover table-dark">
+                    <thead>
+                        <tr class="rulesTableRowHeader topRow rulesRow">
+
+                            <th colspan="2" scope="col" class="">
+                                <div class="d-flex align-items-center flex-fill">
+                                    <div class="mr-auto rulesTitle">Rules</div>
+                                    <input type="radio" name="ruleRadio" checked value="all">
+                                    <div class="mr-1">All</div>
+                                    <input type="radio" name="ruleRadio" value="Clubs"><img
+                                        src="assets/decklab/clubs.png" class="suit blackSuit mr-1">
+                                    <input type="radio" name="ruleRadio" value="Diamonds"><img
+                                        src="assets/decklab/diamonds.png" class="suit redSuit mr-1">
+                                    <input type="radio" name="ruleRadio" value="Spades"><img
+                                        src="assets/decklab/spades.png" class="suit blackSuit mr-1">
+                                    <input type="radio" name="ruleRadio" value="Hearts"><img
+                                        src="assets/decklab/hearts.png" class="suit redSuit">
+                                </div>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="addRuleRow rulesRow">
                             <th scope="row" colspan="2" class="text-muted">+ Add Rule</th>
                         </tr>
                     </tbody>
                 </table>
+
+                <textarea id="deckDecription" class="form-control" rows="3" style="resize: none;" maxlength="250"
+                    placeholder="Enter a brief description of the ruleset..."></textarea>
+                <br>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-8" style="padding-bottom: 2px;"> <input id="deckName" type="text"
+                            class="form-control" placeholder="Enter Ruleset Name"> </div>
+                    <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
+                            class="btn btn-primary flex-fill">Save</button> </div>
+                    <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
+                            class="btn btn-success flex-fill">Play</button> </div>
+                </div>
             </div>
         </div>
     </div>

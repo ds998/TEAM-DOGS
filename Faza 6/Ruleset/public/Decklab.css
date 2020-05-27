@@ -1,15 +1,11 @@
 .cardName {
     background-color: transparent;
     border: none;
-    color: var(--text-navbar-color);
+    color: var(--text-content-color);
     border-radius: 3px;
     outline: none;
     padding-left: 3px;
     cursor: pointer;
-}
-
-.cardName.selectedRow {
-    color: var(--text-brand-color);
 }
 
 .cardName:focus {
@@ -18,10 +14,166 @@
     cursor: text;
 }
 
+.inputNumber {
+    width: 40px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: none;
+    color: var(--text-content-color);
+    border-radius: 3px;
+    outline: none;
+    padding-left: 3px;
+    cursor: pointer;
+    text-align: right;
+}
+
+.inputNumber:hover {
+    text-align: left;
+}
+
+.inputNumber:focus {
+    box-shadow: 1px 1px;
+    cursor: text;
+    text-align: left;
+}
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 20%;
+    overflow: auto;
+}
+
+.suit {
+    height: 25px;
+}
+
+.redSuit {
+    filter: invert(80%) sepia(78%) saturate(3407%) hue-rotate(323deg) brightness(103%) contrast(93%);
+}
+
+.blackSuit {
+    filter: invert(71%) sepia(13%) saturate(271%) hue-rotate(160deg) brightness(92%) contrast(86%);
+}
+
+.numRulesCell {
+    width: 40%;
+}
+
+.removeitem {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 4px;
+    padding-left: 4px;
+    font-size: 12px;
+    font-weight: bolder;
+    z-index: 100;
+    display: none;
+    background-color: transparent;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/*  ---------------------------- Tables ----------------------------   */
+
 .table {
-    background-color: var(--navbar-color);
-    color: var(--text-navbar-color);
+    background-color: var(--content-color);
+    color: var(--text-content-color);
     cursor: default;
+    border-radius: 4px;
+    border-color: var(--text-content-color);
+    border: 2px solid var(--text-content-color);
+}
+
+table {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+thead {
+    flex: 0 0 auto;
+}
+
+tbody {
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+#cardTable tbody {
+    max-height: 300px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+#ruleTable tbody {
+    max-height: 300px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+@media only screen and (min-width : 992px) {
+    #cardTable tbody {
+        max-height: 68vh !important;
+    }
+
+    #ruleTable tbody {
+        max-height: 63vh;
+    }
+}
+
+.table-hover tbody tr.selectedRow:hover td,
+.table-hover tbody tr.selectedRow:hover th {
+    color: var(--text-brand-color);
+    cursor: pointer;
+}
+
+tr:hover>th>.removeitem,
+tr:hover>td>.removeitem {
+    display: block !important;
+}
+
+.row {
+    min-width: 600px;
+}
+
+
+tr {
+    width: 100%;
+    display: table;
+    table-layout: auto;
+}
+
+th,
+td {
+    border-color: var(--text-content-color) !important;
+}
+
+.table td.fit,
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.deckTableRow,
+.rulesRow {
+    position: relative;
+}
+
+.topRow th {
+    border-top: none;
+}
+
+/*        ------------------- Selcet Row ------------------          */
+
+.cardName.selectedRow {
+    color: var(--text-brand-color);
 }
 
 .custom-select {
@@ -35,69 +187,74 @@
     box-shadow: 0 0 0 2px var(--shadow-brand-color) !important;
 }
 
-.deckTableRow.selectedRow {
+.deckTableRow.selectedRow,
+.globalRulesRow.selectedRow {
     background: var(--main-brand-color) !important;
     color: var(--text-brand-color) !important;
 }
 
 .table-hover tbody tr:hover td,
 .table-hover tbody tr:hover th {
-    color: var(--text-navbar-color);
+    color: var(--text-content-color);
     cursor: pointer;
 }
 
-.table-hover tbody tr.selectedRow:hover td,
-.table-hover tbody tr.selectedRow:hover th {
-    color: var(--text-brand-color);
-    cursor: pointer;
+/*        ------------------- Rules Tables ------------------          */
+
+.ruleSelectCell {
+    border-right: 1px solid var(--text-content-color);
 }
 
-.inputNumber {
-    width: 40px;
-    background-color: rgba(255, 255, 255, 0.4);
-    border: none;
-    color: var(--text-navbar-color);
-    border-radius: 3px;
-    outline: none;
-    padding-left: 3px;
-    cursor: pointer;
+/*        -------------------- Table Scroll -------------------         */
+
+table> ::-webkit-scrollbar {
+    width: 6px;
 }
 
-.inputNumber:focus {
-    box-shadow: 1px 1px;
-    cursor: text;
+table> ::-webkit-scrollbar-track {
+    padding-left: -12px;
+    background-color: rgba(255, 255, 255, 0.199);
+}
+
+table> ::-webkit-scrollbar-thumb {
+    background-color: var(--main-brand-color);
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);  */
+}
+
+table> ::-webkit-scrollbar-thumb:hover {
+    background: var(--hover-brand-color);
+}
+
+/*  ------------------------- Select Sizes ------------------------     */
+
+.globalRuleNameCell {
+    min-width: 195px;
 }
 
 .ruleSelect {
     width: 190px;
 }
 
-.triggerSelect {
-    width: 140px;
+.globalRuleSelect {
+    width: 171px;
 }
 
-.table td.fit,
-.table th.fit {
-    white-space: nowrap;
-    width: 1%;
+.triggerSelect {
+    width: 140px;
 }
 
 .targetSelect {
     width: 220px;
 }
 
-.my-custom-scrollbar {
-    position: relative;
-    height: 20%;
-    overflow: auto;
+.orderSelect {
+    width: 270px;
 }
 
-.table-wrapper-scroll-y {
-    display: block;
+.winConSelect {
+    width: 340px;
 }
 
-#cardTable tbody {
-    max-height: 600px;
-    overflow-y: auto;
-    width: 100%;
+.suitSelect {
+    width: 160px;
 }

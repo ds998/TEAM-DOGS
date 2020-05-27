@@ -3,10 +3,10 @@
     /*Izmenjene main-bg-color i main-brand-color*/
     --main-bg-color:#0B294B;
   
-    --main-brand-color: #f19f2b;
+    --main-brand-color: #F69D52;
   
     /* ex. Used for button borrders */
-    --border-brand-color: #f19f2b;
+    --border-brand-color: #F69D52;
   
     /* ex. Used for button box shadow when pressed */
     --shadow-brand-color: #f7bb61c7;
@@ -15,24 +15,28 @@
     --hover-brand-color: #f7B37D;
   
     --navbar-color: #284b63;
+
+    --content-color: #23222399;
   
     /* Color of text apearing on top of the brand color */
-    --text-brand-color: #f19f2b;
+    --text-brand-color: #F69D52;
   
     /* Color of text apearing on top of the navbar color */
     --text-navbar-color: white;
+
+    --text-content-color: #F69D52;
   
     /* Color of input boxes apearing on top of the navbar color */
-    --input-bg-navbar-color: rgba(255, 255, 255, 0.4);
+    --input-bg-navbar-color: #ffffff66;
   
     /* Color of input boxes apearing on top of the navbar color */
-    --input-bg-brand-color: rgba(255, 255, 255, 0.4);
+    --input-bg-brand-color: #ffffff66;
 
     /*---Dodata promenljive---*/
-    --default-text-color: rgba(255, 255, 255, 0.4);
+    --default-text-color: #ffffff66;
 
     /*Webkit-scrollbar-thumb*/
-    --thumb-color: rgb(5, 27, 53);
+    --thumb-color: #051b35;
     
     /*Linkovi i hover za dugme*/
     --text-highlight: #59ADE6;
