@@ -66,20 +66,18 @@ create table `GameMove`(
 	`idLobby` int not null,
 	`cardsThrown` varchar(100) not null,
 	`lastUserId` int,
-	`moveTime` int not null,
+	`moveTime` int not null
 );
 
-ALTER TABLE `GameMove` ADD CONSTRAINT `Relationship10` FOREIGN KEY (`idLobby`) REFERENCES `Lobby` (`idLobby``) ON DELETE NO ACTION ON UPDATE NO ACTION
+ALTER TABLE `GameMove` ADD CONSTRAINT `Relationship10` FOREIGN KEY (`idLobby`) REFERENCES `Lobby` (`idLobby`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
-ALTER TABLE `GameMove` ADD CONSTRAINT `Relationship12` FOREIGN KEY (`lastUserId`) REFERENCES `User` (`idUser``) ON DELETE NO ACTION ON UPDATE NO ACTION
-;
 
 create table `ChatMsg`(
 	`idLobby` int not null,
 	`username` varchar(30) not null,
 	`msg` varchar(50) not null,
-	`sequenceNum` int,
+	`sequenceNum` int
 );
 
 ALTER TABLE `ChatMsg` ADD CONSTRAINT `Relationship11` FOREIGN KEY (`idLobby`) REFERENCES `Lobby` (`idLobby`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -133,7 +131,7 @@ ALTER TABLE `Admins` ADD PRIMARY KEY (`idUser`)
 
 -- Create foreign keys (relationships) section -------------------------------------------------
 
-ALTER TABLE `User_Decks` ADD CONSTRAINT `User to Deck` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
+ALTER TABLE `User_Decks` ADD CONSTRAINT `Relationship57891` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
 ALTER TABLE `User_Decks` ADD CONSTRAINT `I` FOREIGN KEY (`idDeck`) REFERENCES `Deck` (`idDeck`) ON DELETE NO ACTION ON UPDATE NO ACTION
