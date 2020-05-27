@@ -23,7 +23,7 @@ class Controller extends BaseController
             $user=$userModel->findByMail(session_id());
         }
         
-        $this->session->set('user',$user);//ovde treba da se stavi identitet gosta
+        $this->session->set('user',$user[0]);//ovde treba da se stavi identitet gosta
         return $this->all_lobbies();
         //radi testiranja
     }

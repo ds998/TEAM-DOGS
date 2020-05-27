@@ -1,0 +1,112 @@
+/* Version: 1.0 Maja*/
+:root {
+    /*Izmenjene main-bg-color i main-brand-color*/
+    --main-bg-color: #0B294B;
+  
+    --main-brand-color: #f19f2b;
+  
+    /* ex. Used for button borrders */
+    --border-brand-color: #f19f2b;
+  
+    /* ex. Used for button box shadow when pressed */
+    --shadow-brand-color: #f7bb61c7;
+  
+    /* ex. Used for button hover */
+    --hover-brand-color: #f7B37D;
+  
+    --navbar-color: #284b63;
+  
+    /* Color of text apearing on top of the brand color */
+    --text-brand-color: #f19f2b;
+  
+    /* Color of text apearing on top of the navbar color */
+    --text-navbar-color: white;
+  
+    /* Color of input boxes apearing on top of the navbar color */
+    --input-bg-navbar-color: rgba(255, 255, 255, 0.4);
+  
+    /* Color of input boxes apearing on top of the navbar color */
+    --input-bg-brand-color: rgba(255, 255, 255, 0.4);
+
+    /*---Dodata promenljive---*/
+    --default-text-color: rgba(255, 255, 255, 0.4);
+
+    /*Webkit-scrollbar-thumb*/
+    --thumb-color: rgb(5, 27, 53);
+    
+    /*Linkovi i hover za dugme*/
+    --text-highlight: #59ADE6;
+}
+
+/* ----------------- BODY ----------------- */
+body {
+    background-color: var(--main-bg-color);
+    font-family: sans-serif;
+}
+
+/*Promenljen skrolbar*/
+body::-webkit-scrollbar {
+    width: 10px;
+}
+  
+body::-webkit-scrollbar-track {
+    background: transparent;
+}
+  
+body::-webkit-scrollbar-thumb {
+    background: var(--thumb-color);
+    border-radius: 10px;
+}
+
+/* ----------------- BUTTON ----------------- */
+.btn-primary {
+    background-color: transparent;
+    color: var(--main-brand-color);
+    border-color: var(--border-brand-color);
+    width: 200px;
+}
+  
+.btn-primary:hover {
+    background-color: transparent;
+    border-color: var(--text-highlight);
+    color: var(--text-highlight);
+}
+  
+.btn-primary:active,
+  .btn-primary:focus {
+    background-color: var(--hover-brand-color) !important;
+    border-color: var(--border-brand-color) !important;
+    box-shadow: 0 0 0 2px var(--shadow-brand-color) !important;
+}
+
+/* ----------------- FORM ----------------- */
+.form_class {
+    padding-top: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+input[type=text] {
+    background-color: transparent;
+    width: 300px;
+}
+  
+input[type=text]:active, input[type=text]:focus {
+    background-color: transparent;
+    color: var(--input-bg-brand-color);
+}
+  
+input[type=password] {
+    background-color: transparent;
+    width: 300px;
+}
+  
+input[type=password]:active, input[type=password]:focus {
+    background-color: transparent;
+    color: var(--input-bg-brand-color);
+}
+  
+.label_class {
+    color: var(--input-bg-brand-color);
+}

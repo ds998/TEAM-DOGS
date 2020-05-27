@@ -1,74 +1,41 @@
-:root {
-  --main-bg-color: #F3F6F5;
+/* Version: 2.0 Maja*/
+/* ----------------- NAVBAR ----------------- */
 
-  --main-brand-color: #F69D52;
-
-  /* ex. Used for button borrders */
-  --border-brand-color: #d18140;
-
-  /* ex. Used for button box shadow when pressed */
-  --shadow-brand-color: #f7bb61c7;
-
-  /* ex. Used for button hover */
-  --hover-brand-color: #f7B37D;
-
-  --navbar-color: #232223;
-
-  /* Color of text apearing on top of the brand color */
-  --text-brand-color: black;
-
-  /* Color of text apearing on top of the navbar color */
-  --text-navbar-color: white;
-
-  /* Color of input boxes apearing on top of the navbar color */
-  --input-bg-navbar-color: rgba(255, 255, 255, 0.4);
-
-  /* Color of input boxes apearing on top of the navbar color */
-  --input-bg-brand-color: rgba(255, 255, 255, 0.4);
-}
-
-body {
-  background-color: var(--main-bg-color);
-}
-
-/* ----------------- Navbar ----------------- */
-
+/*Promenjena pozadina navbara*/
 .bg-dark {
-  background-color: var(--navbar-color) !important;
+  background-color: var(--main-bg-color) !important;
 }
 
 .nav-item {
-  font-family: Calibri, Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 22px;
   padding-right: 3px;
   padding-left: 3px;
+}
+
+/*Izbrisana pozadina za aktivnu stranicu u navbaru; hover stil je kako treba da bude umesto toga, a hover da ostane po defaultu*/
+.nav-link:hover {
+   color: var(--main-brand-color) !important;
 }
 
 .top-buffer {
   margin-top: 20px;
 }
 
-.nav-item.active {
-  color: #000;
-  background: var(--main-brand-color);
-  border-radius: 6px;
-  padding-right: 5px;
-  padding-left: 5px
-}
-
 /* ----------------- LOGO ----------------- */
 
+/*Izmenjena boja logo-a; --main-brand-color*/
 #logoRuleImage {
   /* Get filter you need to aplly on this link:
-     https://codepen.io/sosuke/pen/Pjoqqp */
-  filter: invert(80%) sepia(78%) saturate(3407%) hue-rotate(323deg) brightness(103%) contrast(93%);
+  https://codepen.io/sosuke/pen/Pjoqqp */
+  filter: invert(67%) sepia(56%) saturate(1072%) hue-rotate(342deg) brightness(102%) contrast(89%);
 }
 
 #logoSetImage {
   /* Get filter you need to aplly on this link:
-     https://codepen.io/sosuke/pen/Pjoqqp */
+  https://codepen.io/sosuke/pen/Pjoqqp */
   margin-left: -6;
-  filter: invert(71%) sepia(13%) saturate(271%) hue-rotate(160deg) brightness(92%) contrast(86%);
+  filter: invert(67%) sepia(56%) saturate(1072%) hue-rotate(342deg) brightness(102%) contrast(89%);
 }
 
 .logoImage {

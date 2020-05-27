@@ -2,7 +2,7 @@
 
 <head>
     <title>Ruleset by team DOGS</title>
-    <!-- Version: 1.0 -->
+    <!-- Version: 2.0 Maja-->
     <meta charset="UTF-8">
     <link rel ="shortcut icon" type="image/png" href="assets/navbar/corgi_pixel.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -17,12 +17,13 @@
     </script>
 
     <link rel="stylesheet" href="<?php echo base_url('Navbar.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('Base.css') ?>"/>
 </head>
 
 <body>
     <div class="header">
-        <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
-            <a class="navbar-brand" href="https://www.youtube.com/watch?v=EWMPVn1kgIQ">
+        <nav class="navbar bg-dark navbar-dark">
+            <a class="navbar-brand" href="#">
                 <img id='logoRuleImage' src="<?php echo base_url('assets/navbar/rule_icon.png'); ?>" alt="Logo" class='logoImage'>
                 <img id='logoSetImage' src="<?php echo base_url('assets/navbar/set_icon.png'); ?>" alt="Logo" class='logoImage'>
             </a>
@@ -33,21 +34,21 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarElements">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="https://www.crazygames.com/game/uno-online">Play</a>
+                        <a class="nav-link" href="<?php echo base_url('Navbar.php'); ?>">Play</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo base_url('Login.html'); ?>">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url('Register.html'); ?>">Register</a>
+                        <a class="nav-link" href="#">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url('Decklab.html'); ?>">Make Ruleset</a>
+                        <a class="nav-link" href="#">Make Ruleset</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://www.google.com/search?q=Ruleset">Find Ruleset</a>
+                        <a class="nav-link" href="#">Find Ruleset</a>
                     </li>
                 </ul>
             </div>

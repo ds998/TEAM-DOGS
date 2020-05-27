@@ -12,39 +12,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+    <link rel="stylesheet" href="<?php echo base_url('Navbar.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('Base.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('deljenje_spilova.css'); ?>">
     </head>
     <body>
         <div class="container-fluid">
-            <div id="share_form">
-                <form name="shareform" class="form-inline d-flex justify-content-center md-form form-sm mt-0" action="<?= site_url("$controller/share_deck_submit/{$deck_id}") ?>">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                    <input class="form-control form-control-sm ml-3 w-75" name="share_textbox" type="text" placeholder="Name of the user">
-                    <?php 
+            <form name="shareform" action="<?= site_url("$controller/share_deck_submit/{$deck_id}") ?>">
+                <input type="text" class="form-control" name="share_textbox"  placeholder="Name of the user">
+                <?php 
                     if(!empty($message)) 
-                        echo "<font color='red'>".$message."</font><br?";
-                    ?>
-                    <div class="share_button"><input type="submit" name="share_submit" class="btn btn-primary" value="Share Request"></div>
-                </form>
-                
-            </div>
+                        echo "<div id='errors'>".$message."</div>";
+                ?>
+                <div class="share_button"><input type="submit" name="share_submit" class="btn btn-primary" value="Share Request"></div>
+            </form>
         </div>
-        <style>
-            .container-fluid{
-                height:50%;
-                text-align:center;
-                
-            }
-            #share_form{
-                width:30%;
-                margin-top:20%;
-                height:70%;
-                margin-left:auto;
-                margin-right:auto;
-            }
-            .share_button{
-                padding-top:20px;
-            }
-        </style>
-        
-        
     </body>

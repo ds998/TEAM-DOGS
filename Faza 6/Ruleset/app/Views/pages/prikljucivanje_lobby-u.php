@@ -12,6 +12,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+    <link rel="stylesheet" href="<?php echo base_url('Navbar.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('Base.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('prikljucivanje_lobby-u.css'); ?>" />
     </head>
     <body>
         <div class="container-fluid">
@@ -30,32 +33,35 @@
                       else echo 'Game: Waiting';
                    ?>
                 </p>
-                <table id="lobby_table" class="table table-striped table-bordered table-sm">
+                <table id="playerTable" class="table table-hover table-dark">
                     <thead>
-                    <tr><th class="th-sm">Current players</th></tr>
+                        <tr class="playerTableRowHeader">
+                                <th scope="col" class='numRulesCol'>Players</th>
+                        </tr>
                     </thead>
-                    <?php 
-                        $s=$lobby->PlayerList;
-                        $arr=$s->str_split(",");
-                        foreach($arr as $a){
-                            echo "<tr><td>".$a."<td><tr>";
-                        }
-                    ?>
-
+                    <tbody>
+                        <?php
+                            $s=$lobby->PlayerList;
+                            $arr=explode(",",$s);
+                            foreach($arr as $a){
+                                echo "<tr><td>".$a."</td></tr>";
+                            }
+                        ?>
+                    </tbody>
                 </table>
                 <p id="lobby_max">Maximum number of players: <?php echo $lobby->maxPlayers;?></p>
             </div>
             <div class="right col-sm-6 col-md-6 col-lg-6">
-                <div id="errors"><?php
-                   if(!empty($error)){
-                       echo "<p font='red'>".$error."</p>";
+                <?php  
+                   if(!empty($errors)){
+                       echo "<div id='errors'".$errors."</div>";
                    }
-                ?></div>
+                ?>
                 <div class="joinButton">
-                    <a class="btn btn-secondary" href="<?= site_url("$controller/joining_lobby/{$deck_id}") ?>" role="button">Join</a>
+                    <a class="btn btn-primary" href="<?= site_url("$controller/joining_lobby/{$lobby->idDeck}") ?>" role="button">Join</a>
                 </div>
                 <div class="exitButton">
-                    <a class="btn btn-secondary" href="<?= site_url("$controller/all_lobbies") ?>" role="button">Exit</a>
+                    <a class="btn btn-primary" href="<?= site_url("$controller/all_lobbies") ?>" role="button">Exit</a>
                 </div>
             </div>
         </div>
@@ -63,62 +69,5 @@
         
         
     </body>
-    <style>
-    table.dataTable thead .sorting:after,
-    table.dataTable thead .sorting:before,
-    table.dataTable thead .sorting_asc:after,
-    table.dataTable thead .sorting_asc:before,
-    table.dataTable thead .sorting_asc_disabled:after,
-    table.dataTable thead .sorting_asc_disabled:before,
-    table.dataTable thead .sorting_desc:after,
-    table.dataTable thead .sorting_desc:before,
-    table.dataTable thead .sorting_desc_disabled:after,
-    table.dataTable thead .sorting_desc_disabled:before {
-       bottom: .5em;
-    }
-    .left{
-        text-align:center;
-    }
-    .joinButton{
-        float:left;
-    }
-    .exitbutton{
-        float:right;
-    }
-    #lobby_table{
-        text-align:center;
-        margin-left:auto;
-        margin-right:auto;
-    }
-
-    </style>
-    <script>
-       $(document).ready(function(){
-           setInterval(getStuff,1000);
-
-           function getStuff(){
-               var id="<?php echo $lobby->idLobby; ?>";
-               id=JSON.stringify({'idLobby:':id});
-               $.ajax({
-                   contentType:'application/json;charset=utf-8',
-                   dataType:'text',
-                   type:'GET',
-                   url:'/help/UpdateLobbyPage',
-                   data:id,
-                   success:function(data){
-                        var arr=data.split(",");
-                        $("#lobby_in_game").html(arr[0]);
-                        var new_str="";
-                        for(int i=1;i<arr.length;i++){
-                            new_str+="<tr><td>"+arr[i]+"<td><tr>";
-                        }
-                        $("#lobby_table").html(new_str);
-
-                   }
-               });
-           }
-       }
-       );
-    </script>
 
 </html>

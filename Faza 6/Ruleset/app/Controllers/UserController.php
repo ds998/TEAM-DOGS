@@ -7,7 +7,7 @@ class UserController extends Controller
     public function index(){
         
         $userModel=new UserModel();
-        $user=$userModel->find(0);
+        $user=$userModel->find(1);
         $this->session->set('user',$user);
         $this->session->set('controller','UserController');
         //ovaj deo bi trebalo da stoji kod login,id odabran samo radi testiranja
