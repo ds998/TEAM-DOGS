@@ -1,5 +1,5 @@
 :root {
-  --main-bg-color: #F3F6F5;
+  --main-bg-color: #0B294B;
 
   --main-brand-color: #F69D52;
 
@@ -12,7 +12,9 @@
   /* ex. Used for button hover */
   --hover-brand-color: #f7B37D;
 
-  --navbar-color: #232223;
+  --navbar-color: transparent;
+
+  --content-color: #23222399;
 
   /* Color of text apearing on top of the brand color */
   --text-brand-color: black;
@@ -20,11 +22,13 @@
   /* Color of text apearing on top of the navbar color */
   --text-navbar-color: white;
 
-  /* Color of input boxes apearing on top of the navbar color */
-  --input-bg-navbar-color: rgba(255, 255, 255, 0.4);
+  --text-content-color:#F69D52;
 
   /* Color of input boxes apearing on top of the navbar color */
-  --input-bg-brand-color: rgba(255, 255, 255, 0.4);
+  --input-bg-navbar-color: #ffffff66;
+
+  /* Color of input boxes apearing on top of the navbar color */
+  --input-bg-brand-color: #ffffff66;
 }
 
 body {
