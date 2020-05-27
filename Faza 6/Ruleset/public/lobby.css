@@ -1,13 +1,5 @@
 .container-fluid{
     height:90%;
-}
-.left{
-    text-align:center;
-    display:flex;
-    flex-direction:column;
-
-}
-.right{
     text-align:center;
     display:flex;
     flex-direction:column;
@@ -54,17 +46,6 @@ tr{
 }
 #lobby_title{
     margin-top:20px;
-    color:var(--text-brand-color);
-}
-#lobby_status{
-    color:var(--text-brand-color);
-}
-#lobby_in_game{
-    color:var(--text-brand-color);
-    margin-bottom:100px;
-}
-#lobby_max{
-    margin-top:50px;
     color:var(--text-brand-color);
 }
 #errors{

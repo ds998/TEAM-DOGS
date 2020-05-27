@@ -45,9 +45,12 @@ class Controller extends BaseController
         $lobby_model=new LobbyModel();
         $lobby=$lobby_model->find($idLobby);
         if($lobby->status==1){
+            if($lobby->inGame==1){
+                return $this->join_lobby($idLobby,"There is a game in progress currently.");
+            }
             $x=$lobby->PlayerList;
-            $sx=$x->str_split(",");
-            if(count($sx)==$lobby->MaxPlayers){
+            $sx=explode(",",$x);
+            if(count($sx)==$lobby->maxPlayers){
                 return $this->join_lobby($idLobby,"The lobby is filled out.");
             }
             else{
@@ -66,7 +69,7 @@ class Controller extends BaseController
                     'status'=>$lobby->status,
                     'inGame'=>$lobby->inGame
                 ];
-                $lobby_model->update($idlobby,$data);
+                $lobby_model->update($idLobby,$data);
                 $controller=$this->session->get('controller');
                 return redirect()->to(site_url("$controller/lobby/{$idLobby}"));
 
@@ -75,6 +78,12 @@ class Controller extends BaseController
         else{
             return redirect()->to(site_url("$controller/lozinka/{$idLobby}"));
         }
+    }
+
+    public function lobby($idLobby,$error=null){
+        $lobby_model=new LobbyModel();
+        $lobby=$lobby_model->find($idLobby);
+        return $this->show('lobby',['lobby'=>$lobby,'controller'=>$this->session->get('controller'),'error'=>$error]);
     }
 
 	//--------------------------------------------------------------------

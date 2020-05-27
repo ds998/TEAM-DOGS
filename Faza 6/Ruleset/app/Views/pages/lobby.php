@@ -14,25 +14,11 @@
     </script>
     <link rel="stylesheet" href="<?php echo base_url('Navbar.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url('Base.css'); ?>" />
-    <link rel="stylesheet" href="<?php echo base_url('prikljucivanje_lobby-u.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('lobby.css'); ?>" />
     </head>
     <body>
         <div class="container-fluid">
-        <div class="row">
-            <div class="left col-sm-6 col-md-6 col-lg-6">
                 <h3 id="lobby_title"><?php echo $lobby->lobbyName; ?></h3>
-                <p id="lobby_status">
-                   <?php 
-                      if($lobby->status==1) echo 'Public'; 
-                      else echo 'Private';
-                   ?>
-                </p>
-                <p id="lobby_in_game">
-                   <?php 
-                      if($lobby->inGame==1) echo 'Game: In progress'; 
-                      else echo 'Game: Waiting';
-                   ?>
-                </p>
                 <table id="playerTable" class="table table-hover table-dark">
                     <thead>
                         <tr class="playerTableRowHeader">
@@ -49,25 +35,18 @@
                         ?>
                     </tbody>
                 </table>
-                <p id="lobby_max">Maximum number of players: <?php echo $lobby->maxPlayers;?></p>
-            </div>
-            <div class="right col-sm-6 col-md-6 col-lg-6">
-                <div class="deckButton">
-                    <a class="btn btn-primary" href="" role="button">Examine Deck</a>
-                </div>
-                <?php 
-                   if(!empty($error)){
+                <?php  
+                   if($error!=null){
                        echo "<div id='errors'".$error."</div>";
                    }
+                   $user=$_SESSION["user"];
+                   if($user->idUser==$lobby->idUser){
+                       echo "<div class='gameButton'><a class='btn btn-primary' href=''>Start The Game</a></div>";
+                   }
                 ?>
-                <div class="joinButton">
-                    <a class="btn btn-primary" href="<?= site_url("$controller/joining_lobby/{$lobby->idLobby}") ?>" role="button">Join</a>
-                </div>
                 <div class="exitButton">
                     <a class="btn btn-primary" href="<?= site_url("$controller/all_lobbies") ?>" role="button">Exit</a>
                 </div>
-            </div>
-        </div>
         </div>
         
         
