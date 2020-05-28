@@ -14,7 +14,7 @@
 
   --navbar-color: transparent;
 
-  --content-color: #23222399;
+  --content-color: #23222378;
 
   /* Color of text apearing on top of the brand color */
   --text-brand-color: black;
@@ -23,6 +23,8 @@
   --text-navbar-color: white;
 
   --text-content-color:#F69D52;
+  
+  --default-text-color: #ffffff66;
 
   /* Color of input boxes apearing on top of the navbar color */
   --input-bg-navbar-color: #ffffff66;

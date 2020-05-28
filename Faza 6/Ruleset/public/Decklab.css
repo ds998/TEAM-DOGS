@@ -102,10 +102,6 @@ tbody {
     overflow-x: hidden;
 }
 
-.table-wrapper-scroll-y {
-    display: block;
-}
-
 #cardTable tbody {
     max-height: 300px;
     overflow-y: auto;

@@ -47,7 +47,7 @@
                         <a class="nav-link" href="decklab.html">Make Ruleset</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://www.google.com/search?q=Ruleset">Find Ruleset</a>
+                        <a class="nav-link" href="deckList.html">Find Ruleset</a>
                     </li>
                 </ul>
             </div>
