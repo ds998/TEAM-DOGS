@@ -41,6 +41,7 @@ class BaseController extends Controller
 		//--------------------------------------------------------------------
 		// E.g.:
 		$this->session = session();
+		helper('url');
 	}
 
 }

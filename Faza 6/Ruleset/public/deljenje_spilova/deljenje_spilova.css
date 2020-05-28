@@ -1,0 +1,19 @@
+.container-fluid{
+    height:80%;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    
+}
+.share_button{
+    padding-top:20px;
+}
+#errors{
+    padding-top:5px;
+    color:#e06377;
+}
+.form-control{
+    margin-left:auto;
+    margin-right:auto;
+}
