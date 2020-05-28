@@ -14,23 +14,30 @@
     /* ex. Used for button hover */
     --hover-brand-color: #f7B37D;
   
-    --navbar-color: #284b63;
+    --navbar-color: transparent;
 
-    --content-color: #23222399;
+    --table-color: #23222378;
   
     /* Color of text apearing on top of the brand color */
-    --text-brand-color: #F69D52;
+    --text-brand-color: black;
   
     /* Color of text apearing on top of the navbar color */
     --text-navbar-color: white;
 
-    --text-content-color: #F69D52;
+    --text-table-color: #F69D52;
+
+    /* Button bacground color */
+    --btn-bg: transparent;
+    --btn-bg-hover: transparent;
+    --btn-text: #F69D52;
+    --btn-text-hover: #59ADE6;
+    --btn-border-hover: #59ADE6;
   
     /* Color of input boxes apearing on top of the navbar color */
-    --input-bg-navbar-color: #ffffff66;
+    --input-text-color: #ffffff66;
   
     /* Color of input boxes apearing on top of the navbar color */
-    --input-bg-brand-color: #ffffff66;
+    --input-bg-color: transparent;
 
     /*---Dodata promenljive---*/
     --default-text-color: #ffffff66;
@@ -64,16 +71,16 @@ body::-webkit-scrollbar-thumb {
 
 /* ----------------- BUTTON ----------------- */
 .btn-primary {
-    background-color: transparent;
-    color: var(--main-brand-color);
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
     border-color: var(--border-brand-color);
     width: 200px;
 }
   
 .btn-primary:hover {
-    background-color: transparent;
-    border-color: var(--text-highlight);
-    color: var(--text-highlight);
+    background-color: var(--btn-bg-hover);
+    border-color: var(--btn-border-hover);
+    color: var(--btn-text-hover);
 }
   
 .btn-primary:active,
@@ -90,27 +97,19 @@ body::-webkit-scrollbar-thumb {
     justify-content: center;
     align-items: center;
 }
+
+.customInput {
+    background-color: var(--input-bg-color);
+}
+.customInput:active, .customInput:focus {
+    background-color: var(--input-bg-color);
+    color: var(--input-text-color);
+}
   
-input[type=text] {
-    background-color: transparent;
+.mediumInput {
     width: 300px;
-}
-  
-input[type=text]:active, input[type=text]:focus {
-    background-color: transparent;
-    color: var(--input-bg-brand-color);
-}
-  
-input[type=password] {
-    background-color: transparent;
-    width: 300px;
-}
-  
-input[type=password]:active, input[type=password]:focus {
-    background-color: transparent;
-    color: var(--input-bg-brand-color);
 }
   
 .label_class {
-    color: var(--input-bg-brand-color);
+    color: var(--input-text-color);
 }

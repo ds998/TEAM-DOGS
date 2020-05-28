@@ -1,0 +1,28 @@
+
+label {
+    color: var(--default-text-color);
+}
+input[type='search'] {
+    background-color: var(--input-bg-color);
+}
+input[type='search']:active, input[type='search']:focus {
+    background-color: var(--input-bg-color);
+    color: var(--input-text-color);
+}
+.dataTables_info {
+    color: var(--default-text-color);
+}
+
+.table {
+    background-color: var(--table-color);
+    color: var(--text-table-color);
+    cursor: default;
+    border-radius: 4px;
+    border-color: var(--text-table-color);
+    border: 2px solid var(--text-table-color);
+}
+
+th,
+td {
+    border-color: var(--text-table-color) !important;
+}

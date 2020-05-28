@@ -104,7 +104,7 @@ label {
 
 th,
 td {
-    border-color: var(--text-content-color) !important;
+    border-color: var(--text-table-color) !important;
 }
 
 table> ::-webkit-scrollbar {
@@ -125,12 +125,12 @@ table> ::-webkit-scrollbar-thumb:hover {
 }
 
 .table {
-    background-color: var(--content-color);
-    color: var(--text-content-color);
+    background-color: var(--table-color);
+    color: var(--text-table-color);
     cursor: default;
     border-radius: 4px;
-    border-color: var(--text-content-color);
-    border: 2px solid var(--text-content-color);
+    border-color: var(--text-table-color);
+    border: 2px solid var(--text-table-color);
 }
 
 table {

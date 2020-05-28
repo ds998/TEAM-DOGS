@@ -1,0 +1,42 @@
+/* Version: 2.1*/
+/* ----------------- Navbar ----------------- */
+
+.bg-dark {
+  background-color: var(--navbar-color) !important;
+}
+
+.nav-item {
+  font-family: Calibri, Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  padding-right: 3px;
+  padding-left: 3px;
+}
+
+.top-buffer {
+  margin-top: 20px;
+}
+
+.nav-link:hover {
+  color: var(--main-brand-color) !important;
+}
+
+/* ----------------- LOGO ----------------- */
+
+#logoRuleImage {
+  /* Get filter you need to aplly on this link:
+     https://codepen.io/sosuke/pen/Pjoqqp */
+  filter: invert(80%) sepia(78%) saturate(3407%) hue-rotate(323deg) brightness(103%) contrast(93%);
+}
+
+#logoSetImage {
+  /* Get filter you need to aplly on this link:
+     https://codepen.io/sosuke/pen/Pjoqqp */
+  margin-left: -6;
+  filter: invert(80%) sepia(78%) saturate(3407%) hue-rotate(323deg) brightness(103%) contrast(93%);
+  /* Ja i dalje predlazem ovu boju ispod da budemo sareno kao korgi */
+  /* filter: invert(88%) sepia(38%) saturate(5%) hue-rotate(348deg) brightness(103%) contrast(97%); */ 
+}
+
+.logoImage {
+  height: 36px;
+}

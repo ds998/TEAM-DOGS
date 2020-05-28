@@ -1,7 +1,7 @@
 .cardName {
     background-color: transparent;
     border: none;
-    color: var(--text-content-color);
+    color: var(--text-table-color);
     border-radius: 3px;
     outline: none;
     padding-left: 3px;
@@ -18,7 +18,7 @@
     width: 40px;
     background-color: rgba(255, 255, 255, 0.4);
     border: none;
-    color: var(--text-content-color);
+    color: var(--text-table-color);
     border-radius: 3px;
     outline: none;
     padding-left: 3px;
@@ -77,12 +77,12 @@
 /*  ---------------------------- Tables ----------------------------   */
 
 .table {
-    background-color: var(--content-color);
-    color: var(--text-content-color);
+    background-color: var(--table-color);
+    color: var(--text-table-color);
     cursor: default;
     border-radius: 4px;
-    border-color: var(--text-content-color);
-    border: 2px solid var(--text-content-color);
+    border-color: var(--text-table-color);
+    border: 2px solid var(--text-table-color);
 }
 
 table {
@@ -148,7 +148,7 @@ tr {
 
 th,
 td {
-    border-color: var(--text-content-color) !important;
+    border-color: var(--text-table-color) !important;
 }
 
 .table td.fit,
@@ -191,14 +191,14 @@ td {
 
 .table-hover tbody tr:hover td,
 .table-hover tbody tr:hover th {
-    color: var(--text-content-color);
+    color: var(--text-table-color);
     cursor: pointer;
 }
 
 /*        ------------------- Rules Tables ------------------          */
 
 .ruleSelectCell {
-    border-right: 1px solid var(--text-content-color);
+    border-right: 1px solid var(--text-table-color);
 }
 
 /*        -------------------- Table Scroll -------------------         */

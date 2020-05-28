@@ -3,7 +3,7 @@
 <head>
     <title>Ruleset - Decklab</title>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" type="image/png" href="assets/navbar/corgi_pixel.png">
+    <link rel="shortcut icon" type="image/png" href="../assets/navbar/corgi_pixel.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
@@ -15,11 +15,12 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
 
-    <link rel="stylesheet" href="Navbar.css" />
+    <link rel="stylesheet" href="../base/Base.css"/>
+    <link rel="stylesheet" href="../base/Navbar.css"/>
     <link rel="stylesheet" href="Decklab.css" />
-    <link rel="stylesheet" href="Login.css" />
-    <script src="base.js"></script>
-    <script src="Rule.js"></script>
+    <link rel="stylesheet" href="../login/Login.css" />
+    <script src="../base/Base.js"></script>
+    <script src="../game/Rule.js"></script>
     <script src="Decklab_globals.js"></script>
     <script src="Decklab_rules.js"></script>
     <script src="decklab.js"></script>
@@ -27,11 +28,10 @@
 
 <body class="">
     <div class="header">
-        <nav class="navbar bg-dark navbar-dark">
-            <!-- navbar-expand-lg -->
-            <a class="navbar-brand" href="https://www.youtube.com/watch?v=EWMPVn1kgIQ">
-                <img id='logoRuleImage' src="assets/navbar/rule_icon.png" alt="Logo" class='logoImage'>
-                <img id='logoSetImage' src="assets/navbar/set_icon.png" alt="Logo" class='logoImage'>
+        <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
+            <a class="navbar-brand" href="../main/main.html">
+                <img id='logoRuleImage' src="../assets/navbar/rule_icon.png" alt="Logo" class='logoImage'>
+                <img id='logoSetImage' src="../assets/navbar/set_icon.png" alt="Logo" class='logoImage'>
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarElements"
@@ -41,20 +41,17 @@
 
             <div class="collapse navbar-collapse" id="navbarElements">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="game.html">Play</a>
-                    </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="decklab.html">Make Ruleset</a>
+                        <a class="nav-link" href="../decklab/decklab.html">Create Ruleset</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="deckList.html">Find Ruleset</a>
+                        <a class="nav-link" href="../deck_list/deckList.html">Find Ruleset</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="login.html">Login</a>
+                        <a class="nav-link" href="../login/login.html">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="register.html">Register</a>
+                        <a class="nav-link" href="../register/register.html">Register</a>
                     </li>
                 </ul>
             </div>
@@ -68,13 +65,13 @@
                 <table class="table table-dark">
                     <tr class="topRow d-flex justify-content-between">
                         <th class="d-flex flex-nowrap align-items-center"><input type="checkbox" checked>
-                            <img src="assets/decklab/clubs.png" class="suit blackSuit"></th>
+                            <img src="../assets/decklab/clubs.png" class="suit blackSuit"></th>
                         <th class="d-flex flex-nowrap align-items-center"><input type="checkbox" checked>
-                            <img src="assets/decklab/diamonds.png" class="suit redSuit"></th>
+                            <img src="../assets/decklab/diamonds.png" class="suit redSuit"></th>
                         <th class="d-flex flex-nowrap align-items-center"><input type="checkbox" checked>
-                            <img src="assets/decklab/spades.png" class="suit blackSuit"></th>
+                            <img src="../assets/decklab/spades.png" class="suit blackSuit"></th>
                         <th class="d-flex flex-nowrap align-items-center"><input type="checkbox" checked>
-                            <img src="assets/decklab/hearts.png" class="suit redSuit"></th>
+                            <img src="../assets/decklab/hearts.png" class="suit redSuit"></th>
                     </tr>
                 </table>
 
@@ -112,13 +109,13 @@
                                     <input type="radio" name="ruleRadio" checked value="all">
                                     <div class="mr-1">All</div>
                                     <input type="radio" name="ruleRadio" value="Clubs"><img
-                                        src="assets/decklab/clubs.png" class="suit blackSuit mr-1">
+                                        src="../assets/decklab/clubs.png" class="suit blackSuit mr-1">
                                     <input type="radio" name="ruleRadio" value="Diamonds"><img
-                                        src="assets/decklab/diamonds.png" class="suit redSuit mr-1">
+                                        src="../assets/decklab/diamonds.png" class="suit redSuit mr-1">
                                     <input type="radio" name="ruleRadio" value="Spades"><img
-                                        src="assets/decklab/spades.png" class="suit blackSuit mr-1">
+                                        src="../assets/decklab/spades.png" class="suit blackSuit mr-1">
                                     <input type="radio" name="ruleRadio" value="Hearts"><img
-                                        src="assets/decklab/hearts.png" class="suit redSuit">
+                                        src="../assets/decklab/hearts.png" class="suit redSuit">
                                 </div>
                             </th>
 
@@ -131,12 +128,12 @@
                     </tbody>
                 </table>
 
-                <textarea id="deckDecription" class="form-control" rows="3" style="resize: none;" maxlength="250"
+                <textarea id="deckDecription" class="form-control customInput" rows="3" style="resize: none;" maxlength="250"
                     placeholder="Enter a brief description of the ruleset..."></textarea>
                 <br>
                 <div class="row">
                     <div class="col-sm-6 col-lg-8" style="padding-bottom: 2px;"> <input id="deckName" type="text"
-                            class="form-control" placeholder="Enter Ruleset Name"> </div>
+                            class="form-control customInput" placeholder="Enter Ruleset Name"> </div>
                     <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
                             class="btn btn-primary flex-fill">Save</button> </div>
                     <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
