@@ -63,7 +63,7 @@ class Controller extends BaseController
                 $data=[
                     'idDeck'=>$lobby->idDeck,
                     'idUser'=>$lobby->idUser,
-                    'maxplayers'=>$lobby->maxPlayers,
+                    'maxPlayers'=>$lobby->maxPlayers,
                     'PlayerList'=>$x,
                     'lobbyName'=>$lobby->lobbyName,
                     'password'=>$lobby->password,
@@ -90,6 +90,51 @@ class Controller extends BaseController
         $lobby_model=new LobbyModel();
         $lobby=$lobby_model->find($idLobby);
         return $this->show('lobby',['lobby'=>$lobby,'controller'=>$this->session->get('controller'),'error'=>$error]);
+    }
+    public function update_lobbies(){
+        $lobbyModel=new LobbyModel();
+        return json_encode($lobbyModel->findAll());
+    }
+    public function update_lobby($idLobby){
+        $lobbyModel=new LobbyModel();
+        $lobby=$lobbyModel->find($idLobby);
+        if($lobby==null){
+            return json_encode("Nothing!");
+        }
+        else return json_encode($lobby->PlayerList);
+    }
+    public function exit_lobby($idLobby){
+        $lobbyModel=new LobbyModel();
+        $user=$this->session->get('user');
+        $lobby=$lobbyModel->find($idLobby);
+        if($user->idUser==$lobby->idUser){
+            $lobbyModel->delete($idLobby);
+        }
+        else{
+            $string=$lobby->PlayerList;
+            $players=explode(",",$string);
+            $new_str="";
+            foreach($players as $player){
+                if($user->username!=$player) {
+                    if($new_str!="") $new_str=$new_str.",";
+                    $new_str=$new_str.$player;
+                }
+            }
+            $data=[
+                'idDeck'=>$lobby->idDeck,
+                'idUser'=>$lobby->idUser,
+                'maxPlayers'=>$lobby->maxPlayers,
+                'PlayerList'=>$new_str,
+                'lobbyName'=>$lobby->lobbyName,
+                'password'=>$lobby->password,
+                'status'=>$lobby->status,
+                'inGame'=>$lobby->inGame
+            ];
+            $lobbyModel->update($idLobby,$data);
+
+        }
+        $controller=$this->session->get('controller');
+        return redirect()->to(site_url("$controller/all_lobbies"));
     }
 
 	//--------------------------------------------------------------------

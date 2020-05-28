@@ -7,11 +7,12 @@ class UserController extends Controller
     public function index(){
         
         $userModel=new UserModel();
-        $user=$userModel->find(1);
+        $user=$userModel->find(5);
         $this->session->set('user',$user);
         $this->session->set('controller','UserController');
         //ovaj deo bi trebalo da stoji kod login,id odabran samo radi testiranja
-        return $this->share_a_deck($this->session->get('controller'),0);
+        return $this->all_lobbies();
+        //return $this->share_a_deck($this->session->get('controller'),0);
         //za testiranje
     }
 

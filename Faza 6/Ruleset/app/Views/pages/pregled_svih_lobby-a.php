@@ -39,7 +39,39 @@
         </div>
         
     </body>
-    <script type="text/javascript" src="<?php echo base_url('pregled_svih_lobby-a.js'); ?>"></script>
+    <script>
+        var myVar=setInterval(update_lobbies,10000);
+        function update_lobbies(){
+            myTest().then((data)=>{
+                var controller="<?php echo $controller; ?>";
+                var s="";
+                for(var i=0;i<data.length;i++){
+                    s+="<div class='lobby_button' id='"+data[i]["lobbyName"]+"'><a class='btn btn-primary' href='localhost:8080/"+controller+"/join_lobby/"+data[i]["idLobby"]+"'>"+data[i]["lobbyName"]+"</a></div>";
+                }
+                document.getElementsByClassName("right")[0].innerHTML=s;
+            });
+        }
+        const myTest = async () => {
+            var controller="<?php echo $controller; ?>";
+            var response = await fetch("http://localhost:8080/"+controller+"/update_lobbies", {
+                headers:{'Accept': 'application/json'},
+                method: "GET",
+                mode: "cors"
+            });
+            var returnData = await response.json();
+            return returnData;
+        }
+        function dosearch(){
+            var sf=document.searchform;
+            var submitted=sf.search_textbox.value;
+            var item=document.getElementById(submitted);
+            if(item!=null) {
+                location.href="#";
+                location.href="#"+submitted;
+            }
+            return;
+        }
+        </script>
 
 </html>
 

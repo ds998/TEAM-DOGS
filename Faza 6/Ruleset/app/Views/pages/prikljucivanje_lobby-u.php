@@ -69,6 +69,38 @@
             </div>
         </div>
         </div>
+        <script>
+            setInterval(update_lobby,10000);
+
+            function update_lobby(){
+                var controller="<?php echo $controller; ?>";
+                myTest().then((data)=>{
+                    if(data=="Nothing!"){
+                        location.href="http://localhost:8080/"+controller+"/all_lobbies";
+                    }
+                    else{
+                        var players=data.split(",");
+                        var new_s="";
+                        for(var i=0;i<players.length;i++){
+                            new_s+="<tr><td>"+players[i]+"</td></tr>";
+                        }
+                        console.log(new_s);
+                        document.getElementById("playerTable").getElementsByTagName("tbody")[0].innerHTML=new_s;
+                    }
+                });
+            }
+            const myTest = async () => {
+                var controller="<?php echo $controller; ?>";
+                var idLobby="<?php echo $lobby->idLobby; ?>";
+                var response = await fetch("http://localhost:8080/"+controller+"/update_lobby/"+idLobby, {
+                    headers:{'Accept': 'application/json'},
+                    method: "GET",
+                    mode: "cors"
+                });
+                var returnData = await response.json();
+                return returnData;
+            }
+        </script>
     </body>
 
 </html>
