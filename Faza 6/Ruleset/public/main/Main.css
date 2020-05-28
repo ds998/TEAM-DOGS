@@ -22,8 +22,8 @@
 }
 
 @keyframes rock {
-    25% {transform: rotate(-20deg);}
-    75% {transform: rotate(20deg);}
+    25% {transform: rotate(-12deg);}
+    75% {transform: rotate(12deg);}
 }
 
 #main_id {
@@ -52,7 +52,7 @@
 }
 
 .hd_image:hover {
-    animation: rock 1s infinite;
+    animation: rock 1.2s infinite;
     animation-timing-function: linear;
 }
 .welcome_popup {

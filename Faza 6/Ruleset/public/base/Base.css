@@ -1,7 +1,7 @@
 /* Version: 1.0 */
 :root {
     /*Izmenjene main-bg-color i main-brand-color*/
-    --main-bg-color:#0B294B;
+    --main-bg-color: #004e64;
   
     --main-brand-color: #F69D52;
   
@@ -43,7 +43,7 @@
     --default-text-color: #ffffff66;
 
     /*Webkit-scrollbar-thumb*/
-    --thumb-color: #051b35;
+    --thumb-color: #033b4b;
     
     /*Linkovi i hover za dugme*/
     --text-highlight: #59ADE6;
