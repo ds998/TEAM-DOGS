@@ -7,7 +7,7 @@ class UserModel extends Model
         protected $table      = 'user';
         protected $primaryKey = 'idUser';
         protected $returnType = 'object';
-        protected $allowedFields = ['username','email','passwordHash','salt','isGuest'];
+        protected $allowedFields = ['username','email','passwordHash','isGuest'];
 
         public function findName($username){
                 return $this->where('username',$username)->findAll();
@@ -24,7 +24,6 @@ class UserModel extends Model
                         'username' => $username,
                         'email'=> $email,
                         'passwordHash'=>$passwordHash,
-                        'salt'=>'yes',
                         'isGuest'=>0
                 ];
                 $this->insert($data);
