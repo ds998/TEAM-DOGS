@@ -17,7 +17,9 @@ class UserModel extends Model
                 return $this->where('email',$email)->findAll();
         }
 
-        public function register($username, $email, $passwordHash, $salt){
+        public function register($username, $email, $passwordHash){
+                if($this->where('username',$username)!=null)return -2;
+                if($this->where('email',$email)!=null)return -1;
                 $data=[
                         'username' => $username,
                         'email'=> $email,
@@ -26,5 +28,6 @@ class UserModel extends Model
                         'isGuest'=>0
                 ];
                 $this->insert($data);
+                return 1;
         }
 }

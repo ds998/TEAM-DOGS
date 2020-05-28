@@ -20,6 +20,20 @@ class UserController extends Controller
         return $this->show('deljenje_spilova',['controller'=>$controller,'deck_id'=>$deck_id,'message'=>$message]);
     }
 
+    public function register(){
+        if($this->request->getVar('username'))
+		{
+            $username=$this->request->getVar('username');
+            $email=$this->request->getVar('email');
+            $password=$this->request->getVar('password');
+            $userModel = new UserModel();
+            $response = $userModel->register($username, $email, password_hash($password, PASSWORD_BCRYPT));
+            if($response == -1 || $response == -2)return $this->show('register',[]);
+            return redirect()->to(site_url("controller/index"));
+        }
+        else return $this->show('register',[]);
+    }
+
     public function share_deck_submit($deck_id){
         if(!$this->validate(['share_textbox'=>'required'])){
             return $this->share_a_deck($this->session->get('controller'),$deck_id,'Textbox is empty.&nbsp;&nbsp;&nbsp;');

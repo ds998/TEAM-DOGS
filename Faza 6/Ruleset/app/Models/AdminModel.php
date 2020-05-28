@@ -9,21 +9,15 @@ class AdminModel extends Model
         protected $returnType = 'object';
         protected $allowedFields = ['idUser'];
 
-        public function addAdmin($idUser, $currentUser){
-
-                if(!checkIfAdmin($currentUser))return -1;
-
-                $sameAdmin = $this->where('idUser',$idUser)->findAll();
-
-                if($sameAdmin == null)return -1;
+        public function registerAdmin($idUser, $currentUser){
 
                 $data = array(
                         'idUser' => $idUser
                 );
-                return $this->db->insert($table,$data);
+                $this->insert($data);
         }
 
         public function checkIfAdmin($idUser){
-                return null;
+                return 1;
         }
 }

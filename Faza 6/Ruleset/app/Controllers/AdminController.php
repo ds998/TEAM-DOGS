@@ -10,15 +10,17 @@ class AdminController extends Controller
 
 	//--------------------------------------------------------------------
 
-    public function addAdmin($deck_id){
 
-        $adminModel = new AdminModel();
 
-        $response = $adminModel->addAdmin($newAdmin_id);
-
-        if($response == -1)return -1;
-
-        return redirect()->to(site_url('Controller')); 
+    public function registerAdmin(){
+        if($this->request->getVar('userID'))
+		{
+            $userID=$this->request->getVar('userID');
+            $adminModel = new AdminModel();
+            $adminModel->registerAdmin($userID, 0);
+            return redirect()->to(site_url("controller/index"));
+        }
+        else return $this->show('registeradmin',[]);
     }
 
     public function viewHDecks(){

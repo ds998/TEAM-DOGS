@@ -9,7 +9,6 @@ CREATE TABLE `User`
   `username` Varchar(15) NOT NULL,
   `email` Varchar(50) NOT NULL,
   `passwordHash` Varchar(65) NOT NULL,
-  `salt` Varchar(10) NOT NULL,
   `isGuest` int,
    PRIMARY KEY(`idUser`)
 )
@@ -46,7 +45,7 @@ CREATE TABLE `Deck`
   `idDeck` Int NOT NULL AUTO_INCREMENT,
   `idUser` Int NOT NULL,
   `deckName` Varchar(30) not null,
-  `deckDescription` Varchar(140),
+  `deckDescription` Varchar(280),
   `cardRules` Varchar(210) NOT NULL,
   `Cards` Varchar(120) NOT NULL,
   `globalRules` Varchar(20) NOT NULL,
