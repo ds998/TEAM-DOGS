@@ -15,7 +15,6 @@ class Controller extends BaseController
             'username' =>session_id(),
             'email'=> session_id(),
             'passwordHash'=>'who cares',
-            'salt'=>'yes',
             'isGuest'=>1
         ];
         $user=$userModel->findByMail(session_id());
@@ -132,6 +131,101 @@ class Controller extends BaseController
         return redirect()->to(site_url("$controller/all_lobbies"));
     }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+    
+    //-------------GAME RELATED-------------------------------------------
+    public function draw( $idUserThrown, $idUserAffected, $numOfCards, $idSource, $cardThrown, $idLobby)
+    {
+        // update poteza koji trenutno $idUserThrown igra da bi svi znali sta se radi u igri (ali ne vide koje se karte vuku itd)
+        $update = "draw";
+        $update = $update.",".$idUserThrown.",".$idUserAffected.",".$numOfCards.",".$idSource.",".$cardThrown.";";
+        (new GameUpdateModel)->addToUpdate($idLobby, $update);
+
+        if($idUserThrown == $idUserAffected) // true znaci da korisnik nema cime da preklopi draw pa sam sebi kaze da mora da vuce
+        { 
+            $userHandModel = new UserHandModel();
+            if($idSource == 0) // znaci da se vuce iz spila
+            {
+                $LobbyDeckModel = new LobbyDeckModel();
+                $cards = $LobbyDeckModel->takeXCards($idLobby, $numOfCards);
+                $userHandModel->addToUserHand($idUserAffected, $cards);
+                return $cards;
+            }
+            else if ($idUserThrown == $idSource) return null; // greska ne mozes da vuces iz svog spila
+            else // vuce od drugog korisnika
+            {
+                $cards = $userHandModel->takeFromUserHand($idSource, $numOfCards); // uzmemo karte iz ruke $idSource
+                $userHandModel->addToUserHand($idUserAffected, $cards); // dodamo $idUserAffected
+                return $cards;
+            }
+
+        }
+        else return null;
+    
+    }
+
+    public function skip($idUser, $idLobby)
+    {
+        $update = "skip";
+        $update = $update.",".$idUser.";";
+        (new GameUpdateModel)->addToUpdate($idLobby, $update);  
+        // ideja je da ce korisnik koji treba da bude preskocen da vidi da treba da bude preskocen 
+        // i kada dodje red na njega on samo moze da zavrsi potez
+    }
+
+    public function viewCard($idUserThrown, $idSource, $num, $idLobby)
+    {
+        $update = "skip";
+        $update = $update.",".$idUser.";";
+        (new GameUpdateModel)->addToUpdate($idLobby, $update); // klasican update
+
+        $userHandModel = new UserHandModel();
+        $cardsToView = $userHandModel->getXCards($idSource, $num);
+        return $cardsToView;
+    }
+
+    public function update($idLobby)
+    {
+        return (new GameUpdateModel())->getUpdate($idLobby);
+    }
+
+    public function myHand($idUser)
+    {
+        return (new UserHandModel())->getUserHand($idUser);
+    }
+
+    public function endTurn($idLobby)
+    {
+        $update = "endTurn,".$idUser.";";
+        (new GameUpdateModel)->addToUpdate($idLobby, $update);
+    }
+
+    public function claimTurn($idUser, $idLobby, $cardThrown)
+    {
+        $gum = new GameUpdateModel();
+        $update = $gum->getUpdate($idLobby);
+        $pos = strpos($update, "endTurn");
+        if($pos === false) return false;
+        else 
+        {
+            $update = "claimed,".$idUser.";";
+            $gum->newUserUpdate($idUser, $update, $idLobby);
+        }
+        return true;
+    }
+
+    public function changeGlobalRule( $rule, $newValue, $idLobby)
+    {
+        $update = "cgr,".$rule.",".$newValue.";";
+        (new GameUpdateModel)->addToUpdate($idLobby, $update);
+    }
+
+    public function throw($idUser, $card, $idLobby)
+    {
+        $userHandModel = new UserHandModel();
+        $userHandModel->takeSpecificCard($idUserThrown, $card);
+        $update = "throw,".$idUser.",".$card.";";
+        (new GameUpdateModel)->addToUpdate($idLobby, $update);
+    }
 
 }

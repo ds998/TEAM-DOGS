@@ -8,7 +8,7 @@ CREATE TABLE `User`
   `idUser` Int NOT NULL AUTO_INCREMENT,
   `username` Varchar(15) NOT NULL,
   `email` Varchar(25) NOT NULL,
-  `passwordHash` Varchar(45) NOT NULL,
+  `passwordHash` Varchar(60) NOT NULL,
   `isGuest` int,
    PRIMARY KEY(`idUser`)
 )
@@ -34,6 +34,8 @@ CREATE TABLE `Lobby`
   `PlayerList` VARCHAR(120),
   `lobbyName` Varchar(15) NOT NULL,
   `password` Varchar(10),
+  `status` varchar(3),
+  `inGame` int,
    PRIMARY KEY(`idLobby`)
 )
 ;
@@ -104,8 +106,15 @@ CREATE TABLE `User_Hand`
 CREATE TABLE `Lobby_Deck`
 (
   `idLobby` Int NOT NULL,
-  `idUser` Int NOT NULL,
   `cards` Varchar(420)
+)
+;
+
+CREATE TABLE `Game_Update`
+(
+  `idLobby` Int NOT NULL,
+  `idUser` int,
+  `updateF` Varchar(420)
 )
 ;
 

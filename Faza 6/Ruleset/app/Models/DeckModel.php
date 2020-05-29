@@ -7,5 +7,5 @@ class DeckModel extends Model
         protected $table      = 'deck';
         protected $primaryKey = 'idDeck';
         protected $returnType = 'object';
-        protected $allowedFields = ['idUser', 'cardRules', 'Cards', 'globalRules', 'Rating', 'numberOfPlays', 'numberOfRatings'];
+        protected $allowedFields = ['idUser', 'cardRules', 'Cards', 'globalRules', 'suits', 'Rating', 'numberOfPlays', 'numberOfRatings'];
 }
