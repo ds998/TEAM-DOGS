@@ -430,11 +430,13 @@ function convertStoredInfo() {
     globalRulesStr = globalRulesStr.join(';');
 
     $("#deck").val(cards);
+    $("#suits").val(suits);
     $("#rules").val(rules);
     $("#globalRules").val(globalRulesStr);
     
     // DEBUG
     // console.log("Cards: " + cards);
+    // console.log("Suits: " + suits);
     // console.log("Rules: " + rules);
     // console.log("Global Rules: " + globalRulesStr);
 }
