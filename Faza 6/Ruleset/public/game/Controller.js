@@ -1,9 +1,21 @@
 class Controller {
+    static controller = null;
+
+    static getController(numPlayers, rules, deck_template) {
+        if (Controller.controller == null && numPlayers != null && rules != null && deck_template!=null)
+            Controller.controller = new Controller(numPlayers, rules, deck_template);
+        return Controller.controller;
+    }
+
     constructor(numPlayers, rules, deck_template) {
-        this.myTurn=false;
+        
+        //Ruleset
+        this.ruleset = new Ruleset(rules, this);
+        this.ruleset.addEventHandlers();
+
         //Deck
         this.deck = new Deck(this, deck_template.num, deck_template.vales, deck_template.suits, deck_template.type);
-        this.deck.generate_deck();
+        this.deck.generate_deck(this.ruleset);
         this.deck.shuffle();
 
         this.discard = new Deck(this, deck_template.num, deck_template.vales, deck_template.suits, Deck.types.LIMITED);
@@ -15,11 +27,7 @@ class Controller {
         this.numPlayers = numPlayers;
         this.players = [];
         for (let i = 0; i < this.numPlayers; i++)
-            this.players.push(new Player());
-
-        //Ruleset
-        this.ruleset = new Ruleset(rules);
-        this.ruleset.addEventHandlers();
+            this.players.push(new Player(this));
 
         //Event handler
         this.handler = new EventTarget();
