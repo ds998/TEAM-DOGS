@@ -254,3 +254,9 @@ table> ::-webkit-scrollbar-thumb:hover {
 .suitSelect {
     width: 160px;
 }
+
+/*  -------------------------- Send Form --------------------------     */
+
+.sendForm{
+    display:none;
+}

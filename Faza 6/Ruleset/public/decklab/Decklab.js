@@ -304,107 +304,137 @@ function addOptions(select, names, values, isSelected = false, selectedValue = n
 function convertStoredInfo() {
     let cards = [];
     let rules = [];
+    let globalRulesStr = [];
     deck.forEach(card => {
-        cards.add(card.name)
+        cards.push(card.name);
     });
 
-    Object.keys(cards.rules).forEach(ruleCategory => {
-        ruleCategory.forEach(rule => {
-            let ruleStr = [];
-            //Suit
-            if (rule.suit == 'all') ruleStr.add("a");
-            else {
-                let index = suits.findIndex((el) => el == rule.suit);
-                ruleStr.add(index);
-            }
-            //Type
-            ruleStr.add(rule.type);
-            //Details
-            switch (rule.type) {
-                case "1":
-                    //Draw
-                    ruleStr.add(rule.details.trigger);
-                    ruleStr.add(rule.details.target);
-                    ruleStr.add(rule.details.num_cards);
-                    ruleStr.add(rule.details.source);
-                    break;
-                case "2":
-                    //Draw Until
-                    ruleStr.add(rule.details.trigger);
-                    ruleStr.add(rule.details.target);
-                    switch (rule.detail.card) {
-                        case "ANY":
-                            ruleStr.add("a");
-                            break;
-                        case "DIFFERENT":
-                            ruleStr.add("d");
-                            break;
-                        default:
-                            ruleStr.add(cards.findIndex((el) => el == rule.detail.card));
-                            break;
-                    }
-                    switch (rule.detail.suit) {
-                        case "ANY":
-                            ruleStr.add("a");
-                            break;
-                        case "DIFFERENT":
-                            ruleStr.add("d");
-                            break;
-                        case "SAME":
-                            ruleStr.add("s");
-                            break;
-                        default:
-                            ruleStr.add(suits.findIndex((el) => el == rule.detail.suit));
-                            break;
-                    }
-                    break;
-                case "3":
-                    //Skip
-                    ruleStr.add(rule.details.trigger);
-                    ruleStr.add(rule.details.target);
-                    break;
-                case "4":
-                    // Not Done yet
-                    break;
-                case "5":
-                    //View Card
-                    ruleStr.add(rule.details.trigger);
-                    ruleStr.add(rule.details.source);
-                    ruleStr.add(rule.details.num_cards);
-                    break;
-                case "6":
-                    //Jump In
-                    switch (rule.detail.card) {
-                        case "ANY":
-                            ruleStr.add("a");
-                            break;
-                        case "DIFFERENT":
-                            ruleStr.add("d");
-                            break;
-                        default:
-                            ruleStr.add(cards.findIndex((el) => el == rule.detail.card));
-                            break;
-                    }
-                    switch (rule.detail.suit) {
-                        case "ANY":
-                            ruleStr.add("a");
-                            break;
-                        case "DIFFERENT":
-                            ruleStr.add("d");
-                            break;
-                        case "SAME":
-                            ruleStr.add("s");
-                            break;
-                        default:
-                            ruleStr.add(suits.findIndex((el) => el == rule.detail.suit));
-                            break;
-                    }
-                    break;
-            }
-            rules.add(ruleStr.join());
+    for (let c = 0; c < deck.length; c++) {
+        Object.keys(deck[c].rules).forEach(ruleCategory => {
+            deck[c].rules[ruleCategory].forEach(rule => {
+
+                let ruleStr = [];
+                ruleStr.push(c);
+                //Suit
+                if (rule.suit == 'all') ruleStr.push("a");
+                else {
+                    let index = suits.findIndex((el) => el == rule.suit);
+                    ruleStr.push(index);
+                }
+                //Type
+                ruleStr.push(rule.type);
+                //Details
+                switch (rule.type) {
+                    case 1:
+                        //Draw
+                        ruleStr.push(rule.details.trigger);
+                        ruleStr.push(rule.details.target);
+                        ruleStr.push(rule.details.num_cards);
+                        ruleStr.push(rule.details.source);
+                        ruleStr.push(0); // Counteraction
+                        break;
+                    case 2:
+                        //Draw Until
+                        ruleStr.push(rule.details.trigger);
+                        ruleStr.push(rule.details.target);
+                        switch (rule.details.card) {
+                            case "ANY":
+                                ruleStr.push("a");
+                                break;
+                            case "DIFFERENT":
+                                ruleStr.push("d");
+                                break;
+                            default:
+                                ruleStr.push(rule.details.card);
+                                break;
+                        }
+                        switch (rule.details.suit) {
+                            case "ANY":
+                                ruleStr.push("a");
+                                break;
+                            case "DIFFERENT":
+                                ruleStr.push("d");
+                                break;
+                            case "SAME":
+                                ruleStr.push("s");
+                                break;
+                            default:
+                                ruleStr.push(rule.details.suit);
+                                break;
+                        }
+                        ruleStr.push(0); // Counteraction
+                        break;
+                    case 3:
+                        //Skip
+                        ruleStr.push(rule.details.trigger);
+                        ruleStr.push(rule.details.target);
+                        break;
+                    case 4:
+                        // Not Done yet
+                        break;
+                    case 5:
+                        //View Card
+                        ruleStr.push(rule.details.trigger);
+                        ruleStr.push(rule.details.source);
+                        ruleStr.push(rule.details.num_cards);
+                        break;
+                    case 6:
+                        //Jump In
+                        switch (rule.details.card) {
+                            case "ANY":
+                                ruleStr.push("a");
+                                break;
+                            case "DIFFERENT":
+                                ruleStr.push("d");
+                                break;
+                            default:
+                                ruleStr.push(rule.details.card);
+                                break;
+                        }
+                        switch (rule.details.suit) {
+                            case "ANY":
+                                ruleStr.push("a");
+                                break;
+                            case "DIFFERENT":
+                                ruleStr.push("d");
+                                break;
+                            case "SAME":
+                                ruleStr.push("s");
+                                break;
+                            default:
+                                ruleStr.push(rule.details.suit);
+                                break;
+                        }
+                        break;
+                }
+                rules.push(ruleStr.join());
+            });
         });
-    });
+    }
+
+    globalRulesStr.push(globalRules.winCon);
+    globalRulesStr.push(globalRules.minPlayers)
+    globalRulesStr.push(globalRules.maxPlayers)
+    globalRulesStr.push(globalRules.order);
+    globalRulesStr.push(globalRules.startingCards);
+    globalRulesStr.push(globalRules.handLimit);
+    globalRulesStr.push(globalRules.cardsDrawnPerTurn);
+    globalRulesStr.push(globalRules.cardsPerTurn);
+    globalRulesStr.push(globalRules.cantPlay);
+    if (globalRules.sameCardJumpIn) globalRulesStr.push(1);
+    else globalRulesStr.push(0);
+    //globalRulesStr.push(globalRules.specialRules);
 
     cards = cards.join();
     rules = rules.join(';');
+    globalRulesStr = globalRulesStr.join(';');
+
+    $("#deck").val(cards);
+    $("#rules").val(rules);
+    $("#globalRules").val(globalRulesStr);
+    
+    // DEBUG
+    // console.log("Cards: " + cards);
+    // console.log("Rules: " + rules);
+    // console.log("Global Rules: " + globalRulesStr);
 }

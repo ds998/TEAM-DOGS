@@ -1,13 +1,6 @@
 class Controller {
-    static controller = null;
-
-    static getController(numPlayers, rules, deck_template) {
-        if (Controller.controller == null && numPlayers != null && rules != null && deck_template!=null)
-            Controller.controller = new Controller(numPlayers, rules, deck_template);
-        return Controller.controller;
-    }
-
     constructor(numPlayers, rules, deck_template) {
+        this.myTurn=false;
         //Deck
         this.deck = new Deck(this, deck_template.num, deck_template.vales, deck_template.suits, deck_template.type);
         this.deck.generate_deck();
@@ -105,5 +98,16 @@ class Controller {
         return this.players[(this.players.indexOf(player) - 1 + this.players.length) % this.players.length];
     }
 
+    tryToPlay(card) {
+        if ( canPlay(card, deckCard)) {
+            sendMove(Instruction.PLAY, card);
+            endTurn();
+        }
+    }
 
+    canPlay(card, cardDest){
+        if (this.myMove && (card.suit == cardDest.suit || card.value == cardDest.value) ) return true;
+        else if( this.ruleset.canJumpIn(card, cardDest) ) return true;
+        else return false;
+    }
 }

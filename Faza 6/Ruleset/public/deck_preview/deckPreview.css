@@ -23,7 +23,7 @@
     width: 100%;
     padding: 10px;
     overflow: hidden;
-    color: var(--main-brand-color);
+    color: var(--default-text-color);
     float: left;
     min-height: 610px !important;
 }

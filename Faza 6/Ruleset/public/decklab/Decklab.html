@@ -15,8 +15,8 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
 
-    <link rel="stylesheet" href="../base/Base.css"/>
-    <link rel="stylesheet" href="../base/Navbar.css"/>
+    <link rel="stylesheet" href="../base/Base.css" />
+    <link rel="stylesheet" href="../base/Navbar.css" />
     <link rel="stylesheet" href="Decklab.css" />
     <link rel="stylesheet" href="../login/Login.css" />
     <script src="../base/Base.js"></script>
@@ -28,7 +28,8 @@
 
 <body class="">
     <div class="header">
-        <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
+        <nav class="navbar bg-dark navbar-dark">
+            <!-- navbar-expand-lg -->
             <a class="navbar-brand" href="../main/main.html">
                 <img id='logoRuleImage' src="../assets/navbar/rule_icon.png" alt="Logo" class='logoImage'>
                 <img id='logoSetImage' src="../assets/navbar/set_icon.png" alt="Logo" class='logoImage'>
@@ -128,17 +129,24 @@
                     </tbody>
                 </table>
 
-                <textarea id="deckDecription" class="form-control customInput" rows="3" style="resize: none;" maxlength="250"
-                    placeholder="Enter a brief description of the ruleset..."></textarea>
-                <br>
-                <div class="row">
-                    <div class="col-sm-6 col-lg-8" style="padding-bottom: 2px;"> <input id="deckName" type="text"
-                            class="form-control customInput" placeholder="Enter Ruleset Name"> </div>
-                    <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
-                            class="btn btn-primary flex-fill">Save</button> </div>
-                    <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
-                            class="btn btn-success flex-fill">Play</button> </div>
-                </div>
+                <form>
+                    <textarea id="deckDecription" class="form-control customInput" rows="3" style="resize: none;"
+                        maxlength="250" required placeholder="Enter a brief description of the ruleset..."></textarea>
+                    <br>
+                    <div class="sendForm">
+                        <input type="text" required id="deck" placeholder="Deck">
+                        <input type="text" id="rules" placeholder="Rules">
+                        <input type="text" required id="globalRules" placeholder="GlobalRules">
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-8" style="padding-bottom: 2px;"> <input id="deckName" type="text"
+                                class="form-control customInput" required placeholder="Enter Ruleset Name"> </div>
+                        <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
+                                class="btn btn-primary flex-fill" onclick="convertStoredInfo()">Save</button> </div>
+                        <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
+                                class="btn btn-success flex-fill" onclick="convertStoredInfo()">Play</button> </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

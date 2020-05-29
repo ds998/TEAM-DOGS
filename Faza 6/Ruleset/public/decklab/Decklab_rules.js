@@ -272,8 +272,8 @@ function addDrawUntilRule(tr, rule = null) {
     //Suit
     newSelect = document.createElement('select');
     $(newSelect).addClass('custom-select suitSelect');
-    if (rule) addOptions(newSelect, ["any suit", "the same suit", "a different suit"].concat(suits), ['ANY', 'SAME', 'DIFFERENT', '1', '2', '3', '4'], true, rule.details.suit);
-    else addOptions(newSelect, ["any suit", "the same suit", "a different suit"].concat(suits), ['ANY', 'SAME', 'DIFFERENT', '1', '2', '3', '4'], true);
+    if (rule) addOptions(newSelect, ["any suit", "the same suit", "a different suit"].concat(suits), ['ANY', 'SAME', 'DIFFERENT', '0', '1', '2', '3'], true, rule.details.suit);
+    else addOptions(newSelect, ["any suit", "the same suit", "a different suit"].concat(suits), ['ANY', 'SAME', 'DIFFERENT', '0', '1', '2', '3'], true);
     newCell.appendChild(newSelect);
     newSelect.addEventListener('change', function () {
         let ruleRow = this.parentNode.parentNode;
@@ -463,8 +463,8 @@ function addJumpInRule(tr, rule = null) {
     //Suit
     newSelect = document.createElement('select');
     $(newSelect).addClass('custom-select suitSelect');
-    if (rule) addOptions(newSelect, ["any suit", "the same suit", "a different suit"].concat(suits), ['ANY', 'SAME', 'DIFFERENT', '1', '2', '3', '4'], true, rule.details.suit);
-    else addOptions(newSelect, ["any suit", "the same suit", "a different suit"].concat(suits), ['ANY', 'SAME', 'DIFFERENT', '1', '2', '3', '4'], true);
+    if (rule) addOptions(newSelect, ["any suit", "the same suit", "a different suit"].concat(suits), ['ANY', 'SAME', 'DIFFERENT', '0', '1', '2', '3'], true, rule.details.suit);
+    else addOptions(newSelect, ["any suit", "the same suit", "a different suit"].concat(suits), ['ANY', 'SAME', 'DIFFERENT', '0', '1', '2', '3'], true);
     newCell.appendChild(newSelect);
     newSelect.addEventListener('change', function () {
         let ruleRow = this.parentNode.parentNode;
