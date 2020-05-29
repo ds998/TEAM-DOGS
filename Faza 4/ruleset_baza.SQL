@@ -9,7 +9,6 @@ CREATE TABLE `User`
   `username` Varchar(15) NOT NULL,
   `email` Varchar(25) NOT NULL,
   `passwordHash` Varchar(45) NOT NULL,
-  `salt` Varchar(10) NOT NULL,
   `isGuest` int,
    PRIMARY KEY(`idUser`)
 )
@@ -45,9 +44,10 @@ CREATE TABLE `Deck`
 (
   `idDeck` Int NOT NULL AUTO_INCREMENT,
   `idUser` Int NOT NULL,
-  `cardRules` Varchar(210) NOT NULL,
-  `Cards` Varchar(120) NOT NULL,
-  `globalRules` Varchar(20) NOT NULL,
+  `cardRules` Varchar(640) NOT NULL,
+  `Cards` Varchar(260) NOT NULL,
+  `globalRules` Varchar(25) NOT NULL,
+  `suits` Varchar(4) not null,
   `Rating` Double,
   `numberOfPlays` Int,
   `numberOfRatings` Int,
@@ -90,6 +90,22 @@ CREATE TABLE `User_Decks`
   `idUser` Int NOT NULL,
   `idCreator` Int NOT NULL,
   `Rating` Int NOT NULL
+)
+;
+
+CREATE TABLE `User_Hand`
+(
+  `idLobby` Int NOT NULL,
+  `idUser` Int NOT NULL,
+  `cards` Varchar(200)
+)
+;
+
+CREATE TABLE `Lobby_Deck`
+(
+  `idLobby` Int NOT NULL,
+  `idUser` Int NOT NULL,
+  `cards` Varchar(420)
 )
 ;
 
