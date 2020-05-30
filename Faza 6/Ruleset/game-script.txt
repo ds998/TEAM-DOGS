@@ -133,18 +133,18 @@ const myHandFunc()->async(idUser)->{
 };
 
 
-function endTurn(){
+function claimTurn(idUser,card){
      var idLobby="<?php echo $idLobby ?>";
-     endTurnFunc(idLobby)->then((data)->{
+     claimTurnFunc(idUser,idLobby,card)->then((data)->{
 
         //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
      });
 }
 
 
-const endTurnFunc()->async(idLobby)->{
+const claimTurnFunc()->async(idUser,idLobby,card)->{
      var controller="<?php echo $controller; ?>";
-     var response = await fetch("http://localhost:8080/"+controller+"/endTurn/"+idLobby, {
+     var response = await fetch("http://localhost:8080/"+controller+"/claimTurn/"+idUser+"/"+idLobby+"/"+card, {
              headers:{'Accept': 'application/json'},
              method: "GET",
              mode: "cors"
@@ -153,7 +153,44 @@ const endTurnFunc()->async(idLobby)->{
      return returnData;
 };
 
+function changeGlobalRole(rule,newValue,card){
+     cgrFunc(rule,newValue,card)->then((data)->{
 
+       return;
+     });
+}
+
+
+const cgrFunc()->async(rule,newValue,card)->{
+     var controller="<?php echo $controller; ?>";
+     var response = await fetch("http://localhost:8080/"+controller+"/changeGlobalRule/"+rule+"/"+newValue+"/"+card, {
+             headers:{'Accept': 'application/json'},
+             method: "GET",
+             mode: "cors"
+     });
+     var returnData = await response.json();
+     return returnData;
+};
+
+function throw(idUser,card){
+     var idLobby="<?php echo $idLobby ?>";
+     throwFunc(idUser,card,idLobby)->then((data)->{
+
+        return;
+     });
+}
+
+
+const claimTurnFunc()->async(idUser,card,idlobby)->{
+     var controller="<?php echo $controller; ?>";
+     var response = await fetch("http://localhost:8080/"+controller+"/claimTurn/"+idUser+"/"+card+"/"+idLobby, {
+             headers:{'Accept': 'application/json'},
+             method: "GET",
+             mode: "cors"
+     });
+     var returnData = await response.json();
+     return returnData;
+};
 //ostatak sutra
    
 
