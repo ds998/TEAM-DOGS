@@ -1,0 +1,163 @@
+!!!Ovo je javascript kod
+!!!Uros mora da vraca sve pod f-jom json_encode(sve sto je vracao dosad samo da je uokvireno f-jom json_encode
+!!!skript obavezno mora biti u php fajlu igrice
+
+
+setInterval(update,1000);//kalibrisacemo milisek. kada bude vreme za to
+
+
+function draw(idUser,idUser2,num,card){
+
+     //ne znam da li Damjan ima id-eve,ako ne,neka stavlja username,a mi cemo preko UserModela saznati ko je ko
+     //mozda ih dostavim putem start the game f-je(pitati Damjana sutra)
+     //idSource putem start_the_game(mozda,mozda ne),card kao obican js argument
+     var source="<?php echo $idSource ?>";
+     var idLobby="<?php echo $idLobby ?>";
+     drawFunc(idUser,idUser2,num,source,card,idLobby)->then((data)->{
+
+        //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
+     });
+}
+
+const drawFunc()->async(idUser,idUser2,num,source,card,idLobby)->{
+     var controller="<?php echo $controller; ?>";
+     var response = await fetch("http://localhost:8080/"+controller+"/draw/"+idUser+"/"+idUser2+"/"+num+"/"+source+"/"+card+"/"+idLobby, {
+             headers:{'Accept': 'application/json'},
+             method: "GET",
+             mode: "cors"
+     });
+     var returnData = await response.json();
+     return returnData;
+};
+
+function skip(idUser){
+    //ne znam da li Damjan ima id-eve,ako ne,neka stavlja username,a mi cemo preko UserModela saznati ko je ko
+    var idLobby="<?php echo $idLobby ?>";
+    skipFunc(idUser,idLobby).then((data)=>{
+        return;//zatraziti od Urosa da vraca nesto u backend php f-ji,recimo string done
+    });
+}
+
+const skipFunc()->async(idUser,idLobby)->{
+     var controller="<?php echo $controller; ?>";
+     var response = await fetch("http://localhost:8080/"+controller+"/skip/"+idUser+"/"+idLobby, {
+             headers:{'Accept': 'application/json'},
+             method: "GET",
+             mode: "cors"
+     });
+     var returnData = await response.json();
+     return returnData;
+};
+
+function viewCard(idUser,num){
+
+     //ne znam da li Damjan ima id-eve,ako ne,neka stavlja username,a mi cemo preko UserModela saznati ko je ko
+     //mozda ih dostavim putem start the game f-je(pitati Damjana sutra)
+     //idSource putem start_the_game(mozda,mozda ne),card kao obican js argument
+     var source="<?php echo $idSource ?>";
+     var idLobby="<?php echo $idLobby ?>";
+     drawFunc(idUser,source,num,idLobby)->then((data)->{
+
+        //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
+     });
+}
+
+const viewCardFunc()->async(idUser,source,num,idLobby)->{
+     var controller="<?php echo $controller; ?>";
+     var response = await fetch("http://localhost:8080/"+controller+"/viewCard/"+idUser+"/"+source+"/"+num+"/"+idLobby, {
+             headers:{'Accept': 'application/json'},
+             method: "GET",
+             mode: "cors"
+     });
+     var returnData = await response.json();
+     return returnData;
+};
+
+function update(){
+     var idLobby="<?php echo $idLobby ?>";
+     updateFunc(idLobby)->then((data)->{
+
+        //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
+     });
+}
+
+
+const updateFunc()->async(idLobby)->{
+     var controller="<?php echo $controller; ?>";
+     var response = await fetch("http://localhost:8080/"+controller+"/update/"+idLobby, {
+             headers:{'Accept': 'application/json'},
+             method: "GET",
+             mode: "cors"
+     });
+     var returnData = await response.json();
+     return returnData;
+};
+
+function update(){
+     var idLobby="<?php echo $idLobby ?>";
+     updateFunc(idLobby)->then((data)->{
+
+        //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
+     });
+}
+
+
+const updateFunc()->async(idLobby)->{
+     var controller="<?php echo $controller; ?>";
+     var response = await fetch("http://localhost:8080/"+controller+"/update/"+idLobby, {
+             headers:{'Accept': 'application/json'},
+             method: "GET",
+             mode: "cors"
+     });
+     var returnData = await response.json();
+     return returnData;
+};
+
+function myHand(idUser){
+     myHandFunc(idUser)->then((data)->{
+
+        //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
+     });
+}
+
+
+const myHandFunc()->async(idUser)->{
+     var controller="<?php echo $controller; ?>";
+     var response = await fetch("http://localhost:8080/"+controller+"/myHand/"+idUser, {
+             headers:{'Accept': 'application/json'},
+             method: "GET",
+             mode: "cors"
+     });
+     var returnData = await response.json();
+     return returnData;
+};
+
+
+function endTurn(){
+     var idLobby="<?php echo $idLobby ?>";
+     endTurnFunc(idLobby)->then((data)->{
+
+        //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
+     });
+}
+
+
+const endTurnFunc()->async(idLobby)->{
+     var controller="<?php echo $controller; ?>";
+     var response = await fetch("http://localhost:8080/"+controller+"/endTurn/"+idLobby, {
+             headers:{'Accept': 'application/json'},
+             method: "GET",
+             mode: "cors"
+     });
+     var returnData = await response.json();
+     return returnData;
+};
+
+
+//ostatak sutra
+   
+
+
+
+
+     
