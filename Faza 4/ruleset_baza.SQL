@@ -106,7 +106,7 @@ CREATE TABLE `User_Hand`
 CREATE TABLE `Lobby_Deck`
 (
   `idLobby` Int NOT NULL,
-  `cards` Varchar(420)
+  `cards` Varchar(1280)
 )
 ;
 
