@@ -1,12 +1,17 @@
 class CardMatcher {
-    constructor(value, suit = '') {
+    constructor(value, suit = '', valMissMatch=false, suitMissMatch=false) {
         this.value = value;
         this.suit = suit;
+        this.valMissMatch=valMissMatch;
+        this.suitMissMatch=suitMissMatch;
     }
 
     isMatch(card) {
-        if (this.value != '' && this.value != card.value) return false;
-        if (this.suit != '' && this.suit != card.suit) return false;
+        if (valMissMatch && this.value == card.value) return false;
+        else if (this.value != '' && this.value != card.value) return false;
+        
+        if (suitMissMatch && this.suit == card.suit) return false;
+        else if (this.suit != '' && this.suit != card.suit) return false;
 
         return true;
     }

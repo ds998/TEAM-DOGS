@@ -7,7 +7,7 @@ class Deck {
         SHUFFLE_DISCARD: 3
     }
 
-    constructor(controller, num_decks = 1, values = Deck.defaultValues, suits = Deck.defaultSuits, type = Deck.types.INFINITE) {
+    constructor(controller, num_decks = 1, values = Deck.defaultValues, suits = Deck.defaultSuits, type = Deck.types.SHUFFLE_DISCARD) {
         this.values = values;
         this.suits = suits;
         this.num = num_decks;
