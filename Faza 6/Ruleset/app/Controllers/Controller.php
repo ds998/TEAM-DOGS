@@ -317,14 +317,14 @@ class Controller extends BaseController
                 $LobbyDeckModel = new LobbyDeckModel();
                 $cards = $LobbyDeckModel->takeXCards($idLobby, $numOfCards);
                 $userHandModel->addToUserHand($idUserAffected, $cards);
-                return $cards;
+                return json_encode($cards);
             }
             else if ($idUserThrown == $idSource) return null; // greska ne mozes da vuces iz svog spila
             else // vuce od drugog korisnika
             {
                 $cards = $userHandModel->takeFromUserHand($idSource, $numOfCards); // uzmemo karte iz ruke $idSource
                 $userHandModel->addToUserHand($idUserAffected, $cards); // dodamo $idUserAffected
-                return $cards;
+                return json_encode($cards);
             }
 
         }
@@ -349,17 +349,17 @@ class Controller extends BaseController
 
         $userHandModel = new UserHandModel();
         $cardsToView = $userHandModel->getXCards($idSource, $num);
-        return $cardsToView;
+        return json_encode($cardsToView);
     }
 
     public function update($idLobby)
     {
-        return (new GameUpdateModel())->getUpdate($idLobby);
+        return json_encode((new GameUpdateModel())->getUpdate($idLobby));
     }
 
     public function myHand($idUser)
     {
-        return (new UserHandModel())->getUserHand($idUser);
+        return json_encode((new UserHandModel())->getUserHand($idUser));
     }
 
     public function endTurn($idLobby)
