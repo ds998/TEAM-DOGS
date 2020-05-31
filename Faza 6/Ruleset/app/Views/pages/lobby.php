@@ -1,3 +1,11 @@
+<?php
+/**
+* lobby.php – fajl za prikaz lobby-a
+* Danilo Stefanovic,2017/0475
+* @version 1.0
+*/
+?>
+
 <html>
     <head>
         <title>Prikljucivanje lobby-u</title>
@@ -52,8 +60,12 @@
         
     </body>
     <script>
-            setInterval(update_lobby,10000);
-
+            setInterval(update_lobby,1000);
+             /**
+             * Asinhrono azuriranje prikaza za igrace u lobby-u
+             *
+             * @return void
+             */
             function update_lobby(){
                 var controller="<?php echo $controller; ?>";
                 myTest().then((data)=>{

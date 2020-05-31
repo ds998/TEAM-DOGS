@@ -1,7 +1,14 @@
+<?php
+/**
+* deljenje_spilova.php – fajl za prikaz deljenja spilova
+* Danilo Stefanovic,2017/0475
+* @version 1.0
+*/
+?>
+
 <html>
     <head>
-        <title>Deljenje spilova</title>
-    <!-- Version: 0.2 -->
+    <title>Deljenje spilova</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
@@ -28,3 +35,4 @@
             </form>
         </div>
     </body>
+</html

@@ -1,8 +1,28 @@
 <?php namespace App\Controllers;
+/**
+* Controller.php – fajl za opstu Controller klasu
+* Danilo Stefanovic 2017/0475; Maja Dimitrijevic 2017/0723; Uros Ugrinic 2017/0714; Damjan Pavlovic 2017/0312
+* Posto su deljeni kontroleri po kategorijama, a svako je imao svoje f-je u klasama Controller i UserController,navedeno je svacije vlasnistvo
+* @version 1.0
+*/
 use App\Models\LobbyModel;
 use App\Models\UserModel;
+use App\Models\GameUpdateModel;
+use App\Models\LobbyDeckModel;
+use App\Models\UserHandModel;
+use App\Models\DeckModel;
+/**
+* Controller – opsta Controller klasa koja sadrzi funkcije za sve kategorije korisnika
+* 
+* @version 1.0
+*/
 class Controller extends BaseController
 {
+    /**
+    * Prikazivanje prikaza
+    *
+    * @return void
+    */
     protected function show($page,$data){
         echo view('navbar');
         echo view("pages/{$page}",$data);
@@ -21,26 +41,51 @@ class Controller extends BaseController
         if($user==null){
             $userModel->insert($data);
             $user=$userModel->findByMail(session_id());
+            $data=[
+                'username' =>"Guest".$user[0]->idUser,
+                'email'=> session_id(),
+                'passwordHash'=>'who cares',
+                'isGuest'=>1
+            ];
+            $userModel->update($user[0]->idUser,$data);
+            $user=$userModel->findByMail(session_id());
+
         }
         
         $this->session->set('user',$user[0]);//ovde treba da se stavi identitet gosta
         return $this->all_lobbies();
         //radi testiranja
     }
-
+    /**
+    * Prikazivanje prikaza pregleda svih lobby-a
+    *
+    * @return function show
+    */
 	public function all_lobbies()
 	{
 		$lobby_model=new LobbyModel();
         $lobbies=$lobby_model->findAll();
         return $this->show('pregled_svih_lobby-a',['lobbies'=>$lobbies,'controller'=>$this->session->get('controller')]);
     }
-    
+    /**
+    * Prikazivanje prikaza prikljucivanja lobby-a
+    *
+    * @param integer $idLobby idLobby
+    * @param string $error error
+    * @return function show
+    */
     public function join_lobby($idLobby,$error=null){
         $lobby_model=new LobbyModel();
         $lobby=$lobby_model->find($idLobby);
         return $this->show('prikljucivanje_lobby-u',['lobby'=>$lobby,'controller'=>$this->session->get('controller'),'error'=>$error]);
     }
-
+    /**
+    * Pokusaj prikljucivanja lobby-u
+    *
+    * @param integer $idLobby idLobby
+    * 
+    * @return function show or function redirect
+    */
     public function joining_lobby($idLobby){
         $lobby_model=new LobbyModel();
         $lobby=$lobby_model->find($idLobby);
@@ -79,16 +124,36 @@ class Controller extends BaseController
             return redirect()->to(site_url("$controller/lozinka/{$idLobby}"));
         }
     }
-
+    /**
+    * Prikazivanje prikaza lobby
+    *
+    * @param integer $idLobby idLobby
+    * @param string $error error
+    * 
+    * @return function show 
+    */
     public function lobby($idLobby,$error=null){
         $lobby_model=new LobbyModel();
         $lobby=$lobby_model->find($idLobby);
         return $this->show('lobby',['lobby'=>$lobby,'controller'=>$this->session->get('controller'),'error'=>$error]);
     }
+    /**
+    * Azuriranje lobby-a iz baze za prikaz pregled svih lobby-a
+    *
+    * 
+    * @return json 
+    */
     public function update_lobbies(){
         $lobbyModel=new LobbyModel();
         return json_encode($lobbyModel->findAll());
     }
+    /**
+    * Azuriranje lobby-a iz baze za prikaz pregled svih lobby-a
+    *
+    * @param integer $idLobby idLobby
+    * 
+    * @return json 
+    */
     public function update_lobby($idLobby){
         $lobbyModel=new LobbyModel();
         $lobby=$lobbyModel->find($idLobby);
@@ -97,6 +162,12 @@ class Controller extends BaseController
         }
         else return json_encode($lobby->PlayerList);
     }
+    /**
+    * Izlazak iz lobby-a
+    *
+    * 
+    * @return function redirect
+    */
     public function exit_lobby($idLobby){
         $lobbyModel=new LobbyModel();
         $user=$this->session->get('user');
@@ -130,7 +201,104 @@ class Controller extends BaseController
         $controller=$this->session->get('controller');
         return redirect()->to(site_url("$controller/all_lobbies"));
     }
+    /**
+    * Ucitavanje igre
+    *
+    * 
+    * @return function show
+    */
+    public function game($idLobby){
+        $lobbyModel=new LobbyModel();
+        $userModel=new UserModel();
+        $lobby=$lobbyModel->find($idLobby);
+        
+        $this_user=$this->session->get('user');
+        if($lobby->idUser==$this_user->idUser){
+            $gameUpdateModel=new GameUpdateModel();
+            $data=[
+                'idLobby'=>$idLobby,
+                'idUser'=>$this_user->idUser,
+                'updateF'=>"claimed,".$this_user->idUser.";"
+            ];
+            $gameUpdateModel->insert($data);
+            $this->fill_and_shuffle($idLobby);
 
+        }
+        $userHandModel=new UserHandModel();
+        $data=[
+            'idLobby'=>$idLobby,
+            'idUser'=>$this_user->idUser,
+            'cards'=>""
+        ];
+        $userHandModel->insert($data);
+        $players=array();
+        $pl=explode(",",$lobby->PlayerList);
+        for($i=0;$i<count($pl);$i++){
+            $ll=$userModel->findByName($pl[$i]);
+            array_push($players,$ll[0]->idUser);
+        }
+        return $this->show('game',['controller'=>$this->session->get('controller'),'players'=>$players,'idLobby'=>$idLobby]);
+        
+
+    }
+    /**
+    * Punjenje spila za igru
+    *
+    * 
+    * @return void
+    */
+    public function fill_and_shuffle($idLobby){
+        $deckModel=new DeckModel();
+        $lobbyModel=new LobbyModel();
+        $lobbyDeckModel=new LobbyDeckModel();
+        $lobby=$lobbymodel->find($idLobby);
+        $deck=$deckModel->find($lobby->idDeck);
+        $cards=$deck->Cards;
+        $suits=$deck->suits;
+        $c=explode(",",$cards);
+        $glob_rules=$deck->globalRules;
+        $glr=explode(";",$glob_rules);
+        $num_of_decks=intval($glr[2]);
+        $arr=array();
+        for($i=0;$i<$num_of_decks;$i++){
+            for($j=0;$j<count($c);$j++){
+                $str="";
+                if($suits[0]=='1'){
+                    $str=chr($j).'c';
+                    array_push($arr,$str);
+                }
+                if($suits[1]=='1'){
+                    $str=chr($j).'d';
+                    array_push($arr,$str);
+                }
+                if($suits[2]=='1'){
+                    $str=chr($j).'s';
+                    array_push($arr,$str);
+                }
+                if($suits[3]=='1'){
+                    $str=chr($j).'h';
+                    array_push($arr,$str);
+                }
+            }
+        }
+        shuffle($arr);
+        $new_cards=implode("",$arr);
+        $old_entry=$lobbyDeckModel->find($id);
+        if($old_entry==null){
+            $data=[
+                'idLobby'=>$idLobby,
+                'cards'=>$new_cards
+            ];
+            $lobbyDeckModel->insert($data);
+        }
+        else{
+            $data=[
+                'cards'=>$new_cards
+            ];
+            $lobbyDeckModel->update($idLobby,$data);
+        }
+
+    }
     //--------------------------------------------------------------------
     
     //-------------GAME RELATED-------------------------------------------

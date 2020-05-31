@@ -6,12 +6,10 @@
 setInterval(update,1000);//kalibrisacemo milisek. kada bude vreme za to
 
 
-function draw(idUser,idUser2,num,card){
+function draw(idUser,idUser2,num,source,card){
 
      //ne znam da li Damjan ima id-eve,ako ne,neka stavlja username,a mi cemo preko UserModela saznati ko je ko
      //mozda ih dostavim putem start the game f-je(pitati Damjana sutra)
-     //idSource putem start_the_game(mozda,mozda ne),card kao obican js argument
-     var source="<?php echo $idSource ?>";
      var idLobby="<?php echo $idLobby ?>";
      drawFunc(idUser,idUser2,num,source,card,idLobby)->then((data)->{
 
@@ -49,12 +47,10 @@ const skipFunc()->async(idUser,idLobby)->{
      return returnData;
 };
 
-function viewCard(idUser,num){
+function viewCard(idUser,source,num){
 
      //ne znam da li Damjan ima id-eve,ako ne,neka stavlja username,a mi cemo preko UserModela saznati ko je ko
      //mozda ih dostavim putem start the game f-je(pitati Damjana sutra)
-     //idSource putem start_the_game(mozda,mozda ne),card kao obican js argument
-     var source="<?php echo $idSource ?>";
      var idLobby="<?php echo $idLobby ?>";
      drawFunc(idUser,source,num,idLobby)->then((data)->{
 
@@ -172,7 +168,7 @@ const cgrFunc()->async(rule,newValue,card)->{
      return returnData;
 };
 
-function throw(idUser,card){
+function throwf(idUser,card){
      var idLobby="<?php echo $idLobby ?>";
      throwFunc(idUser,card,idLobby)->then((data)->{
 
@@ -181,7 +177,7 @@ function throw(idUser,card){
 }
 
 
-const claimTurnFunc()->async(idUser,card,idlobby)->{
+const throwFunc()->async(idUser,card,idlobby)->{
      var controller="<?php echo $controller; ?>";
      var response = await fetch("http://localhost:8080/"+controller+"/claimTurn/"+idUser+"/"+card+"/"+idLobby, {
              headers:{'Accept': 'application/json'},
@@ -191,10 +187,3 @@ const claimTurnFunc()->async(idUser,card,idlobby)->{
      var returnData = await response.json();
      return returnData;
 };
-//ostatak sutra
-   
-
-
-
-
-     
