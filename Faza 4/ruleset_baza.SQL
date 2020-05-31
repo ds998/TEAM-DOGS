@@ -6,8 +6,8 @@
 CREATE TABLE `User`
 (
   `idUser` Int NOT NULL AUTO_INCREMENT,
-  `username` Varchar(15) NOT NULL,
-  `email` Varchar(25) NOT NULL,
+  `username` Varchar(40) NOT NULL,
+  `email` Varchar(40) NOT NULL,
   `passwordHash` Varchar(60) NOT NULL,
   `isGuest` int,
    PRIMARY KEY(`idUser`)

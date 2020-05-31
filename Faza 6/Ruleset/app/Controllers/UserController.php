@@ -39,12 +39,41 @@ class UserController extends Controller
         return $this->show('deljenje_spilova',['controller'=>$controller,'deck_id'=>$deck_id,'message'=>$message]);
     }
 
-    public function register(){
+
+    public function decklab()
+    {
+        
+        echo "deckDesc =".$this->request->getVar('deckDecription');
+        if($this->request->getVar('deckDecription')){
+            $cards = $this->request->getVar('cards');
+            $suits = $this->request->getVar('suits');
+            $rules = $this->request->getVar('rules');
+            $globalRules = $this->request->getVar('globalRules');
+
+            $deckModel = new DeckModel();
+            $data = [
+                'idUser' => 1,
+                'cardRules' => $rules,
+                'Cards' => $cards,
+                'globalRules' => $globalRules,
+                'suits' => $suits,
+                'Rating' => 0,
+                'numberOfPlays' => 0,
+                'numberOfRatings' => 0,
+            ];
+            $deckModel->insert($data);
+            return redirect()->to(site_url("controller/index"));
+        }
+        else return $this->show('decklab',[]);
+    }
+
+    public function register()
+    {
         if($this->request->getVar('username'))
 		{
-            $username=$this->request->getVar('username');
-            $email=$this->request->getVar('email');
-            $password=$this->request->getVar('password');
+            $username = $this->request->getVar('username');
+            $email = $this->request->getVar('email');
+            $password = $this->request->getVar('password');
             $userModel = new UserModel();
             $response = $userModel->register($username, $email, password_hash($password, PASSWORD_BCRYPT));
             if($response == -1 || $response == -2)return $this->show('register',[]);

@@ -15,49 +15,18 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
 
-    <link rel="stylesheet" href="../base/Base.css" />
-    <link rel="stylesheet" href="../base/Navbar.css" />
-    <link rel="stylesheet" href="Decklab.css" />
-    <link rel="stylesheet" href="../login/Login.css" />
-    <script src="../base/Base.js"></script>
-    <script src="../game/Rule.js"></script>
-    <script src="Decklab_globals.js"></script>
-    <script src="Decklab_rules.js"></script>
-    <script src="decklab.js"></script>
+    <link rel="stylesheet" href="<?php echo base_url('decklab/Decklab.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('base/Navbar.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('base/Base.css'); ?>" />
+    <script src="<?php echo base_url('base/Base.js');?>"> </script>
+    <script src="<?php echo base_url('game/Rule.js');?>"> </script>
+
+    <script src="<?php echo base_url('decklab/Decklab_globals.js');?>"> </script>
+    <script src="<?php echo base_url('decklab/Decklab_rules.js');?>"> </script>
+    <script src="<?php echo base_url('decklab/decklab.js');?>"> </script>
 </head>
 
 <body class="">
-    <div class="header">
-        <nav class="navbar bg-dark navbar-dark">
-            <!-- navbar-expand-lg -->
-            <a class="navbar-brand" href="../main/main.html">
-                <img id='logoRuleImage' src="../assets/navbar/rule_icon.png" alt="Logo" class='logoImage'>
-                <img id='logoSetImage' src="../assets/navbar/set_icon.png" alt="Logo" class='logoImage'>
-            </a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarElements"
-                aria-controls="navbarElements" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarElements">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="../decklab/decklab.html">Create Ruleset</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../deck_list/deckList.html">Find Ruleset</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../login/login.html">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../register/register.html">Register</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
 
     <div class="container-fluid">
         <br>
@@ -129,23 +98,23 @@
                     </tbody>
                 </table>
 
-                <form>
-                    <textarea id="deckDecription" class="form-control customInput" rows="3" style="resize: none;"
+                <form action="<?= site_url("usercontroller/decklab/{}") ?>">
+                    <textarea name="deckDecription" class="form-control customInput" rows="3" style="resize: none;"
                         maxlength="250" required placeholder="Enter a brief description of the ruleset..."></textarea>
                     <br>
                     <div class="sendForm">
-                        <input type="text" required id="deck" placeholder="Deck">
-                        <input type="text" required id="suits" placeholder="Suits">
-                        <input type="text" id="rules" placeholder="Rules">
-                        <input type="text" required id="globalRules" placeholder="GlobalRules">
+                        <input type="text" required id="deck" name="cards" placeholder="Deck">
+                        <input type="text" required id="suits" name="suits" placeholder="Suits">
+                        <input type="text" id="rules" name="rules" placeholder="Rules">
+                        <input type="text" required id="globalRules" name="globalRules" placeholder="GlobalRules">
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-lg-8" style="padding-bottom: 2px;"> <input id="deckName" type="text"
                                 class="form-control customInput" required placeholder="Enter Ruleset Name"> </div>
                         <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
-                                class="btn btn-primary flex-fill" onclick="convertStoredInfo()">Save</button> </div>
+                        class="btn btn-primary flex-fill" onclick="convertStoredInfo()">Save</button> </div>
                         <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
-                                class="btn btn-success flex-fill" onclick="convertStoredInfo()">Play</button> </div>
+                            name="decklab" class="btn btn-success flex-fill" onclick="convertStoredInfo()">Play</button> </div>
                     </div>
                 </form>
             </div>

@@ -56,6 +56,11 @@ class Controller extends BaseController
         return $this->all_lobbies();
         //radi testiranja
     }
+
+    public function getDecks()
+    {
+        return json_encode((new DeckModel)->findAll());
+    }
     /**
     * Prikazivanje prikaza pregleda svih lobby-a
     *
