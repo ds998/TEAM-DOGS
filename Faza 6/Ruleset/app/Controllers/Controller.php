@@ -27,8 +27,6 @@ class Controller extends BaseController
         echo view('navbar');
         echo view("pages/{$page}",$data);
     }
-
-    
     public function index(){
         $this->session->set('controller','Controller');
         $userModel=new UserModel();
@@ -59,14 +57,16 @@ class Controller extends BaseController
         //radi testiranja
     }
 
-    public function game() //tester
-    {
-        return $this->show('game',[]);
-    }
-
     public function getDecks()
     {
         return json_encode((new DeckModel)->findAll());
+    }
+
+    public function listDecks()
+    {
+        $deckModel = new DeckModel();
+        $decks = $deckModel->findAll();
+        return $this->show('deckList', ['decks'=>$decks]);
     }
     /**
     * Prikazivanje prikaza pregleda svih lobby-a
@@ -219,7 +219,6 @@ class Controller extends BaseController
     * 
     * @return function show
     */
-    /*
     public function game($idLobby){
         $lobbyModel=new LobbyModel();
         $userModel=new UserModel();
@@ -254,7 +253,6 @@ class Controller extends BaseController
         
 
     }
-    */
     /**
     * Punjenje spila za igru
     *

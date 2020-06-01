@@ -18,8 +18,8 @@ class UserModel extends Model
         }
 
         public function register($username, $email, $passwordHash){
-                if($this->where('username',$username)!=null)return -2;
-                if($this->where('email',$email)!=null)return -1;
+                if($this->where('username',$username)->findAll()!=null)return -2;
+                if($this->where('email',$email)->findAll()!=null)return -1;
                 $data=[
                         'username' => $username,
                         'email'=> $email,

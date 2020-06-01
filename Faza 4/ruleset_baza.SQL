@@ -47,6 +47,8 @@ CREATE TABLE `Deck`
   `idDeck` Int NOT NULL AUTO_INCREMENT,
   `idUser` Int NOT NULL,
   `cardRules` Varchar(640) NOT NULL,
+  `name` VARCHAR(30) not null,
+  `descr` varchar(280) not null,
   `Cards` Varchar(260) NOT NULL,
   `globalRules` Varchar(25) NOT NULL,
   `suits` Varchar(4) not null,

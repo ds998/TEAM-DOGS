@@ -45,8 +45,10 @@ class UserController extends Controller
         
         echo "deckDesc =".$this->request->getVar('deckDecription');
         if($this->request->getVar('deckDecription')){
+            $desc  = $this->request->getVar('deckDecription');
             $cards = $this->request->getVar('cards');
             $suits = $this->request->getVar('suits');
+            $name  = $this->request->getVar('deckName');
             $rules = $this->request->getVar('rules');
             $globalRules = $this->request->getVar('globalRules');
 
@@ -55,6 +57,8 @@ class UserController extends Controller
                 'idUser' => 1,
                 'cardRules' => $rules,
                 'Cards' => $cards,
+                'descr' => $desc,
+                'name' => $name,
                 'globalRules' => $globalRules,
                 'suits' => $suits,
                 'Rating' => 0,

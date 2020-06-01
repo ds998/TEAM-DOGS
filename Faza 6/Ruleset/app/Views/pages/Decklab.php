@@ -109,7 +109,7 @@
                         <input type="text" required id="globalRules" name="globalRules" placeholder="GlobalRules">
                     </div>
                     <div class="row">
-                        <div class="col-sm-6 col-lg-8" style="padding-bottom: 2px;"> <input id="deckName" type="text"
+                        <div class="col-sm-6 col-lg-8" style="padding-bottom: 2px;"> <input id="deckName" name="deckName" type="text"
                                 class="form-control customInput" required placeholder="Enter Ruleset Name"> </div>
                         <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
                         class="btn btn-primary flex-fill" onclick="convertStoredInfo()">Save</button> </div>
