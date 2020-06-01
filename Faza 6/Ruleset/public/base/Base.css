@@ -90,6 +90,12 @@ body::-webkit-scrollbar-thumb {
     box-shadow: 0 0 0 2px var(--shadow-brand-color) !important;
 }
 
+.disabled {
+    background-color: var(--btn-bg-hover) !important;
+    border-color: var(--default-text-color) !important;
+    color: var(--default-text-color) !important;
+    cursor: default ;
+}
 /* ----------------- FORM ----------------- */
 .form_class {
     padding-top: 150px;
@@ -112,4 +118,17 @@ body::-webkit-scrollbar-thumb {
   
 .label_class {
     color: var(--input-text-color);
+}
+
+.error {
+    padding-top: 5px;
+    color: var(--main-brand-color);
+    font-size: 12px;
+    font-family: sans-serif;
+}
+
+.has-error {
+    outline: none;
+    border-color: var(--main-brand-color);
+    box-shadow: 0 0 7px var(--main-brand-color);
 }

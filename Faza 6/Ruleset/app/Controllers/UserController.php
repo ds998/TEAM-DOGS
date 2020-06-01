@@ -8,6 +8,8 @@
 use App\Models\DeckModel;
 use App\Models\UserModel;
 use App\Models\UserDeckModel;
+use App\Models\AdminModel;
+use App\Models\HDecksModel;
 /**
 * UserController – klasa koja sadrzi funkcije za kategoriju Registrovani Korisnik
 * 
@@ -24,8 +26,7 @@ class UserController extends Controller
         }
 
         $this->session->set('controller', 'UserController');
-        //return $this->show('main', ['controller'=>$this->session->get('controller')]);
-
+        return $this->show('main', ['controller'=>$this->session->get('controller')]);
     }
     /**
     * Prikazivanje prikaza deljenja spilova
@@ -125,7 +126,10 @@ class UserController extends Controller
     }
 
 
-
+    public function logout() {
+        $this->session->destroy();
+        return redirect()->to(site_url("Controller"));
+    }
 	
 	//--------------------------------------------------------------------
 

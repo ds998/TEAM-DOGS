@@ -12,6 +12,7 @@ use App\Models\LobbyDeckModel;
 use App\Models\UserHandModel;
 use App\Models\DeckModel;
 use App\Models\UserDeckModel;
+use App\Models\AdminModel;
 /**
 * Controller – opsta Controller klasa koja sadrzi funkcije za sve kategorije korisnika
 * 
@@ -25,7 +26,7 @@ class Controller extends BaseController
     * @return void
     */
     protected function show($page,$data){
-        echo view('navbar');
+        //echo view('navbar');
         echo view("pages/{$page}",$data);
     }
     public function index(){
@@ -52,11 +53,9 @@ class Controller extends BaseController
             $user=$userModel->findByMail(session_id());
 
         }
+
+        $_SESSION['user'] = $user[0];
         
-        $this->session->set('user',$user[0]);//ovde treba da se stavi identitet gosta
-        return $this->all_lobbies();
-        //radi testiranja
-    }
     public function register()
     {
         if($this->request->getVar('username'))
@@ -71,6 +70,7 @@ class Controller extends BaseController
             return redirect()->to(site_url("usercontroller/index/$idUser"));
         }
         else return $this->show('register',[]);
+        return $this->show("main",['controller'=>$this->session->get('controller')]);
     }
 
     public function getDecks()
@@ -166,7 +166,7 @@ class Controller extends BaseController
             }
         }
         else{
-            return redirect()->to(site_url("$controller/lozinka/{$idLobby}"));
+            return redirect()->to(site_url("Controller/lobby_password_page/{$idLobby}"));
         }
     }
     /**
@@ -246,6 +246,160 @@ class Controller extends BaseController
         $controller=$this->session->get('controller');
         return redirect()->to(site_url("$controller/all_lobbies"));
     }
+
+    public function login_page($error=null) {
+        return $this->show('login',['error'=>$error]);
+    }
+
+    public function login_submit() {
+
+        $username = $this->request->getVar('user_name');
+        $password = $this->request->getVar('user_password');
+        $error_msg = "";
+
+        if (empty($username)) {
+           $error_msg = "empty username ";
+        }
+        if (empty($password)) {
+            $error_msg .= "empty password";
+        }
+
+        if (!($error_msg == "")) {
+            return $this->login_page($error_msg);
+        }
+        else {
+            $userModel = new UserModel();
+            $user = $userModel->findName($username);
+            if ($user != null) {
+                $user = $user[0];
+            }
+
+            if ($user == null) {
+                $this->login_page("Username doesn't exist");
+            }
+            else {
+                if (password_verify($password,$user->passwordHash)) {
+                    $controller = "";
+                    $adminModel = new AdminModel();
+                    $ifAdmin = $adminModel->find($user->idUser);//umesto find treba checkIfAdmin
+                    if ($ifAdmin == null) {
+                        $controller = "UserController";
+                    }
+                    else {
+                        $controller = "AdminController";
+                    }
+                    $this->session->set('user', $user);
+                    return redirect()->to(site_url("$controller/index/{$user->idUser}"));
+                }
+                else {
+                    $this->login_page('Incorrect password.');
+                }
+            }
+        }
+
+    }
+
+    public function lobby_password_page($idLobby, $error=null) {
+        return $this->show('lobby_password',['idLobby'=>$idLobby, 'error'=>$error, 'controller'=>$this->session->get('controller')]);
+    }
+
+    public function lobby_password_submit($idLobby) {
+
+        $lobbypassword = $this->request->getVar('lobby_password');
+        $error_msg = "";
+        if (empty($lobbypassword)) {
+           $error_msg = "Empty lobby password field";
+        }
+        if ($error_msg != "") {
+           return $this->lobby_password_page($idLobby, $error_msg);
+        }
+        else {
+            $newLobbyModel = new LobbyModel();
+            $findLobby = $newLobbyModel->find($idLobby);
+
+            if ($findLobby->password != $lobbypassword) {
+                return $this->lobby_password_page($idLobby, "Incorrect lobby password");
+            }
+            if ($findLobby->inGame == 1) {
+                return $this->lobby_password_page($idLobby, "There is a game in progress");
+            }
+
+            $pl = $findLobby->PlayerList;
+            $players_array = explode(",", $pl);
+
+            if (count($players_array) == $findLobby->maxPlayers) {
+                return $this->lobby_password_page($idLobby, "The lobby is already full");
+            }
+
+            $user = $this->session->get('user');
+
+            $data = [
+                'idDeck'=>$findLobby->idDeck,
+                'idUser'=>$findLobby->idUser,
+                'maxPlayers'=>$findLobby->maxPlayers,
+                'PlayerList'=>$pl.",".$user->username,
+                'lobbyName'=>$findLobby->lobbyName,
+                'password'=>$findLobby->password,
+                'status'=>$findLobby->status,
+                'inGame'=>$findLobby->inGame
+            ];
+
+            $newLobbyModel->update($idLobby,$data);
+
+            $controller = $this->session->get('controller');
+            return redirect()->to(site_url("$controller/lobby/{$idLobby}"));
+        }
+
+    }
+
+    public function create_lobby_page($idDeck, $error=null) {
+        $deckModel = new DeckModel();
+        $deck = $deckModel->find($idDeck);
+        return $this->show('create_lobby',['error'=>$error, 'controller'=>$this->session->get('controller'), 'idDeck'=>$idDeck, 'deckName'=>$deck->name]);
+    }
+
+    public function create_lobby_submit($idDeck) {
+        $deckModel = new DeckModel();
+        $lobbyModel = new LobbyModel();
+        $deck = $deckModel->find($idDeck);
+        $lobby_name = $this->request->getVar('lobby_name');
+        $create_lobby_password = $this->request->getVar('create_lobby_password');
+        $private_checkmark = $this->request->getVar('private_checkmark');
+        $maxplayercount = $this->request->getVar('create_max_player_count');
+
+        if (empty($lobby_name)) {
+            return $this->create_lobby_page($idDeck, "Empty lobby name field");
+        }
+        if ($private_checkmark != null && empty($create_lobby_password)) {
+            return $this->create_lobby_page($idDeck, "Empty lobby password field");
+        }
+        if ($maxplayercount < 2 || $maxplayercount > 10) {
+            return $this->create_lobby_page($idDeck, "Max Player Count out of range");
+        }
+        
+        $user = $this->session->get('user');
+        $status = ($private_checkmark == null)? 1:0;
+
+        $data = [
+            'idDeck'=>$idDeck,
+            'idUser'=>$user->idUser,
+            'maxPlayers'=>$maxplayercount,
+            'PlayerList'=>$user->username,
+            'lobbyName'=>$lobby_name,
+            'password'=>$create_lobby_password,
+            'status'=>$status,
+            'inGame'=>0
+        ];
+
+        $lobbyModel->insert($data);
+        $lobby_array = $lobbyModel->findByName($lobby_name); 
+        $lobby = $lobby_array[0];
+
+        $controller = $this->session->get('controller');
+        return redirect()->to(site_url("$controller/lobby/{$lobby->idLobby}"));
+
+    }
+    
     /**
     * Ucitavanje igre
     *

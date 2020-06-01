@@ -16,10 +16,10 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
 
-    <link rel="stylesheet" href="../base/Base.css"/>
-    <link rel="stylesheet" href="../base/Navbar.css" />
-    <link rel="stylesheet" href="Login.css"/>
-    <script src="../base/Base.js"></script>
+    <link rel="stylesheet" href="<?php echo base_url('base/Navbar.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('base/Base.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('login/Login.css'); ?>" />
+    <script src="<?php echo base_url('base/Base.js'); ?>"></script>
 </head>
 
 <body>
@@ -27,8 +27,8 @@
         <nav class="navbar bg-dark navbar-dark">
             <!-- navbar-expand-lg -->
             <a class="navbar-brand" href="../main/main.html">
-                <img id='logoRuleImage' src="../assets/navbar/rule_icon.png" alt="Logo" class='logoImage'>
-                <img id='logoSetImage' src="../assets/navbar/set_icon.png" alt="Logo" class='logoImage'>
+                <img id='logoRuleImage' src="<?php echo base_url('assets/navbar/rule_icon.png'); ?>" alt="Logo" class='logoImage'>
+                <img id='logoSetImage' src="<?php echo base_url('assets/navbar/set_icon.png'); ?>" alt="Logo" class='logoImage'>
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarElements"
@@ -56,19 +56,34 @@
     </div>
     <container>
         <div class="form_class">
-            <form>
+            <form name = "login_form" action = "<?= site_url("Controller/login_submit") ?>" method="post">
                 <br>
                 <div class="form-group">
                     <label for="inputUsername" class="label_class">Username</label>
-                    <input type="text" class="form-control customInput mediumInput" id="inputUsername" aria-describedby="emailHelp"
-                        placeholder="Enter Username">
+                    <input type="text" name = "user_name" class="form-control customInput mediumInput <?=  isset($error) ? 'has-error'  : ''   ?>" id="inputUsername" placeholder="Enter Username">
+                    <?php
+                        if (strpos($error, "empty") !== false && strpos($error, "username") !== false) {
+                            echo "<div class='error'>Empty username field</div>";
+                        }
+                        if (strpos($error, "exist") !== false) {
+                            echo "<div class='error'>User doesn't exist</div>";
+                        }
+                    ?>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword" class="label_class">Password</label>
-                    <input type="password" class="form-control customInput mediumInput" id="inputPassword" placeholder="Password">
+                    <input type="password" name = "user_password" class="form-control customInput mediumInput <?=  isset($error) ? 'has-error'  : ''   ?>" id="inputPassword" placeholder="Enter Password">
+                    <?php
+                        if (strpos($error, "empty") !== false && strpos($error, "password") !== false) {
+                            echo "<div class='error'>Empty password field</div>";
+                        }
+                        else {
+                            echo "<div class='error'>".$error."</div>";
+                        }
+                    ?>
                 </div>
                 <div class="form-row login-area">
-                    <button type="submit" class="btn btn-primary">Sign in</button>
+                    <input type="submit" name="login_submit_button" class="btn btn-primary" value="Login">    
                 </div>
                 <small id="needAccount" class="form-text text-muted">Don't have an account?
                     <a id = "register_link" href="../register/Register.html">REGISTER</a>

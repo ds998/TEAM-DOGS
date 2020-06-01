@@ -1,12 +1,19 @@
 <?php 
 namespace App\Controllers;
 use App\Models\AdminModel;
+use App\Models\UserModel;
 use App\Models\HDecksModel;
 class AdminController extends Controller
 {
     public function index(){
-        $adminModel = new AdminModel();
-        $user = $this->session->get('user');
+        if ($idUser != null) {
+            $userModel = new UserModel();
+            $user = $userModel->find($idUser);
+            $this->session->set('user', $user);
+        }
+
+        $this->session->set('controller', 'AdminController');
+        return $this->show('main', ['controller'=>$this->session->get('controller')]);
     }
 
 	//--------------------------------------------------------------------

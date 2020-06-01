@@ -1,0 +1,21 @@
+.lobby_create_class {
+    padding-top: 100px;
+}
+
+#finish_lobby_button {
+    padding-top: 100px;
+    padding-left: 50px;
+}
+
+#privateCheckboxDiv {
+    padding-left: 20px;
+    padding-bottom: 27px;
+}
+
+#privateCheckboxLabel {
+    padding-left: 5px;
+}
+
+#selected_ruleset_div {
+    color: var(--main-brand-color);
+}
