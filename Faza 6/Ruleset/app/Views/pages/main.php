@@ -115,8 +115,6 @@
                 <br>
                 <br>
                 <a class="btn btn-primary btn-effect" href="<?php echo site_url("Controller/all_lobbies"); ?>" role="button">Join Lobby</a>
-                <br>
-                <a class="btn btn-primary btn-effect" href="<?php echo site_url("Controller/create_lobby_page/12"); ?>" role="button">Create Lobby</a>
             </div>
         </div>
 
