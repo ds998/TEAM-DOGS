@@ -11,6 +11,7 @@ use App\Models\GameUpdateModel;
 use App\Models\LobbyDeckModel;
 use App\Models\UserHandModel;
 use App\Models\DeckModel;
+use App\Models\UserDeckModel;
 /**
 * Controller – opsta Controller klasa koja sadrzi funkcije za sve kategorije korisnika
 * 
@@ -68,12 +69,21 @@ class Controller extends BaseController
         $decks = $deckModel->findAll();
         return $this->show('deckList', ['decks'=>$decks]);
     }
+
     public function listUserDecks()
     {
         $idUser = $_SESSION['user']->idUser;
         $userDeckModel = new UserDeckModel();
-        $decks = $userDeckModel->query('select u.username, d.rating from user u, user_decks d where u.idUser=d.idUser')->findAll();
+        $decks = $userDeckModel->query("select u.username, d.rating from user u, user_decks d where u.idUser=d.idUser and u.idUser=$idUser");
+        $decks = $decks->getResult();
+
         return $this->show('userDeckList', ['decks'=>$decks]);
+    }
+    public function deckPreview($idDeck)
+    {
+        $deckModel = new DeckModel();
+        $deck = $deckModel->find($idDeck);
+        return $this->show('deckPreview', ['deck'=>$deck]);
     }
     /**
     * Prikazivanje prikaza pregleda svih lobby-a
@@ -380,7 +390,8 @@ class Controller extends BaseController
     {
         $update = "skip";
         $update = $update.",".$idUser.";";
-        (new GameUpdateModel)->addToUpdate($idLobby, $update);  
+        (new GameUpdateModel)->addToUpdate($idLobby, $update);
+        return json_encode("topcina");
         // ideja je da ce korisnik koji treba da bude preskocen da vidi da treba da bude preskocen 
         // i kada dodje red na njega on samo moze da zavrsi potez
     }
