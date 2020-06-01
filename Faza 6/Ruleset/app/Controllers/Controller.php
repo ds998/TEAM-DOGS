@@ -417,13 +417,13 @@ class Controller extends BaseController
         $gum = new GameUpdateModel();
         $update = $gum->getUpdate($idLobby);
         $pos = strpos($update, "endTurn");
-        if($pos === false) return false;
+        if($pos === false) return json_encode(false);
         else 
         {
             $update = "claimed,".$idUser.";";
             $gum->newUserUpdate($idUser, $update, $idLobby);
         }
-        return true;
+        return json_encode(true);
     }
 
     public function changeGlobalRule( $rule, $newValue, $idLobby)
