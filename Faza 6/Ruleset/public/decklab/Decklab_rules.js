@@ -507,7 +507,7 @@ function addGlobalRules(globalRules = null) {
         return;
     }
 
-    addGlobalRules.rules = ['Win Condition', 'Number of players', 'Play order', 'Starting cards', 'Hand Limit', 'Cards drawn per turn', 'Cards played per turn', "When can't play", 'Same card Jump-in'];
+    addGlobalRules.rules = ['Win Condition', 'Number of players', 'Number of decks', 'Play order', 'Starting cards', 'Hand Limit', 'Cards drawn per turn', 'Cards played per turn', "When can't play", 'Same card Jump-in'];
     if (!isValid()) return;
 
     let adderRow = $(".addRuleRow");
@@ -575,6 +575,25 @@ function addGlobalRules(globalRules = null) {
 
                 break;
             case 2:
+                newCell.appendChild(document.createTextNode("\u00A0There are "));
+
+                newElem = document.createElement('input');
+                newElem.type = 'number';
+                newElem.min = "1";
+                newElem.max = MAX_STARTING_DECK.toString(10);
+                if (globalRules) newElem.value = globalRules.deckNum;
+                else newElem.value = "2";
+                newElem.required = "true";
+                $(newElem).addClass("inputNumber");
+                newCell.appendChild(newElem);
+                newElem.addEventListener('focusout', function () {
+                    globalRules.deckNum = this.value;
+                    sessionStorage.setItem("globalRules", JSON.stringify(globalRules));
+                });
+
+                newCell.appendChild(document.createTextNode(" copies of the deck in play."));
+                break;
+            case 3:
                 newElem = document.createElement('select');
                 $(newElem).addClass('custom-select orderSelect');
                 if (globalRules) addOptions(newElem, ["Play proceeds clockwise", "Play proceeds counterclockwise"], ['1', '-1'], true, globalRules.order);
@@ -585,7 +604,7 @@ function addGlobalRules(globalRules = null) {
                     sessionStorage.setItem("globalRules", JSON.stringify(globalRules));
                 });
                 break;
-            case 3:
+            case 4:
                 newCell.appendChild(document.createTextNode("\u00A0Each player starts with "));
 
                 newElem = document.createElement('input');
@@ -604,7 +623,7 @@ function addGlobalRules(globalRules = null) {
 
                 newCell.appendChild(document.createTextNode(" card/s."));
                 break;
-            case 4:
+            case 5:
                 newCell.appendChild(document.createTextNode("\u00A0Each player can have a max of "));
 
                 newElem = document.createElement('input');
@@ -623,7 +642,7 @@ function addGlobalRules(globalRules = null) {
 
                 newCell.appendChild(document.createTextNode(" card/s in their hand."));
                 break;
-            case 5:
+            case 6:
                 newCell.appendChild(document.createTextNode("\u00A0Each player draws "));
 
                 newElem = document.createElement('input');
@@ -642,7 +661,7 @@ function addGlobalRules(globalRules = null) {
 
                 newCell.appendChild(document.createTextNode(" card/s at the beginning of their turn."));
                 break;
-            case 6:
+            case 7:
                 newCell.appendChild(document.createTextNode("\u00A0Each player can play "));
 
                 newElem = document.createElement('input');
@@ -661,7 +680,7 @@ function addGlobalRules(globalRules = null) {
 
                 newCell.appendChild(document.createTextNode(" card/s per turn."));
                 break;
-            case 7:
+            case 8:
                 newCell.appendChild(document.createTextNode("\u00A0When a player can't play any of their cards "));
                 newElem = document.createElement('select');
                 $(newElem).addClass('custom-select winConSelect');
@@ -673,7 +692,7 @@ function addGlobalRules(globalRules = null) {
                     sessionStorage.setItem("globalRules", JSON.stringify(globalRules));
                 });
                 break;
-            case 8:
+            case 9:
                 newCell.appendChild(document.createTextNode("\u00A0Enabled: "));
 
                 newElem = document.createElement('input');
