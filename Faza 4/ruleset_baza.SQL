@@ -97,6 +97,13 @@ CREATE TABLE `User_Decks`
 )
 ;
 
+CREATE TABLE `Chat`
+(
+  `idLobby` Int NOT NULL,
+  `chat` varchar(800)
+)
+;
+
 CREATE TABLE `User_Hand`
 (
   `idLobby` Int NOT NULL,

@@ -15,16 +15,17 @@ use App\Models\UserDeckModel;
 */
 class UserController extends Controller
 {
-    public function index(){
-        
-        $userModel=new UserModel();
-        $user=$userModel->find(5);
-        $this->session->set('user',$user);
-        $this->session->set('controller','UserController');
-        //ovaj deo bi trebalo da stoji kod login,id odabran samo radi testiranja
-        return $this->all_lobbies();
-        //return $this->share_a_deck($this->session->get('controller'),0);
-        //za testiranje
+    public function index($idUser = null){
+
+        if ($idUser != null) {
+            $userModel = new UserModel();
+            $user = $userModel->find($idUser);
+            $this->session->set('user', $user);
+        }
+
+        $this->session->set('controller', 'UserController');
+        //return $this->show('main', ['controller'=>$this->session->get('controller')]);
+
     }
     /**
     * Prikazivanje prikaza deljenja spilova
@@ -35,10 +36,26 @@ class UserController extends Controller
     *
     * @return function show
     */
-    public function share_a_deck($controller,$deck_id,$message=null){
+    public function share_a_deck($deck_id,$message=null){
+        $controller = $this->session->get('controller');
         return $this->show('deljenje_spilova',['controller'=>$controller,'deck_id'=>$deck_id,'message'=>$message]);
     }
 
+    public function save_user_deck($idUser, $idDeck)
+    {
+        $udModel = new UserDeckModel();
+        $dModel = new DeckModel();
+        $creatorId = $dModel->find($idDeck)->idUser;
+
+        $data = [
+            'idUser' => $idUser,
+            'idDeck' => $idDeck,
+            'idCreator' => $creatorId,
+            'Rating' => 5
+        ];
+
+        $udModel->insert($data);
+    }
 
     public function decklab()
     {
@@ -71,20 +88,7 @@ class UserController extends Controller
         else return $this->show('decklab',[]);
     }
 
-    public function register()
-    {
-        if($this->request->getVar('username'))
-		{
-            $username = $this->request->getVar('username');
-            $email = $this->request->getVar('email');
-            $password = $this->request->getVar('password');
-            $userModel = new UserModel();
-            $response = $userModel->register($username, $email, password_hash($password, PASSWORD_BCRYPT));
-            if($response == -1 || $response == -2)return $this->show('register',[]);
-            return redirect()->to(site_url("controller/index"));
-        }
-        else return $this->show('register',[]);
-    }
+    
     /**
     * Pokusaj prikljucivanja lobby-u
     *

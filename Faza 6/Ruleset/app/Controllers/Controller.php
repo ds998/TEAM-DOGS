@@ -57,13 +57,28 @@ class Controller extends BaseController
         return $this->all_lobbies();
         //radi testiranja
     }
+    public function register()
+    {
+        if($this->request->getVar('username'))
+		{
+            $username = $this->request->getVar('username');
+            $email = $this->request->getVar('email');
+            $password = $this->request->getVar('password');
+            $userModel = new UserModel();
+            $response = $userModel->register($username, $email, password_hash($password, PASSWORD_BCRYPT));
+            $idUser = ($userModel->findName($username))[0]->idUser;
+            if($response == -1 || $response == -2)return $this->show('register',[]);
+            return redirect()->to(site_url("usercontroller/index/$idUser"));
+        }
+        else return $this->show('register',[]);
+    }
 
     public function getDecks()
     {
         return json_encode((new DeckModel)->findAll());
     }
 
-    public function listDecks()
+    public function decklist()
     {
         $deckModel = new DeckModel();
         $decks = $deckModel->findAll();
@@ -83,7 +98,8 @@ class Controller extends BaseController
     {
         $deckModel = new DeckModel();
         $deck = $deckModel->find($idDeck);
-        return $this->show('deckPreview', ['deck'=>$deck]);
+        $user = $this->session->get('user');
+        return $this->show('deckPreview', ['deck'=>$deck, 'user' => $this->session->get('user'), 'controller'=>$this->session->get('controller')]);
     }
     /**
     * Prikazivanje prikaza pregleda svih lobby-a
