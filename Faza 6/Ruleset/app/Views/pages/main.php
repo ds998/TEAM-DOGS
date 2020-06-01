@@ -110,7 +110,7 @@
                     }
                 ?>
                 <br>
-                <button type="submit" class="btn btn-primary btn-effect">List Decks</button>
+                <a class="btn btn-primary btn-effect" href="<?php echo site_url("Controller/decklist"); ?>" role="button">List All Decks</a>
                 <br>
                 <br>
                 <br>
