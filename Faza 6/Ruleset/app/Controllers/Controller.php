@@ -56,6 +56,8 @@ class Controller extends BaseController
 
         $_SESSION['user'] = $user[0];
         
+        return $this->show("main",['controller'=>$this->session->get('controller')]);
+    }
     public function register()
     {
         if($this->request->getVar('username'))
@@ -70,7 +72,6 @@ class Controller extends BaseController
             return redirect()->to(site_url("usercontroller/index/$idUser"));
         }
         else return $this->show('register',[]);
-        return $this->show("main",['controller'=>$this->session->get('controller')]);
     }
 
     public function getDecks()

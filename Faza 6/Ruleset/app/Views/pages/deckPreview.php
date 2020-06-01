@@ -107,8 +107,7 @@
                 -->
 
                     <div class="d-flex flex-row-reverse">
-                        <button type="submit" class="btn btn-primary deck-button">Play</button>
-                        
+                        <a class="btn btn-primary" href="<?php echo base_url("$controller/create_lobby_page/$deck->idDeck") ?>" role="button">Play</a>
                         <a class="btn btn-primary" href="<?php if(!$user->isGuest)echo base_url("$controller/share_a_deck/$deck->idDeck") ?>" role="button">Share</a>
                         <a class="btn btn-primary" href="<?php echo base_url("$controller/save_user_deck/$user->idUser/$deck->idDeck") ?>" role="button">Save</a>
                     </div>
