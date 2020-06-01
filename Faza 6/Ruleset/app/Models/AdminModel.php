@@ -18,6 +18,7 @@ class AdminModel extends Model
         }
 
         public function checkIfAdmin($idUser){
+                if($this->where('idUser',$idUser)->findAll()==null)return 0;
                 return 1;
         }
 }
