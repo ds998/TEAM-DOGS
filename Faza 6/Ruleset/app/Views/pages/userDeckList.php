@@ -25,12 +25,7 @@
     <script src="<?php echo base_url('base/Base.js'); ?>"></script>
     <script src="<?php echo base_url('deck_list/deckList.js'); ?>"></script>
 </head>
-<script>
-jQuery(document).ready(function($) {
-    $(".clickable-row").click(function() {
-        window.location = $(this).data("href");
-    });
-});</script>
+
 <body>
     <div class="container-fluid">
         <br>
@@ -40,21 +35,17 @@ jQuery(document).ready(function($) {
                     
                     <thead>
                         <tr class="deckTableRowHeader topRow">
-                            <th scope="col">Name</th>
+                            <th scope="col">username</th>
                             <th scope="col">Rating</th>
-                            <th scope="col"># of Ratings</th>
-                            <th scope="col"># Plays</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
-                            foreach ($decks as $deck) {
+                            foreach ($decks->result_array() as $deck) {
                                 echo "
-                                <tr class='deckTableRow addCard clickable-row' data-href='deckPreview/$deck->idDeck'> 
-                                    <td>{$deck->name}</td>
+                                <tr class='deckTableRow addCard'> 
+                                    <td>{$deck->username}</td>
                                     <td>{$deck->Rating}</td>
-                                    <td>{$deck->numberOfRatings}</td>
-                                    <td>{$deck->numberOfPlays}</td>
                                 </tr>
                                     ";
                             }
