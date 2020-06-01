@@ -86,7 +86,7 @@
                     <input type="submit" name="login_submit_button" class="btn btn-primary" value="Login">    
                 </div>
                 <small id="needAccount" class="form-text text-muted">Don't have an account?
-                    <a id = "register_link" href="../register/Register.html">REGISTER</a>
+                    <a id = "register_link" href="<?php echo site_url("Controller/register"); ?>">REGISTER</a>
                 </small>
             </form>
         </div>
