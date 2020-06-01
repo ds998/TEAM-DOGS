@@ -17,7 +17,7 @@ class Controller {
         this.deck = new Deck(ids[numPlayers]);
         
         //Discard pile
-        this.discard = new Discard(ids[numPlayers+1], top_card);
+        this.discard = new Discard(ids[numPlayers+1], null);
 
         //Players
         this.curPlayer = 0;
@@ -42,6 +42,10 @@ class Controller {
         }, false);
 
         setInterval(this.updateState(), 200);
+    }
+
+    addGM(gm) {
+        this.gm = gm;
     }
 
     dispatchEvent(event) {
@@ -69,14 +73,18 @@ class Controller {
         return (this.playerIndex-1+this.numPlayers)%this.numPlayers;
     }
 
+    markSkip() {
+        this.skip=true;
+    }
+
     chooseOther() {
         //TO-DO
     }
 
     tryToPlay(card) {
-        if (canPlay(card, this.discard.top_card)) {
-            if (myTurn()) {
-                playerPlayCard(card, true);
+        if (this.canPlay(card, this.discard.top_card)) {
+            if (this.myTurn()) {
+                this.playerPlayCard(card, true);
                 return true;
             } else {
                 claimTurn(this.player.id, card);
