@@ -22,13 +22,12 @@ class Controller {
         //Players
         this.curPlayer = 0;
         this.numPlayers = numPlayers;
-        this.player = new Player(this);
         this.players = [];
         this.claimed=false;
         for (let i = 0; i < numPlayers; i++)
             if (ids[i] == playerId) {
                 this.playerIndex = i;
-                this.players[i] = new Player(this, ids[i]);
+                this.player=this.players[i] = new Player(this, ids[i]);
             } else {
                 this.players[i] = new EnemyPlayer(ids[i]);
             }
@@ -78,10 +77,13 @@ class Controller {
         if (canPlay(card, this.discard.top_card)) {
             if (myTurn()) {
                 playerPlayCard(card, true);
+                return true;
             } else {
                 claimTurn(this.player.id, card);
+                return true; // <------------------------------------------------ Zapravo tek kad dobijemo odgovor znamo
             }
         }
+        return false;
     }
 
     drawFromDeck(num_cards = 1) {
@@ -118,5 +120,9 @@ class Controller {
             randIndex=Math.floor(Math.random() * Math.floor(this.numPlayers));
         }
         return randIndex;
+    }
+
+    cardAt(n) {
+        return this.player.hand[n];
     }
 }
