@@ -68,6 +68,13 @@ class Controller extends BaseController
         $decks = $deckModel->findAll();
         return $this->show('deckList', ['decks'=>$decks]);
     }
+    public function listUserDecks()
+    {
+        $idUser = $_SESSION['user']->idUser;
+        $userDeckModel = new UserDeckModel();
+        $decks = $userDeckModel->query('select u.username, d.rating from user u, user_decks d where u.idUser=d.idUser')->findAll();
+        return $this->show('userDeckList', ['decks'=>$decks]);
+    }
     /**
     * Prikazivanje prikaza pregleda svih lobby-a
     *
