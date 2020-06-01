@@ -34,13 +34,13 @@
             <div class="col-md-12 col-lg-3">
                 <table class="table table-dark">
                     <tr class="topRow d-flex justify-content-between">
-                        <th class="d-flex flex-nowrap align-items-center"><input type="checkbox" checked>
+                        <th class="d-flex flex-nowrap align-items-center"><input id='clubsCB' type="checkbox" checked>
                             <img src="../assets/decklab/clubs.png" class="suit blackSuit"></th>
-                        <th class="d-flex flex-nowrap align-items-center"><input type="checkbox" checked>
+                        <th class="d-flex flex-nowrap align-items-center"><input id='diamondsCB' type="checkbox" checked>
                             <img src="../assets/decklab/diamonds.png" class="suit redSuit"></th>
-                        <th class="d-flex flex-nowrap align-items-center"><input type="checkbox" checked>
+                        <th class="d-flex flex-nowrap align-items-center"><input id='spadesCB' type="checkbox" checked>
                             <img src="../assets/decklab/spades.png" class="suit blackSuit"></th>
-                        <th class="d-flex flex-nowrap align-items-center"><input type="checkbox" checked>
+                        <th class="d-flex flex-nowrap align-items-center"><input id='heartsCB' type="checkbox" checked>
                             <img src="../assets/decklab/hearts.png" class="suit redSuit"></th>
                     </tr>
                 </table>

@@ -92,7 +92,7 @@
 
                 function update() {
                     updateFunc(idLobby).then((data) => {
-                        data.playerCounts
+                        JSON.parse(data);
                         //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
                     });
                 }
@@ -102,6 +102,7 @@
                     var controller = "<?php echo $controller; ?>";
                     var response = await fetch("http://localhost:8080/" + controller + "/update/" + idLobby, {
                         headers: {
+                            'Content-Type': 'application/json',
                             'Accept': 'application/json'
                         },
                         method: "GET",
