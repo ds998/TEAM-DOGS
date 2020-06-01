@@ -241,6 +241,17 @@ class Controller extends BaseController
             ];
             $gameUpdateModel->insert($data);
             $this->fill_and_shuffle($idLobby);
+            $data=[
+                'idDeck'=>$lobby->idDeck,
+                'idUser'=>$lobby->idUser,
+                'maxPlayers'=>$lobby->maxPlayers,
+                'PlayerList'=>$lobby->PlayerList,
+                'lobbyName'=>$lobby->lobbyName,
+                'password'=>$lobby->password,
+                'status'=>$lobby->status,
+                'inGame'=>1
+            ];
+            $lobbyModel->update($idLobby,$data);
 
         }
         $userHandModel=new UserHandModel();
@@ -316,6 +327,20 @@ class Controller extends BaseController
             ];
             $lobbyDeckModel->update($idLobby,$data);
         }
+
+    }
+    /**
+    * Azuriranje statusa igre za prikaz lobby
+    *
+    * @param integer $idLobby idLobby
+    * 
+    * @return json 
+    */
+    public function update_game($idLobby){
+        $lobbyModel=new LobbyModel();
+        $lobby=$lobbyModel->find($idLobby);
+        if($lobby->inGame==1) return json_encode("yes");
+        else return json_encode("no");
 
     }
     //--------------------------------------------------------------------

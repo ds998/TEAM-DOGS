@@ -8,7 +8,7 @@
 
 <html>
     <head>
-        <title>Prikljucivanje lobby-u</title>
+        <title>Lobby</title>
     <!-- Version: 0.2 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" 
@@ -61,6 +61,7 @@
     </body>
     <script>
             setInterval(update_lobby,1000);
+            setInterval(update_game,1200);
              /**
              * Asinhrono azuriranje prikaza za igrace u lobby-u
              *
@@ -87,6 +88,31 @@
                 var controller="<?php echo $controller; ?>";
                 var idLobby="<?php echo $lobby->idLobby; ?>";
                 var response = await fetch("http://localhost:8080/"+controller+"/update_lobby/"+idLobby, {
+                    headers:{'Accept': 'application/json'},
+                    method: "GET",
+                    mode: "cors"
+                });
+                var returnData = await response.json();
+                return returnData;
+            }
+            /**
+             * Asinhrono azuriranje statusa igre za igrace u lobby-u
+             *
+             * @return void
+             */
+            function update_game(){
+                var controller="<?php echo $controller; ?>";
+                var idLobby="<?php echo $lobby->idLobby; ?>";
+                myT().then((data)=>{
+                    if(data=="yes"){
+                        location.href="http://localhost:8080/"+controller+"/game/"+idLobby;
+                    }
+                });
+            }
+            const myT = async () => {
+                var controller="<?php echo $controller; ?>";
+                var idLobby="<?php echo $lobby->idLobby; ?>";
+                var response = await fetch("http://localhost:8080/"+controller+"/update_game/"+idLobby, {
                     headers:{'Accept': 'application/json'},
                     method: "GET",
                     mode: "cors"
