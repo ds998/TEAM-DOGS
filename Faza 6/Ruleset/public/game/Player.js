@@ -16,7 +16,7 @@ class Player {
     draw(num_cards, source, sendSignal = true) {
 
         for (let c = 0; c < num_cards; c++) {
-            let newCard = source.deal()[0];
+            let newCard = source[c];
 
             //Check source empty
             if (newCard == null) break;
@@ -31,6 +31,7 @@ class Player {
                         whereFrom: source
                     }
                 }));
+            this.myController.gm.cards.newCard(newCard.name, newCard.suit);
         }
     }
 

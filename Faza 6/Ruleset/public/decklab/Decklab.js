@@ -430,15 +430,24 @@ function convertStoredInfo() {
     cards = cards.join();
     rules = rules.join(';');
     globalRulesStr = globalRulesStr.join(';');
+    let suitSTR = [];
+    if ($("#clubsCB").is(":checked")) suitSTR.push('1');
+    else suitSTR.push('0');
+    if ($("#diamondsCB").is(":checked")) suitSTR.push('1');
+    else suitSTR.push('0');
+    if ($("#spadesCB").is(":checked")) suitSTR.push('1');
+    else suitSTR.push('0');
+    if ($("#heartsCB").is(":checked")) suitSTR.push('1');
+    else suitSTR.push('0');
 
     $("#deck").val(cards);
-    $("#suits").val(suits);
+    $("#suits").val(suitSTR.join(''));
     $("#rules").val(rules);
     $("#globalRules").val(globalRulesStr);
     
     // DEBUG
-    console.log("Cards: " + cards);
-    console.log("Suits: " + suits);
-    console.log("Rules: " + rules);
-    console.log("Global Rules: " + globalRulesStr);
+    // console.log("Cards: " + cards);
+    // console.log("Suits: " + suitSTR.join(''));
+    // console.log("Rules: " + rules);
+    // console.log("Global Rules: " + globalRulesStr);
 }

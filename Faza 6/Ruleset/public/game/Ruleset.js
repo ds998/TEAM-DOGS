@@ -1,6 +1,6 @@
 class Ruleset {
 
-    constructor(rules) {
+    constructor(rules, controller) {
         this.rules = rules;
         this.myController = controller;
 
@@ -10,7 +10,7 @@ class Ruleset {
     }
 
     addEventHandlers() {
-        this.rules.forEach(rule => {
+        if (this.rules) this.rules.forEach(rule => {
             let key = rule.cardMatcher.toString();
             switch (rule.trigger) {
                 case triggers.ON_PLAY:
@@ -84,6 +84,22 @@ class Ruleset {
                 return (event) => {
                     Ruleset.drawUntilRule(this.myController, rule, event);
                 };
+            case types.SKIP_PLAYER_RULE:
+                return (event) => {
+                    Ruleset.skip(this.myController, rule, event);
+                };
+            case types.CHANGE_RULE_RULE:
+                return (event) => {
+                    Ruleset.changeRule(this.myController, rule, event);
+                };
+            case types.VIEW_CARD_RULE:
+                return (event) => {
+                    Ruleset.viewCard(this.myController, rule, event);
+                };
+            case types.JUMP_IN_RULE:
+                return (event) => {
+                    Ruleset.jumpIn(this.myController, rule, event);
+                };
         }
     }
 
@@ -129,7 +145,7 @@ class Ruleset {
     }
 }
 
-strToRules(str, cards, suits) {
+function strToRules(str, cards, suits) {
     let ret = str.split(';');
     for (let r = 0; r < ret.length; r++) {
         let ruleCode = ret[r].split(',');
@@ -155,14 +171,14 @@ strToRules(str, cards, suits) {
                 let target_can_be_cur = false;
                 let source = targets.DECK;
                 let target_card;
-                if (ruleCode[5]=='d')
+                if (ruleCode[5]=='d') target_card='d';
                 else target_card = ruleCode[5];
                 let target_suit = ruleCode[6];
-                if (ruleCode[6]=='d')
-                else if (ruleCode[6]=='s')
+                if (ruleCode[6]=='d') target_card='d';
+                else if (ruleCode[6]=='s') target_card='d';
                 else target_card = ruleCode[5];
                 let counteraction = ruleCode[7];
-                ret[r] = new DrawRule(card, suit, type, trigger, target, target_can_be_cur, source, target_card, target_suit, counteraction);
+                ret[r] = new DrawUntilRule(card, suit, type, trigger, target, target_can_be_cur, source, target_card, target_suit, counteraction);
                 break;
             case types.SKIP_PLAYER_RULE:
                 let trigger = ruleCode[3];
