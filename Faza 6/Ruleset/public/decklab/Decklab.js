@@ -190,6 +190,7 @@ $(document).ready(function () {
             winCon: "1",
             minPlayers: MIN_NUM_PLAYERS.toString(10),
             maxPlayers: MAX_NUM_PLAYERS.toString(10),
+            deckNum:"2",
             order: "1",
             startingCards: "7",
             handLimit: MAX_HAND_LIMIT.toString(10),
@@ -413,8 +414,9 @@ function convertStoredInfo() {
     }
 
     globalRulesStr.push(globalRules.winCon);
-    globalRulesStr.push(globalRules.minPlayers)
-    globalRulesStr.push(globalRules.maxPlayers)
+    globalRulesStr.push(globalRules.minPlayers);
+    globalRulesStr.push(globalRules.maxPlayers);
+    globalRulesStr.push(globalRules.deckNum);
     globalRulesStr.push(globalRules.order);
     globalRulesStr.push(globalRules.startingCards);
     globalRulesStr.push(globalRules.handLimit);
@@ -435,8 +437,8 @@ function convertStoredInfo() {
     $("#globalRules").val(globalRulesStr);
     
     // DEBUG
-    // console.log("Cards: " + cards);
-    // console.log("Suits: " + suits);
-    // console.log("Rules: " + rules);
-    // console.log("Global Rules: " + globalRulesStr);
+    console.log("Cards: " + cards);
+    console.log("Suits: " + suits);
+    console.log("Rules: " + rules);
+    console.log("Global Rules: " + globalRulesStr);
 }

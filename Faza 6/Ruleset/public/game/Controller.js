@@ -2,32 +2,36 @@ class Controller {
     static controller = null;
 
     static getController(numPlayers, rules, deck_template) {
-        if (Controller.controller == null && numPlayers != null && rules != null && deck_template!=null)
+        if (Controller.controller == null && numPlayers != null && rules != null && deck_template != null)
             Controller.controller = new Controller(numPlayers, rules, deck_template);
         return Controller.controller;
     }
 
-    constructor(numPlayers, rules, deck_template) {
-        
+    constructor(numPlayers, rules, ids, playerId) {
+
         //Ruleset
         this.ruleset = new Ruleset(rules, this);
         this.ruleset.addEventHandlers();
 
         //Deck
-        this.deck = new Deck(this, deck_template.num, deck_template.vales, deck_template.suits, deck_template.type);
-        this.deck.generate_deck(this.ruleset);
-        this.deck.shuffle();
-
-        this.discard = new Deck(this, deck_template.num, deck_template.vales, deck_template.suits, Deck.types.LIMITED);
-
+        this.deck = new Deck(ids[numPlayers]);
+        
         //Discard pile
-        this.discardPile = new Deck();
+        this.discard = new Discard(ids[numPlayers+1], top_card);
 
         //Players
+        this.curPlayer = 0;
         this.numPlayers = numPlayers;
+        this.player = new Player(this);
         this.players = [];
-        for (let i = 0; i < this.numPlayers; i++)
-            this.players.push(new Player(this));
+        this.claimed=false;
+        for (let i = 0; i < numPlayers; i++)
+            if (ids[i] == playerId) {
+                this.playerIndex = i;
+                this.players[i] = new Player(this, ids[i]);
+            } else {
+                this.players[i] = new EnemyPlayer(ids[i]);
+            }
 
         //Event handler
         this.handler = new EventTarget();
@@ -37,85 +41,82 @@ class Controller {
         this.handler.addEventListener('cardPlayed', (e) => {
             this.ruleset.handleOnPlayEvent(e.detail);
         }, false);
+
+        setInterval(this.updateState(), 200);
     }
 
-    dispatchEvent(event) {this.handler.dispatchEvent(event);}
-
-    //Deal a number of cards to all players
-    dealToAllPlayers(num_cards, sendSignal = true) {
-        this.players.forEach(player => {
-            player.draw(num_cards, this.deck, sendSignal);
-        });
+    dispatchEvent(event) {
+        this.handler.dispatchEvent(event);
     }
 
-    //_DEBUG - Print all player hands to console
-    printHands() {
-        // this.players.forEach(player => {
-        //     console.log(player.hand);
-        // });
+    playerPlayCard(card, sendSignal = true) {
 
-        for (let i=0;i<2;i++) {
-            let hand='';
-            this.players[i].hand.forEach(card => {
-                hand += card.name + '\n';
-            });
+        let cardPlayed = this.player.deal(card, sendSignal);
+        this.discard.top_card(cardPlayed);
 
-            if (i==0) $("#p1").val(hand);
-            else $("#p2").val(hand);
-        }
-
-        let deck='';
-        this.discard.cards.forEach(card => {
-            deck += card.name + '\n';
-        });
-
-        $("#discard").val(deck);
-
-        deck='';
-        this.deck.cards.forEach(card => {
-            deck += card.name + '\n';
-        });
-
-        $("#deck").val(deck);
+        throwCard(this.player.id, card);
+        this.turns_left--;
+        if (this.turns_left) endTurn();
     }
-
-    playerDrawCard(pl, num_cards = 1, sendSignal = true) {
-        this.players[pl].draw(num_cards, this.deck,sendSignal);
-    }
-
-    playerPlayCard(pl, num_cards = 1, sendSignal = true) {
-        let cardsPlayed = this.players[pl].deal(num_cards, sendSignal);
-        if (cardsPlayed.length) this.discard.add(cardsPlayed);
-    }
-
 
     // TARGET FUNCTION IMPLEMENTATION
     // Return the player after the player sent as a paramater
-    getNextPlayer(player) {
-        return this.players[(this.players.indexOf(player) + 1) % this.players.length];
+    getNextPlayer() {
+        return (this.playerIndex+1)%this.numPlayers;
     }
 
     // Return the player after the player sent as a paramater
-    getPreviousPlayer(player) {
-        return this.players[(this.players.indexOf(player) - 1 + this.players.length) % this.players.length];
+    getPreviousPlayer() {
+        return (this.playerIndex-1+this.numPlayers)%this.numPlayers;
     }
 
-    chooseOther(player) {
-        this.players[(this.players.indexOf(player) - 1 + this.players.length) % this.players.length];
-
-        return this.players[(this.players.indexOf(player) - 1 + this.players.length) % this.players.length];
+    chooseOther() {
+        //TO-DO
     }
 
     tryToPlay(card) {
-        if ( canPlay(card, deckCard)) {
-            sendMove(Instruction.PLAY, card);
-            endTurn();
+        if (canPlay(card, this.discard.top_card)) {
+            if (myTurn()) {
+                playerPlayCard(card, true);
+            } else {
+                claimTurn(this.player.id, card);
+            }
         }
     }
 
-    canPlay(card, cardDest){
-        if (this.myMove && (card.suit == cardDest.suit || card.value == cardDest.value) ) return true;
-        else if( this.ruleset.canJumpIn(card, cardDest) ) return true;
+    drawFromDeck(num_cards = 1) {
+        if (myTurn()) draw(this.players[this.playerIndex].id, this.players[this.playerIndex].id, num_cards, this.deckId, null);
+    }
+
+    myTurn() {
+        return (this.curPlayer == this.playerIndex) && this.claimed;
+    }
+
+    canPlay(card, cardDest) {
+        if (this.myMove && (card.suit == cardDest.suit || card.value == cardDest.value)) return true;
+        else if (this.ruleset.canJumpIn(card, cardDest)) return true;
         else return false;
+    }
+
+    updateState() {
+        update();
+        //Neke provere, neki pozivi
+    }
+
+    updateMe(data) {
+        this.curPlayer=data.curPlayer;
+        for (let i = 0; i < numPlayers; i++)
+            if (i == this.playerIndex) continue
+            else this.players[i].cardCount=data.cardCounts[i];
+        this.discard.top_card=data.disacrdCard;
+            
+    }
+
+    randomPlayerIndex(canBeMe = true) {
+        let randIndex=Math.floor(Math.random() * Math.floor(this.numPlayers));
+        while (!canBeMe && randIndex==this.playerIndex) {
+            randIndex=Math.floor(Math.random() * Math.floor(this.numPlayers));
+        }
+        return randIndex;
     }
 }

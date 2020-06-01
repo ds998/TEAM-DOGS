@@ -1,7 +1,15 @@
+class EnemyPlayer {
+    constructor(id, cardCount) {
+        this.id=id;
+        this.cardCount = cardCount;
+    }
+}
+
 class Player {
-    constructor(controller) {
+    constructor(controller, id) {
         this.hand = [];
         this.myController = controller;
+        this.id=id;
     }
 
     // draw num_cards from souce
@@ -76,5 +84,4 @@ class Player {
 
         return cards
     }
-
 }
