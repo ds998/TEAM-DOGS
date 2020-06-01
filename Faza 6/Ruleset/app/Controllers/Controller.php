@@ -356,11 +356,11 @@ class Controller extends BaseController
     //--------------------------------------------------------------------
     
     //-------------GAME RELATED-------------------------------------------
-    public function draw( $idUserThrown, $idUserAffected, $numOfCards, $idSource, $cardThrown, $idLobby)
+    public function draw( $idUserThrown, $idUserAffected, $numOfCards, $idSource, $idLobby)
     {
         // update poteza koji trenutno $idUserThrown igra da bi svi znali sta se radi u igri (ali ne vide koje se karte vuku itd)
         $update = "draw";
-        $update = $update.",".$idUserThrown.",".$idUserAffected.",".$numOfCards.",".$idSource.",".$cardThrown.";";
+        $update = $update.",".$idUserThrown.",".$idUserAffected.",".$numOfCards.",".$idSource.";";
         (new GameUpdateModel)->addToUpdate($idLobby, $update);
 
         if($idUserThrown == $idUserAffected) // true znaci da korisnik nema cime da preklopi draw pa sam sebi kaze da mora da vuce
@@ -386,10 +386,10 @@ class Controller extends BaseController
     
     }
 
-    public function skip($idUser, $idLobby)
+    public function skip($idUserThrown, $idUserAffected, $idLobby)
     {
         $update = "skip";
-        $update = $update.",".$idUser.";";
+        $update = $update.",".$idUserThrown.",".$idUserAffected.";";
         (new GameUpdateModel)->addToUpdate($idLobby, $update);
         return json_encode("topcina");
         // ideja je da ce korisnik koji treba da bude preskocen da vidi da treba da bude preskocen 
@@ -398,8 +398,8 @@ class Controller extends BaseController
 
     public function viewCard($idUserThrown, $idSource, $num, $idLobby)
     {
-        $update = "skip";
-        $update = $update.",".$idUser.";";
+        $update = "view";
+        $update = $update.",".$idUserThrown.",".$idSource.",".$num.";";
         (new GameUpdateModel)->addToUpdate($idLobby, $update); // klasican update
 
         $userHandModel = new UserHandModel();
@@ -419,7 +419,7 @@ class Controller extends BaseController
 
     public function endTurn($idLobby)
     {
-        $update = "endTurn,".$idUser.";";
+        $update = "endTurn".";";
         (new GameUpdateModel)->addToUpdate($idLobby, $update);
     }
 
