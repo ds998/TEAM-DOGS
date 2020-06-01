@@ -103,10 +103,10 @@
             <div id = "buttons_div">
                 <?php
                     if (!$_SESSION['user']->isGuest) {
-                        echo "<a class='btn btn-primary btn-effect' role='button' href='<?php echo site_url('Controller/all_lobbies'); ?>Create Deck</a>";
+                        echo "<a class='btn btn-primary btn-effect' role='button' href='".site_url('UserController/decklab')."'>Create Deck</a>";
                     }
                     else {
-                        echo "<button class='btn btn-primary disabled' role='button' href='<?php echo site_url('Controller/all_lobbies'); ?>Create Deck</button>";
+                        echo "<button class='btn btn-primary disabled' role='button' href='".site_url('UserController/decklab')."'>Create Deck</button>";
                     }
                 ?>
                 <br>
