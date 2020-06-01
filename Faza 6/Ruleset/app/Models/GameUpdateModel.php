@@ -15,7 +15,7 @@ class GameUpdateModel extends Model
             $qveri = $this->db->query("UPDATE game_update SET updateF = $temp WHERE idLobby = $idLobby;");
         }
 
-        public function getUpdate($idLobby, $update){
+        public function getUpdate($idLobby){
             return $this->find($idLobby)->updateF;
         }
 
