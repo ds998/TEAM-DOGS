@@ -11,7 +11,7 @@ class LobbyDeckModel extends Model
 
         public function takeXCards($idLobby, $numOfCards){
 
-            $temp = getDeck($idLobby);
+            $temp = $this->getDeck($idLobby);
             if (strlen($temp)>$numOfCards*2)
             {
                 $returnInfo = substr( $temp, 0, $numOfCards*2);
@@ -23,8 +23,8 @@ class LobbyDeckModel extends Model
                 $temp = "''";
             }
             
-            $temp = $stringEnv.$temp.$stringEnv;
-            $qveri = $this->db->query("UPDATE lobby_deck SET cards = $temp WHERE idUser = $idUser;");
+            $temp = "'".$temp."'";
+            $qveri = $this->db->query("UPDATE lobby_deck SET cards = $temp WHERE idLobby = $idLobby;");
             return $returnInfo;
         }
 
@@ -33,7 +33,7 @@ class LobbyDeckModel extends Model
         }
 
         public function getXCards($idLobby){
-            $temp = getDeck($idLobby);
+            $temp = $this->getDeck($idLobby);
             if (strlen($temp)>$numOfCards*2) return substr( $temp, 0, $numOfCards*2);
             else return $temp;
         }

@@ -15,7 +15,7 @@ class UserHandModel extends Model
         }
 
         public function getXCards($idUser, $numOfCards){
-            $temp = getUserHand($idUser);
+            $temp = $this->getUserHand($idUser);
             if (strlen($temp)>$numOfCards*2) return substr( $temp, 0, $numOfCards*2);
             else return $temp;
         }
@@ -29,7 +29,7 @@ class UserHandModel extends Model
         }
 
         public function takeFromUserHand($idUser, $numOfCards){
-            $temp = getUserHand($idUser);
+            $temp = $this->getUserHand($idUser);
             if(strlen($temp)>$numOfCards*2)
             {
                 $returnInfo = substr( $temp, 0, $numOfCards*2);
@@ -40,7 +40,7 @@ class UserHandModel extends Model
                 $returnInfo = $temp;
                 $temp = "''";
             }
-            
+            $stringEnv = "'";
             $temp = $stringEnv.$temp.$stringEnv;
             $qveri = $this->db->query("UPDATE user_hand SET cards = $temp WHERE idUser = $idUser;");
             return $returnInfo;

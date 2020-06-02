@@ -49,7 +49,7 @@
                    }
                    $user=$_SESSION["user"];
                    if($user->idUser==$lobby->idUser){
-                       echo "<div class='gameButton'><a class='btn btn-primary' href=''>Start The Game</a></div>";
+                       echo "<div class='gameButton'><a class='btn btn-primary' href='".site_url("$controller/game/{$lobby->idLobby}")."'>Start The Game</a></div>";
                    }
                 ?>
                 <div class="exitButton">

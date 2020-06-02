@@ -33,7 +33,7 @@ class Player {
                         whereFrom: source
                     }
                 }));
-            this.myController.gm.cards.newCard(newCard.name, newCard.suit);
+            this.myController.gm.newCard(newCard.name, newCard.suit);
         }
     }
 

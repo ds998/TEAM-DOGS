@@ -1,38 +1,39 @@
 class Controller {
     static controller = null;
 
-    static getController(numPlayers, rules, ids, playerId) {
-        if (Controller.controller == null && numPlayers != null && rules != null && ids != null && playerId != null)
-            Controller.controller = new Controller(numPlayers, rules, ids, playerId);
+    static getController(rules, ids, playerId) {
+        if (Controller.controller == null && rules != null && ids != null && playerId != null)
+            Controller.controller = new Controller(rules, ids, playerId);
         return Controller.controller;
     }
 
     diff (diffMe, diffBy) {diffMe.split(diffBy).join('');}
     
-    constructor(numPlayers, rules, ids, playerId) {
+    constructor(rules, ids, playerId) {
 
         //Ruleset
         this.ruleset = new Ruleset(rules, this);
         this.ruleset.addEventHandlers();
 
         //Deck
-        this.deck = new Deck(ids[numPlayers]);
+        this.deck = new Deck(0);
         this.lastData=null;
 
         //Discard pile
-        this.discard = new Discard(ids[numPlayers + 1], null);
+        this.discard = new Discard(-1, null);
 
         //Players
         this.curPlayer = 0;
-        this.numPlayers = numPlayers;
+        this.numPlayers = ids.length;
         this.enemyPlayers = [];
         this.claimed = false;
-        for (let i = 0; i < numPlayers; i++)
+        for (let i = 0; i < this.numPlayers; i++)
             if (ids[i] == playerId)
                 this.player = new Player(this, i, ids[i]);
             else
                 this.enemyPlayers.push(new EnemyPlayer(ids[i], i, 0));
 
+        if(this.curPlayer == this.player.index) this.claimed=true;
 
         //Event handler
         this.handler = new EventTarget();
@@ -99,7 +100,7 @@ class Controller {
     }
 
     drawFromDeck(num_cards = 1) {
-        if (this.myTurn()) draw(this.player.id, this.player.id, num_cards, this.deckId);
+        if (this.myTurn()) draw(this.player.id, this.player.id, num_cards, this.deck.id);
     }
 
     myTurn() {
@@ -161,7 +162,7 @@ class Controller {
                 numOfCards = parseInt(args[3]);
                 idSource = parseInt(args[4]);
 
-                imaginaryFunctionDraw(idUserThrown, idUserAffected, numOfCards, idSource);
+                handleDrawCommands(idUserThrown, idUserAffected, numOfCards, idSource);
                 break;
             case "skip":
                 idUserThrown = parseInt(args[1]);

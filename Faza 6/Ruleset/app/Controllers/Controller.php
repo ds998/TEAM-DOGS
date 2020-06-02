@@ -445,10 +445,11 @@ class Controller extends BaseController
         $players=array();
         $pl=explode(",",$lobby->PlayerList);
         for($i=0;$i<count($pl);$i++){
-            $ll=$userModel->findByName($pl[$i]);
+            $ll=$userModel->findName($pl[$i]);
             array_push($players,$ll[0]->idUser);
         }
-        return $this->show('game',['controller'=>$this->session->get('controller'),'players'=>$players,'idLobby'=>$idLobby]);
+        $F_DECK=(new DeckModel())->find($lobby->idDeck);
+        return $this->show('game',['controller'=>$this->session->get('controller'),'players'=>$players,'idLobby'=>$idLobby, 'idUser'=>$this_user->idUser, 'deck'=>$F_DECK]);
         
 
     }
@@ -475,26 +476,26 @@ class Controller extends BaseController
             for($j=0;$j<count($c);$j++){
                 $str="";
                 if($suits[0]=='1'){
-                    $str=chr($j).'c';
+                    $str=chr($j+48).'c';
                     array_push($arr,$str);
                 }
                 if($suits[1]=='1'){
-                    $str=chr($j).'d';
+                    $str=chr($j+48).'d';
                     array_push($arr,$str);
                 }
                 if($suits[2]=='1'){
-                    $str=chr($j).'s';
+                    $str=chr($j+48).'s';
                     array_push($arr,$str);
                 }
                 if($suits[3]=='1'){
-                    $str=chr($j).'h';
+                    $str=chr($j+48).'h';
                     array_push($arr,$str);
                 }
             }
         }
         shuffle($arr);
         $new_cards=implode("",$arr);
-        $old_entry=$lobbyDeckModel->find($id);
+        $old_entry=$lobbyDeckModel->find($idLobby);
         if($old_entry==null){
             $data=[
                 'idLobby'=>$idLobby,

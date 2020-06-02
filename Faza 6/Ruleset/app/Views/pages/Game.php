@@ -1,9 +1,4 @@
 <html>
-<?php
-    $idUser=6;
-    $idLobby=42;
-    $controller='Controller';
-?>
 <head>
     <title>GAME TEST</title>
     <meta charset="UTF-8">
@@ -18,12 +13,23 @@
 
                 var myID = "<?php echo $idUser ?>";
                 var idLobby = "<?php echo $idLobby ?>";
+                var playerIDs = <?php echo json_encode($players) ?>;
+                var cardNames = "<?php echo $deck->Cards ?>";
+                cardNames = cardNames.split(',');
+                var rules = "<?php echo $deck->cardRules ?>";
+
+                console.log("myID: "+myID);
 
                 function draw(idUser, idUser2, num, source) {
-                    drawFunc(idUser, idUser2, num, source, card, idLobby).then((data) => {
+                    drawFunc(idUser, idUser2, num, source, idLobby).then((data) => {
                         if (idUser2 == myID) {
+                            let cards = data.match(/.{1,2}/g);
+                            for(let c=0; c<cards.length;c++) {
+                                cards[c]=parseCard(cards[c]);
+                            }
+                            
                             let con = Controller.getController();
-                            con.player.draw(data.cards.length, data.cards);
+                            con.player.draw(cards.length, cards);
                         }
                         //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
                     });
@@ -238,8 +244,8 @@
         var c = document.getElementById("canvas");
         var ctx = c.getContext("2d");
 
-        //var con = new Controller(numPlayers, rules, ids, idUser);
-        var con = Controller.getController(2, '', [6, 69], 69);
+        //var con = new Controller(rules, ids, idUser);
+        var con = Controller.getController('', playerIDs, myID);
 
         window.addEventListener('resize', resizeGame, false);
         cardImg.onload = function () {

@@ -174,6 +174,41 @@ class Ruleset {
     }
 }
 
+const suits=['Clubs', 'Diamonds', 'Spades', 'Hearts'];
+
+function parseCard(card) {
+    let cardTemplate = (value, suit) => {
+        let name = value + ' of ' + suit;
+        //returns key and values into each instance of the this.cards array
+        return {
+            'name': name,
+            'suit': suit,
+            'value': value,
+            'events': [
+                [false, false, false],
+                [false, false, false],
+                [false, false, false]
+            ]
+        }
+    }
+    let mysuit;
+    switch(card[1]) {
+        case 'c':
+            mysuit='Clubs';
+            break;
+        case 'd':
+            mysuit='Diamonds';
+            break;
+        case 's':
+            mysuit='Spades';
+            break;
+        case 'h':
+            mysuit='Hearts';
+            break;
+    }
+    return cardTemplate(cardNames[card.charCodeAt(0)-'0'.charCodeAt(0)], mysuit);
+}
+
 // function strToRules(str, cards, suits) {
 //     let ret = str.split(';');
 //     for (let r = 0; r < ret.length; r++) {
