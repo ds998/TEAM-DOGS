@@ -9,6 +9,7 @@
 <html>
     <head>
         <title>Lobby</title>
+    <link rel="shortcut icon" type="image/png" href="<?php echo base_url('assets/navbar/corgi_pixel.png'); ?>">
     <!-- Version: 0.2 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" 
