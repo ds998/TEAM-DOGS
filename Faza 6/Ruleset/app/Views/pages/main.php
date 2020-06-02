@@ -109,7 +109,7 @@
                 <br>
                 <a class="btn btn-primary btn-effect" href="<?php echo site_url("Controller/all_lobbies"); ?>" role="button">Join Lobby</a>
                 <br>
-                <a class="btn btn-primary btn-effect" href="<?php echo site_url("Controller/decklist"); ?>" role="button">Create Lobby</a>
+                <a class="btn btn-primary btn-effect <?php if ($_SESSION['user']->isGuest)echo 'disabled'?>" href="<?php echo site_url("Controller/decklist"); ?>" role="button">Create Lobby</a>
             </div>
         </div>
 
