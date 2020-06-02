@@ -1,0 +1,13 @@
+#display_messages {
+    background-color: transparent;
+    color: var(--default-text-color);
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+#enter_message_area {
+    width: 100%;
+    border-radius: 0;
+}

@@ -415,6 +415,59 @@ class Controller extends BaseController
 
     }
     
+
+    public function send_message($idLobby, $message) {
+        echo $idLobby;
+        $user = $this->session->get('user');
+        $message = $user->username." : ".$message;
+        $chatModel = new ChatModel();
+        $chatRoom = $chatModel->find($idLobby);
+        if($chatRoom == null) {
+            $data = [
+                'idLobby'=>$idLobby,
+                'chat'=>$message
+            ];
+            $chatModel = new ChatModel();
+            $chatModel->insert($data);
+        }
+        else {
+            $chatString = $chatRoom->chat;
+            $chatMessages = explode("^",$chatString);
+            array_push($chatMessages, $message);
+            $new_str = "";
+            if(count($chatMessages) > 15) {
+                for($i = 1; $i < count($chatMessages) - 1; $i++) {
+                    $new_str = $new_str.$chatMessages[$i]."^";
+                }
+                $new_str = $new_str.$chatMessages[count($chatMessages) - 1];
+            }
+            else {
+                for($i = 0; $i < count($chatMessages) - 1; $i++) {
+                    $new_str = $new_str.$chatMessages[$i]."^";
+                }
+                $new_str = $new_str.$chatMessages[count($chatMessages) - 1];
+            }
+            $data = [
+                'chat'=>$new_str
+            ];
+            $chatModel->update($idLobby, $data);
+        }
+        return json_encode("done");
+
+    }
+
+    public function chat_update($idLobby) {
+        $chatModel = new ChatModel();
+        $chatRoom = $chatModel->find($idLobby);
+        if ($chatRoom == null) {
+            return json_encode([]);
+        }
+        else {
+            $chatMessages = $chatRoom->chat;
+            $chatArray = explode("^",$chatMessages);
+            return json_encode($chatArray);
+        }
+    }
     /**
     * Ucitavanje igre
     *
