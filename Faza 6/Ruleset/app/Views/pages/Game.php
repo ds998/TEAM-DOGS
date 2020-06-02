@@ -262,6 +262,55 @@
         }
 
     });
+
+    setInterval(chat_update,300);
+    function send_message() {
+        var text_area = document.getElementById("enter_message_area");
+        var new_message = text_area.value;
+        text_area.value = "";
+        var controller = "<?php echo $controller; ?>";
+        var idLobby = "<?php echo $idLobby; ?>";
+        send_message_func(new_message, controller, idLobby).then((data) => {return;});
+    }
+
+    async function send_message_func(message, controller, idLobby) {
+        var response = await fetch("http://localhost:8080/" + controller + "/send_message/" + idLobby + "/" + message, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            method: "GET",
+                            mode: "cors"
+                        });
+        var returnData = await response;
+        return "done";
+    }
+
+    function chat_update() {
+        var controller = "<?php echo $controller; ?>";
+        var idLobby = "<?php echo $idLobby; ?>";
+        chat_update_func(controller, idLobby).then((data) => {
+            var div_display = document.getElementById('display_messages');
+            var str = "";
+            for (var i = 0; i < data.length; i++) {
+                str += data[i]+"<br>";
+            }
+            div_display.innerHTML = str;
+        });
+    }
+
+    async function chat_update_func(controller, idLobby) {
+        var response = await fetch("http://localhost:8080/" + controller + "/chat_update/" + idLobby, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            method: "GET",
+                            mode: "cors"
+                        });
+        var returnData = await response.json();
+        return returnData;
+    }
 </script>
 
 
