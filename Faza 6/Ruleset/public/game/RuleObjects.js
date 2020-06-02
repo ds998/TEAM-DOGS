@@ -1,14 +1,15 @@
 class Rule {
-    constructor(card, suit, type) {
+    constructor(card, suit, type, trigger) {
         this.cardMatcher = new CardMatcher(card, suit);
         this.type = type;
+        this.trigger = trigger;
+        this.detail = {};
     }
 }
 
 class DrawRule extends Rule {
     constructor(card, suit, type, trigger, target, target_can_be_cur, source, num_cards, counteraction) {
-        super(card, suit, type);
-        this.detail.trigger = trigger;
+        super(card, suit, type, trigger);
         this.detail.target = target;
         this.detail.target_can_be_cur = target_can_be_cur;
         this.detail.source = source;
@@ -19,21 +20,31 @@ class DrawRule extends Rule {
 
 class DrawUntilRule extends Rule {
     constructor(card, suit, type, trigger, target, target_can_be_cur, source, target_card, target_suit, counteraction) {
-        super(card, suit, type);
-        this.detail.trigger = trigger;
+        super(card, suit, type, trigger);
         this.detail.target = target;
         this.detail.target_can_be_cur = target_can_be_cur;
         this.detail.source = source;
-        this.detail.target_card = target_card;
-        this.detail.target_suit = target_suit;
+        let cardMissMatch=false;
+        let suitMissMatch=false;
+        if (target_card == 'a') target_card = '';
+        else if (target_card == 'd') {
+            target_card = '';
+            cardMissMatch=true;
+        }
+        if (target_suit == 'a') target_suit = '';
+        else if (target_suit == 's') target_suit = suit;
+        else if (target_suit == 'd') {
+            target_suit = '';
+            suitMissMatch=true;
+        }
+        this.detail.matcher = new CardMatcher(target_card, target_suit, cardMissMatch, suitMissMatch);
         this.detail.counteraction = counteraction;
     }
 }
 
 class SkipRule extends Rule {
     constructor(card, suit, type, trigger, target, target_can_be_cur) {
-        super(card, suit, type);
-        this.detail.trigger = trigger;
+        super(card, suit, type, trigger);
         this.detail.target = target;
         this.detail.target_can_be_cur = target_can_be_cur;
     }
@@ -41,8 +52,7 @@ class SkipRule extends Rule {
 
 class ChangeRuleRule extends Rule {
     constructor(card, suit, type, trigger, rule, newValue) {
-        super(card, suit, type);
-        this.detail.trigger = trigger;
+        super(card, suit, type, trigger);
         this.detail.rule = rule;
         this.detail.newValue = newValue;
     }
@@ -50,8 +60,7 @@ class ChangeRuleRule extends Rule {
 
 class ViewCardRule extends Rule {
     constructor(card, suit, type, trigger, target, target_can_be_cur, num_cards) {
-        super(card, suit, type);
-        this.detail.trigger = trigger;
+        super(card, suit, type, trigger);
         this.detail.target = target;
         this.detail.target_can_be_cur = target_can_be_cur;
         this.detail.num_cards = num_cards;
@@ -59,9 +68,21 @@ class ViewCardRule extends Rule {
 }
 
 class JumpInRule extends Rule {
-    constructor(card, suit, type, target_card, target_suit) {
-        super(card, suit, type);
-        this.detail.target_card = target_card;
-        this.detail.target_suit = target_suit;
+    constructor(card, suit, type, trigger, target_card, target_suit) {
+        super(card, suit, type, trigger);
+        let cardMissMatch=false;
+        let suitMissMatch=false;
+        if (target_card == 'a') target_card = '';
+        else if (target_card == 'd') {
+            target_card = '';
+            cardMissMatch=true;
+        }
+        if (target_suit == 'a') target_suit = '';
+        else if (target_suit == 's') target_suit = suit;
+        else if (target_suit == 'd') {
+            target_suit = '';
+            suitMissMatch=true;
+        }
+        this.detail.matcher = new CardMatcher(target_card, target_suit, cardMissMatch, suitMissMatch);
     }
 }

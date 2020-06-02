@@ -206,7 +206,6 @@
     <script src="<?php echo base_url('game/Ruleset.js'); ?>"></script>
     <script src="<?php echo base_url('game/Controller.js'); ?>"></script>
     <script src="<?php echo base_url('game/graphics.js'); ?>"></script>
-    <script src="<?php echo base_url('game/TestCases.js'); ?>"></script>
 
     <link rel="stylesheet" href="<?php echo base_url('base/Navbar.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url('base/Base.css') ?>" />

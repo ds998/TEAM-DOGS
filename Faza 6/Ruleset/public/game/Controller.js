@@ -7,12 +7,12 @@ class Controller {
         return Controller.controller;
     }
 
-    diff (diffMe, diffBy) {diffMe.split(diffBy).join('');}
+    diff (diffMe, diffBy) {return diffMe.split(diffBy).join('');}
     
     constructor(rules, ids, playerId) {
 
         //Ruleset
-        this.ruleset = new Ruleset(rules, this);
+        this.ruleset = new Ruleset(strToRules(rules, cardNames), this);
         this.ruleset.addEventHandlers();
 
         //Deck
@@ -22,18 +22,34 @@ class Controller {
         //Discard pile
         this.discard = new Discard(-1, null);
 
+        //Global Rules
+        this.turns_left=0;
+        this.order=parseInt(globalRules[4], 10);
+        this.startingCards=parseInt(globalRules[5], 10);
+        this.handLimit=parseInt(globalRules[6], 10);
+        this.cardsPerTurn=parseInt(globalRules[7], 10);
+        this.playsPerTurn=parseInt(globalRules[8], 10);
+        this.cantPlay=parseInt(globalRules[9], 10);
+
         //Players
         this.curPlayer = 0;
         this.numPlayers = ids.length;
         this.enemyPlayers = [];
+        this.idMap = [];
         this.claimed = false;
         for (let i = 0; i < this.numPlayers; i++)
             if (ids[i] == playerId)
-                this.player = new Player(this, i, ids[i]);
-            else
-                this.enemyPlayers.push(new EnemyPlayer(ids[i], i, 0));
+                this.idMap[ids[i]] = this.player = new Player(this, i, ids[i]);
+            else {
+                let newLen = this.enemyPlayers.push(new EnemyPlayer(ids[i], i, 0));
+                this.idMap[ids[i]] = this.enemyPlayers[newLen-1];
+            }
 
-        if(this.curPlayer == this.player.index) this.claimed=true;
+        if(this.curPlayer == this.player.index) {
+            this.claimed=true;
+            this.turns_left=this.playsPerTurn;
+        }
+        this.skip=false;
 
         //Event handler
         this.handler = new EventTarget();
@@ -46,7 +62,8 @@ class Controller {
     }
 
     startMe() {
-        setInterval(this.updateState(), 200);
+        draw(this.player.id, this.player.id, this.startingCards, this.deck.id);
+        setInterval(function() {update()}, 200);
     }
 
     addGM(gm) {
@@ -58,13 +75,12 @@ class Controller {
     }
 
     playerPlayCard(card, sendSignal = true) {
+        this.player.play(card, sendSignal);
+        this.discard.top_card=card;
 
-        let cardPlayed = this.player.deal(card, sendSignal);
-        this.discard.top_card(cardPlayed);
-
-        throwCard(this.player.id, card);
+        throwf(this.player.id, unparseCard(card));
         this.turns_left--;
-        if (this.turns_left) endTurn();
+        if (!this.turns_left) this.endTurn();
     }
 
     // TARGET FUNCTION IMPLEMENTATION
@@ -87,35 +103,60 @@ class Controller {
     }
 
     tryToPlay(card) {
-        if (this.canPlay(card, this.discard.top_card)) {
-            if (this.myTurn()) {
-                this.playerPlayCard(card, true);
-                return true;
-            } else {
-                claimTurn(this.player.id, card);
-                return true; // <------------------------------------------------ Zapravo tek kad dobijemo odgovor znamo
+        return new Promise(async function(resolve, reject) {
+            var success = false;
+            if (this.canPlay(card, this.discard.top_card)) {
+                if (this.claimed) {
+                    this.playerPlayCard(card, true);
+                    success = true;
+                } else {
+                    if (await claimTurn(this.player.id, card)) {
+                        this.turns_left = this.playsPerTurn;
+                        this.claimed=true;
+                        this.playerPlayCard(card, true);
+                        success = true;
+                    }
+                }
             }
-        }
-        return false;
+          if ( success ) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        }.bind(this));
     }
 
-    drawFromDeck(num_cards = 1) {
-        if (this.myTurn()) draw(this.player.id, this.player.id, num_cards, this.deck.id);
+    async drawFromDeck(num_cards = 1) {
+        if (this.cantPlay == 3) return;
+        if (this.myTurn()) {
+            if (this.player.hand.length+num_cards> this.handLimit) {
+                num_cards = this.handLimit - this.player.hand.length;
+                if (num_cards < 1) return;
+            }
+            if (this.claimed) {
+                draw(this.player.id, this.player.id, num_cards, this.deck.id);
+                if (this.cantPlay == 1) this.endTurn();
+            } else if (await claimTurn(this.player.id, 'null')) {
+                this.turns_left = this.playsPerTurn;
+                this.claimed=true;
+                draw(this.player.id, this.player.id, num_cards, this.deck.id);
+                if (this.cantPlay == 1) this.endTurn();
+            }
+        }
     }
 
     myTurn() {
-        return (this.curPlayer == this.player.index) && this.claimed;
+        return this.curPlayer == this.player.index;
+    }
+
+    amPlaying() {
+        return (this.myTurn() && this.claimed);
     }
 
     canPlay(card, cardDest) {
-        if (this.myMove && (card.suit == cardDest.suit || card.value == cardDest.value)) return true;
+        if (this.myTurn() && (cardDest==null ||(card.suit == cardDest.suit || card.value == cardDest.value))) return true;
         else if (this.ruleset.canJumpIn(card, cardDest)) return true;
         else return false;
-    }
-
-    updateState() {
-        update();
-        //Neke provere, neki pozivi
     }
 
     updateMe(data) {
@@ -135,6 +176,11 @@ class Controller {
         return randIndex;
     }
 
+    endTurn() {
+        this.claimed=false;
+        endTurn();
+    }
+
     cardAt(n) {
         return this.player.hand[n];
     }
@@ -147,7 +193,7 @@ class Controller {
             let commands = newCommands.split(';');
             
             commands.forEach(command => {
-                parseRule(command);
+                this.parseRule(command);
             });
         }
     }
@@ -162,24 +208,24 @@ class Controller {
                 numOfCards = parseInt(args[3]);
                 idSource = parseInt(args[4]);
 
-                handleDrawCommands(idUserThrown, idUserAffected, numOfCards, idSource);
+                this.handleDrawCommands(idUserThrown, idUserAffected, numOfCards, idSource);
                 break;
             case "skip":
                 idUserThrown = parseInt(args[1]);
                 idUserAffected = parseInt(args[2]);
 
-                imaginaryFunctionSkip(idUserThrown, idUserAffected);
+                this.handleSkip(idUserThrown, idUserAffected);
                 break;
             case "view":
                 idUserThrown = parseInt(args[1]);
                 idSource = parseInt(args[2]);
                 numOfCards = parseInt(args[3]);
             case "endTurn":
-                imaginaryFunctionEndTurn();
+                this.handleEndTurn();
                 break;
             case "claimed":
                 idUser = parseInt(args[1]);
-                imaginaryFunctionClaimed(idUser);
+                this.handleClaimed(idUser);
                 break;
             case "cgr":
                 rule = args[1];
@@ -189,7 +235,7 @@ class Controller {
             case "throw":
                 idUser = parseInt(args[1]);
                 card = args[2];
-                imaginaryFunctionThrow(idUser, card);
+                this.handleThrow(idUser, card);
             default:
                 break;
         }
@@ -208,5 +254,28 @@ class Controller {
         } else if (idUserAffected == this.player.id && idUserThrown != idUserAffected) {
             draw(this.player.id, this.player.id, numOfCards, idSource);
         }
+    }
+
+    handleClaimed(idUser) {
+        this.curPlayer=this.idMap[idUser].index;
+    }
+
+    async handleEndTurn() {
+        this.curPlayer=(this.curPlayer+this.numPlayers+this.order)%this.numPlayers;
+        if (this.curPlayer==this.player.index && this.skip) {
+            if (await claimTurn(this.player.id, 'null')) {
+                this.endTurn();
+            }
+        }
+    }
+
+    handleThrow(idUser, card) {
+        if (idUser != this.player.id) this.idMap[idUser].cardCount--;
+        this.discard.top_card=this.ruleset.parseCard(card);
+        this.gm.discardCard = new CardSprite(this.discard.top_card.name, this.discard.top_card.suit);
+    }
+
+    handleSkip(idUserThrown, idUserAffected) {
+        if (idUserAffected == this.player.id) this.markSkip();
     }
 }

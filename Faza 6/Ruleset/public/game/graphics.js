@@ -101,7 +101,7 @@ class GraphicsManager {
 		this.ctx = this.canvas.getContext('2d');
 
 		this.scale = canvasSize / canvas.offsetWidth;
-		resizeGame();
+		this.resizeGame();
 
 		this.lastX = 0;
 		this.lastY = 0;
@@ -122,6 +122,14 @@ class GraphicsManager {
 		this.mouseupListener = this.click.bind(this);
 		this.canvas.addEventListener("mousemove", this.mousemoveListener);
 		this.canvas.addEventListener("mouseup", this.mouseupListener);
+		window.addEventListener('resize', this.resizeGame.bind(this), false);
+	}
+
+	resizeGame() {
+		var c = document.getElementById('canvas');
+		var newWidth = c.offsetWidth;
+	
+		this.scale = canvasSize / newWidth;
 	}
 
 	click(e) {
@@ -136,11 +144,13 @@ class GraphicsManager {
 					}
 					break;
 				default:
-					if (this.controller.tryToPlay(this.controller.cardAt(this.hovered))) {
-						this.discardCard = this.cards.splice(this.hovered, 1)[0];
-						this.discardCard.setHover(false);
-						this.hovered = -1;
-					}
+					this.controller.tryToPlay(this.controller.cardAt(this.hovered)).then((success) =>{
+						if (success) {
+							this.discardCard = this.cards.splice(this.hovered, 1)[0];
+							this.discardCard.setHover(false);
+							this.hovered = -1;
+						}
+					}); 
 					break;
 			}
 		}
@@ -150,8 +160,7 @@ class GraphicsManager {
 	}
 
 	newCard(name, suit) {
-		let len = this.cards.push(new CardSprite(name, suit));
-		this.cards[len - 1].draw(this.ctx, HAND_X, HAND_Y);
+		this.cards.push(new CardSprite(name, suit));
 	}
 
 	updateLogic(e) {
@@ -316,6 +325,7 @@ class CardSprite {
 	}
 
 	isHover(x, y) {
+		if (this.x == undefined || this.y == undefined) return false;
 		if (x < this.x || x >= this.x + CARD_W) return false;
 		if (y < this.y || y >= this.y + CARD_H) return false;
 		return true;

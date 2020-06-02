@@ -87,4 +87,25 @@ class Player {
 
         return cards
     }
+
+    play(card, sendSignal = true) {
+
+        for (let c = 0; c < this.hand.length; c++) {
+            if (this.hand[c] == card) {
+                let dealtCard = this.hand.splice(c, 1)[0];
+
+                if (sendSignal && (dealtCard.events[0][0] || dealtCard.events[0][1] || dealtCard.events[0][2]))
+                    this.myController.dispatchEvent(new CustomEvent('cardPlayed', {
+                        detail: {
+                            card: dealtCard,
+                            player: this
+                        }
+                    }));
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -16,25 +16,26 @@
                 var playerIDs = <?php echo json_encode($players) ?>;
                 var cardNames = "<?php echo $deck->Cards ?>";
                 cardNames = cardNames.split(',');
-                var rules = "<?php echo $deck->cardRules ?>";
+                var rulesSTRING = "<?php echo $deck->cardRules ?>";
+                var globalRules = "<?php echo $deck->globalRules ?>";
+                globalRules = globalRules.split(';');
 
                 console.log("myID: "+myID);
 
                 function draw(idUser, idUser2, num, source) {
                     drawFunc(idUser, idUser2, num, source, idLobby).then((data) => {
                         if (idUser2 == myID) {
+                            let con = Controller.getController();
                             let cards = data.match(/.{1,2}/g);
                             for(let c=0; c<cards.length;c++) {
-                                cards[c]=parseCard(cards[c]);
+                                cards[c]=con.ruleset.parseCard(cards[c]);
                             }
                             
-                            let con = Controller.getController();
                             con.player.draw(cards.length, cards);
                         }
                         //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
                     });
                 }
-
                 async function drawFunc(idUser, idUser2, num, source, idLobby) {
                     var controller = "<?php echo $controller; ?>";
                     var response = await fetch("http://localhost:8080/" + controller + "/draw/" + idUser + "/" +
@@ -56,7 +57,6 @@
                         return; //zatraziti od Urosa da vraca nesto u backend php f-ji,recimo string done
                     });
                 }
-
                 async function skipFunc(idUser, idUser2, idLobby) {
                     var controller = "<?php echo $controller; ?>";
                     var response = await fetch("http://localhost:8080/" + controller + "/skip/" + idUser + "/" +
@@ -81,7 +81,6 @@
                         //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
                     });
                 }
-
                 async function viewCardFunc(idUser, source, num, idLobby) {
                     var controller = "<?php echo $controller; ?>";
                     var response = await fetch("http://localhost:8080/" + controller + "/viewCard/" + idUser +
@@ -102,8 +101,6 @@
                         Controller.getController().handleUpdate(data);
                     });
                 }
-
-
                 async function updateFunc(idLobby) {
                     var controller = "<?php echo $controller; ?>";
                     var response = await fetch("http://localhost:8080/" + controller + "/update/" + idLobby, {
@@ -126,8 +123,6 @@
                         //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
                     });
                 }
-
-
                 async function myHandFunc(idUser) {
                     var controller = "<?php echo $controller; ?>";
                     var response = await fetch("http://localhost:8080/" + controller + "/myHand/" + idUser, {
@@ -142,15 +137,12 @@
                     return returnData;
                 };
 
-
                 function claimTurn(idUser, card) {
-                    claimTurnFunc(idUser, idLobby, card).then((data) => {
+                    return claimTurnFunc(idUser, idLobby, card).then((data) => {
                         return JSON.parse(data);
                         //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
                     });
                 }
-
-
                 async function claimTurnFunc(idUser, idLobby, card) {
                     var controller = "<?php echo $controller; ?>";
                     var response = await fetch("http://localhost:8080/" + controller + "/claimTurn/" + idUser +
@@ -172,8 +164,6 @@
                         return;
                     });
                 }
-
-
                 async function cgrFunc(rule, newValue, card) {
                     var controller = "<?php echo $controller; ?>";
                     var response = await fetch("http://localhost:8080/" + controller + "/changeGlobalRule/" +
@@ -195,11 +185,9 @@
                         return;
                     });
                 }
-
-
                 async function throwFunc(idUser, card, idlobby) {
                     var controller = "<?php echo $controller; ?>";
-                    var response = await fetch("http://localhost:8080/" + controller + "/claimTurn/" + idUser +
+                    var response = await fetch("http://localhost:8080/" + controller + "/throw/" + idUser +
                         "/" + card + "/" + idLobby, {
                             headers: {
                                 'Content-Type': 'application/json',
@@ -208,18 +196,34 @@
                             method: "GET",
                             mode: "cors"
                         });
-                    var returnData = await response.json();
-                    return returnData;
+                    return 'topcina';
+                };
+
+                function endTurn() {
+                    endTurnFunc(idLobby).then((data) => {
+                    });
+                }
+                async function endTurnFunc(idLobby) {
+                    var controller = "<?php echo $controller; ?>";
+                    var response = await fetch("http://localhost:8080/" + controller + "/endTurn/" + idLobby, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                            },
+                            method: "GET",
+                            mode: "cors"
+                        });
+                    return 'topcina';
                 };
     </script>
     <script src="<?php echo base_url('game/Rule.js'); ?>"></script>
+    <script src="<?php echo base_url('game/RuleObjects.js'); ?>"></script>
     <script src="<?php echo base_url('game/TargetFunctions.js'); ?>"></script>
     <script src="<?php echo base_url('game/Deck.js'); ?>"></script>
     <script src="<?php echo base_url('game/Player.js'); ?>"></script>
     <script src="<?php echo base_url('game/Ruleset.js'); ?>"></script>
     <script src="<?php echo base_url('game/Controller.js'); ?>"></script>
     <script src="<?php echo base_url('game/graphics.js'); ?>"></script>
-    <script src="<?php echo base_url('game/TestCases.js'); ?>"></script>
 
     <link rel="stylesheet" href="<?php echo base_url('base/Navbar.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url('base/Base.css') ?>" />
@@ -245,27 +249,13 @@
         var ctx = c.getContext("2d");
 
         //var con = new Controller(rules, ids, idUser);
-        var con = Controller.getController('', playerIDs, myID);
+        var con = Controller.getController(rulesSTRING, playerIDs, myID);
 
-        window.addEventListener('resize', resizeGame, false);
         cardImg.onload = function () {
             gm = new GraphicsManager(con);
             con.addGM(gm);
 
             con.startMe();
-
-            gm.newCard('Jack', 'Diamonds');
-            gm.newCard('Ace', 'Spades');
-            gm.newCard('7', 'Spades');
-            gm.newCard('Cmar', 'Hearts');
-            gm.newCard('Jack', 'Diamonds');
-            gm.newCard('Ace', 'Spades');
-            //     gm.newCard('7', 'Spades');
-            //     gm.newCard('Cmar', 'Hearts');
-            //     gm.newCard('Jack', 'Diamonds');
-            //     gm.newCard('Ace', 'Spades');
-            //     gm.newCard('7', 'Spades');
-            //     gm.newCard('Cmar', 'Hearts');
         }
         cardImg.onerror= function () {
             console.log('ERROR-IMAGE IS AN ASSHOLE! src:' + cardImg.src);
