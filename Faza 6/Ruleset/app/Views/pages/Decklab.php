@@ -27,6 +27,66 @@
 </head>
 
 <body class="">
+<div class="header">
+        <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
+            <a class="navbar-brand" href="<?php echo site_url("$controller");?>">
+                <img id='logoRuleImage' src="<?php echo base_url('assets/navbar/rule_icon.png'); ?>" alt="Logo" class='logoImage'>
+                <img id='logoSetImage' src="<?php echo base_url('assets/navbar/set_icon.png'); ?>" alt="Logo" class='logoImage'>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarElements"
+                aria-controls="navbarElements" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarElements">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                    <?php
+                        if ($_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url("$controller/login_page")."'>Login</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if ($_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Register</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if (!$_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Saved Decks</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if ($controller == "AdminController") {
+                          echo "<a class='nav-link' href='".site_url("$controller/registerAdmin")."'>Choose Admin</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if ($controller == "AdminController") {
+                          echo "<a class='nav-link' href='".site_url("$controller/changeHD")."'>Choose Highlighted Decks</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if (!$_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url("$controller/logout")."'>Logout</a>";
+                        }
+                    ?>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
 
     <div class="container-fluid">
         <br>
@@ -79,13 +139,13 @@
                                     <input type="radio" name="ruleRadio" checked value="all">
                                     <div class="mr-1">All</div>
                                     <input type="radio" name="ruleRadio" value="Clubs"><img
-                                        src="../assets/decklab/clubs.png" class="suit blackSuit mr-1">
+                                        src="<?php echo base_url('assets/decklab/clubs.png'); ?>" class="suit blackSuit mr-1">
                                     <input type="radio" name="ruleRadio" value="Diamonds"><img
-                                        src="../assets/decklab/diamonds.png" class="suit redSuit mr-1">
+                                        src="<?php echo base_url('assets/decklab/diamonds.png'); ?>" class="suit redSuit mr-1">
                                     <input type="radio" name="ruleRadio" value="Spades"><img
-                                        src="../assets/decklab/spades.png" class="suit blackSuit mr-1">
+                                        src="<?php echo base_url('assets/decklab/spades.png'); ?>" class="suit blackSuit mr-1">
                                     <input type="radio" name="ruleRadio" value="Hearts"><img
-                                        src="../assets/decklab/hearts.png" class="suit redSuit">
+                                        src="<?php echo base_url('assets/decklab/hearts.png'); ?>" class="suit redSuit">
                                 </div>
                             </th>
 
@@ -98,7 +158,7 @@
                     </tbody>
                 </table>
 
-                <form action="<?= site_url("usercontroller/decklab/{}") ?>">
+                <form action="<?= site_url("$controller/decklab") ?>">
                     <textarea name="deckDecription" class="form-control customInput" rows="3" style="resize: none;"
                         maxlength="250" required placeholder="Enter a brief description of the ruleset..."></textarea>
                     <br>

@@ -3,9 +3,9 @@ namespace App\Controllers;
 use App\Models\AdminModel;
 use App\Models\UserModel;
 use App\Models\HDecksModel;
-class AdminController extends Controller
+class AdminController extends UserController
 {
-    public function index(){
+    public function index($idUser=null){
         if ($idUser != null) {
             $userModel = new UserModel();
             $user = $userModel->find($idUser);
@@ -24,13 +24,15 @@ class AdminController extends Controller
             $userID=$this->request->getVar('userID');
             $adminModel = new AdminModel();
             $adminModel->registerAdmin($userID, 0);
-            return redirect()->to(site_url("controller/index"));
+            $controller=$this->session->get('controller');
+            return redirect()->to(site_url("$controller/index"));
         }
-        else return $this->show('registeradmin',[]);
+        else return $this->show('registeradmin',['controller'=>$this->session->get('controller')]);
     }
     
     public function changeHD()
     {
+        $controller=$this->session->get('controller');
         if($this->request->getVar('idDeck'))
         {
             $idDeck = $this->request->getVar('idDeck');
@@ -39,13 +41,14 @@ class AdminController extends Controller
             {
                 $hdecksmodel = new HDecksModel();
                 $hdecksmodel->change_HD($idDeck, $seqNum);
-                return redirect()->to(site_url("controller/index"));
+                
+                return redirect()->to(site_url("$controller/index"));
             }
-            return $this->show('HD_change',[]);
+            return $this->show('HD_change',['controller'=>$controller]);
         }
         else 
         {
-            return $this->show('HD_change',[]);
+            return $this->show('HD_change',['controller'=>$controller]);
         }
     }
 

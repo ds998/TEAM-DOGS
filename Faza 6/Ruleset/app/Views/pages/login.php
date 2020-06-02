@@ -23,10 +23,9 @@
 </head>
 
 <body>
-    <div class="header">
-        <nav class="navbar bg-dark navbar-dark">
-            <!-- navbar-expand-lg -->
-            <a class="navbar-brand" href="../main/main.html">
+<div class="header">
+        <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
+            <a class="navbar-brand" href="<?php echo site_url("$controller");?>">
                 <img id='logoRuleImage' src="<?php echo base_url('assets/navbar/rule_icon.png'); ?>" alt="Logo" class='logoImage'>
                 <img id='logoSetImage' src="<?php echo base_url('assets/navbar/set_icon.png'); ?>" alt="Logo" class='logoImage'>
             </a>
@@ -39,16 +38,46 @@
             <div class="collapse navbar-collapse" id="navbarElements">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../decklab/decklab.html">Create Ruleset</a>
+                    <?php
+                        if ($_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url("$controller/login_page")."'>Login</a>";
+                        }
+                    ?>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../deck_list/deckList.html">Find Ruleset</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="../login/login.html">Login</a>
+                    <?php
+                        if ($_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Register</a>";
+                        }
+                    ?>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../register/register.html">Register</a>
+                    <?php
+                        if (!$_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Saved Decks</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if ($controller == "AdminController") {
+                          echo "<a class='nav-link' href='".site_url("$controller/registerAdmin")."'>Choose Admin</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if ($controller == "AdminController") {
+                          echo "<a class='nav-link' href='".site_url("$controller/changeHD")."'>Choose Highlighted Decks</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if (!$_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url("$controller/logout")."'>Logout</a>";
+                        }
+                    ?>
                     </li>
                 </ul>
             </div>
@@ -56,7 +85,7 @@
     </div>
     <container>
         <div class="form_class">
-            <form name = "login_form" action = "<?= site_url("Controller/login_submit") ?>" method="post">
+            <form name = "login_form" action = "<?= site_url("$controller/login_submit") ?>" method="post">
                 <br>
                 <div class="form-group">
                     <label for="inputUsername" class="label_class">Username</label>
@@ -86,7 +115,7 @@
                     <input type="submit" name="login_submit_button" class="btn btn-primary" value="Login">    
                 </div>
                 <small id="needAccount" class="form-text text-muted">Don't have an account?
-                    <a id = "register_link" href="<?php echo site_url("Controller/register"); ?>">REGISTER</a>
+                    <a id = "register_link" href="<?php echo site_url("$controller/register"); ?>">REGISTER</a>
                 </small>
             </form>
         </div>

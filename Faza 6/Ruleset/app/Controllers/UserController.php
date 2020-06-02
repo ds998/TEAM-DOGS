@@ -60,8 +60,7 @@ class UserController extends Controller
 
     public function decklab()
     {
-        
-        echo "deckDesc =".$this->request->getVar('deckDecription');
+        $controller=$this->session->get('controller');
         if($this->request->getVar('deckDecription')){
             $desc  = $this->request->getVar('deckDecription');
             $cards = $this->request->getVar('cards');
@@ -84,9 +83,9 @@ class UserController extends Controller
                 'numberOfRatings' => 0,
             ];
             $deckModel->insert($data);
-            return redirect()->to(site_url("controller/index"));
+            return redirect()->to(site_url("$controller/index"));
         }
-        else return $this->show('decklab',[]);
+        else return $this->show('decklab',['controller'=>$controller]);
     }
 
     

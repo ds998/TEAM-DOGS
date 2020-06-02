@@ -68,10 +68,19 @@ class Controller extends BaseController
             $userModel = new UserModel();
             $response = $userModel->register($username, $email, password_hash($password, PASSWORD_BCRYPT));
             $idUser = ($userModel->findName($username))[0]->idUser;
-            if($response == -1 || $response == -2)return $this->show('register',[]);
-            return redirect()->to(site_url("usercontroller/index/$idUser"));
+            if($response == -1 || $response == -2)return $this->show('register',['controller'=>$this->session->get('controller')]);
+            $adminModel=new AdminModel();
+            $controller="";
+            $isAdmin=$adminModel->find($idUser);
+            if($isAdmin!=null){
+                $controller="AdminController";
+            }
+            else{
+                $controller="UserController";
+            }
+            return redirect()->to(site_url("$controller/index/$idUser"));
         }
-        else return $this->show('register',[]);
+        else return $this->show('register',['controller'=>$this->session->get('controller')]);
     }
 
     public function getDecks()
@@ -83,7 +92,8 @@ class Controller extends BaseController
     {
         $deckModel = new DeckModel();
         $decks = $deckModel->findAll();
-        return $this->show('deckList', ['decks'=>$decks]);
+        $controller=$this->session->get('controller');
+        return $this->show('deckList', ['decks'=>$decks,'controller'=>$controller]);
     }
 
     public function listUserDecks()
@@ -92,8 +102,8 @@ class Controller extends BaseController
         $userDeckModel = new UserDeckModel();
         $decks = $userDeckModel->query("select u.username, d.rating from user u, user_decks d where u.idUser=d.idUser and u.idUser=$idUser");
         $decks = $decks->getResult();
-
-        return $this->show('userDeckList', ['decks'=>$decks]);
+        $controller=$this->session->get('controller');
+        return $this->show('userDeckList', ['controller'=>$controller,'decks'=>$decks]);
     }
     public function deckPreview($idDeck)
     {
@@ -249,7 +259,8 @@ class Controller extends BaseController
     }
 
     public function login_page($error=null) {
-        return $this->show('login',['error'=>$error]);
+        $controller=$this->session->get('controller');
+        return $this->show('login',['controller'=>$this->session->get('controller'),'error'=>$error]);
     }
 
     public function login_submit() {

@@ -32,6 +32,66 @@ jQuery(document).ready(function($) {
     });
 });</script>
 <body>
+<div class="header">
+        <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
+            <a class="navbar-brand" href="<?php echo site_url("$controller");?>">
+                <img id='logoRuleImage' src="<?php echo base_url('assets/navbar/rule_icon.png'); ?>" alt="Logo" class='logoImage'>
+                <img id='logoSetImage' src="<?php echo base_url('assets/navbar/set_icon.png'); ?>" alt="Logo" class='logoImage'>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarElements"
+                aria-controls="navbarElements" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarElements">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                    <?php
+                        if ($_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url("$controller/login_page")."'>Login</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if ($_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Register</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if (!$_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Saved Decks</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if ($controller == "AdminController") {
+                          echo "<a class='nav-link' href='".site_url("$controller/registerAdmin")."'>Choose Admin</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if ($controller == "AdminController") {
+                          echo "<a class='nav-link' href='".site_url("$controller/changeHD")."'>Choose Highlighted Decks</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if (!$_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url("$controller/logout")."'>Logout</a>";
+                        }
+                    ?>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
     <div class="container-fluid">
         <br>
         <div class="row">
@@ -50,7 +110,7 @@ jQuery(document).ready(function($) {
                         <?php 
                             foreach ($decks as $deck) {
                                 echo "
-                                <tr class='deckTableRow addCard clickable-row' data-href='deckPreview/$deck->idDeck'> 
+                                <tr class='deckTableRow addCard clickable-row' data-href='".site_url("$controller/deckPreview/$deck->idDeck")."'> 
                                     <td>{$deck->name}</td>
                                     <td>{$deck->Rating}</td>
                                     <td>{$deck->numberOfRatings}</td>

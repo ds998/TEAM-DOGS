@@ -26,7 +26,7 @@
 <body>
     <div class="header">
         <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
-            <a class="navbar-brand" href="../main/main.html">
+            <a class="navbar-brand" href="<?php echo site_url("$controller");?>">
                 <img id='logoRuleImage' src="<?php echo base_url('assets/navbar/rule_icon.png'); ?>" alt="Logo" class='logoImage'>
                 <img id='logoSetImage' src="<?php echo base_url('assets/navbar/set_icon.png'); ?>" alt="Logo" class='logoImage'>
             </a>
@@ -41,42 +41,42 @@
                     <li class="nav-item">
                     <?php
                         if ($_SESSION['user']->isGuest) {
-                          echo "<a class='nav-link' href='".site_url('Controller/login_page')."'>Login</a>";
+                          echo "<a class='nav-link' href='".site_url("$controller/login_page")."'>Login</a>";
                         }
                     ?>
                     </li>
                     <li class="nav-item">
                     <?php
                         if ($_SESSION['user']->isGuest) {
-                          echo "<a class='nav-link' href='".site_url('UserController/register')."'>Register</a>";
+                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Register</a>";
                         }
                     ?>
                     </li>
                     <li class="nav-item">
                     <?php
                         if (!$_SESSION['user']->isGuest) {
-                          echo "<a class='nav-link' href='".site_url('UserController/register')."'>Saved Decks</a>";
+                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Saved Decks</a>";
                         }
                     ?>
                     </li>
                     <li class="nav-item">
                     <?php
                         if ($controller == "AdminController") {
-                          echo "<a class='nav-link' href='".site_url('AdminController/registerAdmin')."'>Choose Admin</a>";
+                          echo "<a class='nav-link' href='".site_url("$controller/registerAdmin")."'>Choose Admin</a>";
                         }
                     ?>
                     </li>
                     <li class="nav-item">
                     <?php
                         if ($controller == "AdminController") {
-                          echo "<a class='nav-link' href='".site_url('UserController/register')."'>Choose Highlighted Decks</a>";
+                          echo "<a class='nav-link' href='".site_url("$controller/changeHD")."'>Choose Highlighted Decks</a>";
                         }
                     ?>
                     </li>
                     <li class="nav-item">
                     <?php
                         if (!$_SESSION['user']->isGuest) {
-                          echo "<a class='nav-link' href='".site_url('UserController/logout')."'>Logout</a>";
+                          echo "<a class='nav-link' href='".site_url("$controller/logout")."'>Logout</a>";
                         }
                     ?>
                     </li>
@@ -101,15 +101,15 @@
                 <p id = "table_title"></p>
             </div>
             <div id = "buttons_div">
-                <a class="btn btn-primary btn-effect <?php if ($_SESSION['user']->isGuest)echo 'disabled'?>" role='button' href="<?php echo site_url('usercontroller/decklab'); ?>">Create Deck</a>
+                <a class="btn btn-primary btn-effect <?php if ($_SESSION['user']->isGuest)echo 'disabled'?>" role='button' href="<?php echo site_url("$controller/decklab"); ?>">Create Deck</a>
                 <br>
-                <a class="btn btn-primary btn-effect" href="<?php echo site_url("Controller/decklist"); ?>" role="button">List Decks</a>
+                <a class="btn btn-primary btn-effect" href="<?php echo site_url("$controller/decklist"); ?>" role="button">List Decks</a>
                 <br>
                 <br>
                 <br>
-                <a class="btn btn-primary btn-effect" href="<?php echo site_url("Controller/all_lobbies"); ?>" role="button">Join Lobby</a>
+                <a class="btn btn-primary btn-effect" href="<?php echo site_url("$controller/all_lobbies"); ?>" role="button">Join Lobby</a>
                 <br>
-                <a class="btn btn-primary btn-effect" href="<?php echo site_url("Controller/decklist"); ?>" role="button">Create Lobby</a>
+                <a class="btn btn-primary btn-effect" href="<?php echo site_url("$controller/decklist"); ?>" role="button">Create Lobby</a>
             </div>
         </div>
 
