@@ -173,8 +173,6 @@
                                 class="form-control customInput" required placeholder="Enter Ruleset Name"> </div>
                         <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
                         class="btn btn-primary flex-fill" onclick="convertStoredInfo()">Save</button> </div>
-                        <div class="col-sm-3 col-lg-2 d-flex" style="padding-bottom: 2px;"> <button type="submit"
-                            name="decklab" class="btn btn-success flex-fill" onclick="convertStoredInfo()">Play</button> </div>
                     </div>
                 </form>
             </div>
