@@ -11,4 +11,8 @@ class UserDeckModel extends Model
         public function getEntry($idUser,$idDeck){
                 return $this->where('idDeck',$idDeck)->where('idUser',$idUser)->findAll();
         }
+
+        public function getUserEntries($idUser){
+                return $this->where('idUser',$idUser)->findAll();
+        }
 }

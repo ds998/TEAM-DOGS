@@ -55,7 +55,7 @@
                     <li class="nav-item">
                     <?php
                         if (!$_SESSION['user']->isGuest) {
-                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Saved Decks</a>";
+                          echo "<a class='nav-link' href='".site_url("$controller/listUserDecks")."'>Saved Decks</a>";
                         }
                     ?>
                     </li>

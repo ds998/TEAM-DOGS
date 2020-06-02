@@ -25,7 +25,6 @@
 
 <body>
 <div class="header">
-<div class="header">
         <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
             <a class="navbar-brand" href="<?php echo site_url("$controller");?>">
                 <img id='logoRuleImage' src="<?php echo base_url('assets/navbar/rule_icon.png'); ?>" alt="Logo" class='logoImage'>
@@ -56,7 +55,7 @@
                     <li class="nav-item">
                     <?php
                         if (!$_SESSION['user']->isGuest) {
-                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Saved Decks</a>";
+                          echo "<a class='nav-link' href='".site_url("$controller/listUserDecks")."'>Saved Decks</a>";
                         }
                     ?>
                     </li>

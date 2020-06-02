@@ -95,16 +95,6 @@ class Controller extends BaseController
         $controller=$this->session->get('controller');
         return $this->show('deckList', ['decks'=>$decks,'controller'=>$controller]);
     }
-
-    public function listUserDecks()
-    {
-        $idUser = $_SESSION['user']->idUser;
-        $userDeckModel = new UserDeckModel();
-        $decks = $userDeckModel->query("select u.username, d.rating from user u, user_decks d where u.idUser=d.idUser and u.idUser=$idUser");
-        $decks = $decks->getResult();
-        $controller=$this->session->get('controller');
-        return $this->show('userDeckList', ['controller'=>$controller,'decks'=>$decks]);
-    }
     public function deckPreview($idDeck)
     {
         $deckModel = new DeckModel();

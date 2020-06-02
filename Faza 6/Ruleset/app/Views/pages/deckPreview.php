@@ -54,7 +54,7 @@
                     <li class="nav-item">
                     <?php
                         if (!$_SESSION['user']->isGuest) {
-                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Saved Decks</a>";
+                          echo "<a class='nav-link' href='".site_url("$controller/listUserDecks")."'>Saved Decks</a>";
                         }
                     ?>
                     </li>
@@ -167,9 +167,9 @@
                 -->
 
                     <div class="d-flex flex-row-reverse">
-                        <a class="btn btn-primary" href="<?php echo base_url("$controller/create_lobby_page/$deck->idDeck") ?>" role="button">Play</a>
-                        <a class="btn btn-primary" href="<?php if(!$user->isGuest)echo base_url("$controller/share_a_deck/$deck->idDeck") ?>" role="button">Share</a>
-                        <a class="btn btn-primary" href="<?php echo base_url("$controller/save_user_deck/$user->idUser/$deck->idDeck") ?>" role="button">Save</a>
+                        <a class="btn btn-primary" href="<?php echo base_url("$controller/create_lobby_page/$deck->idDeck"); ?>" role="button">Play</a>
+                        <a class="btn btn-primary" href="<?php if(!$user->isGuest)echo base_url("$controller/share_a_deck/$deck->idDeck"); ?>" role="button">Share</a>
+                        <a class="btn btn-primary" href="<?php echo base_url("$controller/save_user_deck/{$deck->idDeck}"); ?>" role="button">Save</a>
                     </div>
                 </div>
             </div>

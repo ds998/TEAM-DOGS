@@ -101,11 +101,13 @@
                     </thead>
                     <tbody>
                         <?php 
-                            foreach ($decks->result_array() as $deck) {
+                            foreach ($decks as $deck) {
                                 echo "
-                                <tr class='deckTableRow addCard'> 
-                                    <td>{$deck->username}</td>
+                                <tr class='deckTableRow addCard clickable-row' data-href='".site_url("$controller/deckPreview/$deck->idDeck")."'> 
+                                    <td>{$deck->name}</td>
                                     <td>{$deck->Rating}</td>
+                                    <td>{$deck->numberOfRatings}</td>
+                                    <td>{$deck->numberOfPlays}</td>
                                 </tr>
                                     ";
                             }

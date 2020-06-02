@@ -42,12 +42,19 @@ class UserController extends Controller
         return $this->show('deljenje_spilova',['controller'=>$controller,'deck_id'=>$deck_id,'message'=>$message]);
     }
 
-    public function save_user_deck($idUser, $idDeck)
+    public function save_user_deck($idDeck)
     {
+        $user=$this->session->get('user');
+        $idUser=$user->idUser;
         $udModel = new UserDeckModel();
         $dModel = new DeckModel();
-        $creatorId = $dModel->find($idDeck)->idUser;
-
+        $deck=$dModel->find($idDeck);
+        $creatorId = $deck->idUser;
+        $entries=$udModel->getEntry($idUser,$idDeck);
+        $controller=$this->session->get('controller');
+        if($entries!=null){
+            return redirect()->to(site_url("$controller/deckPreview/{$idDeck}"));
+        }
         $data = [
             'idUser' => $idUser,
             'idDeck' => $idDeck,
@@ -56,6 +63,8 @@ class UserController extends Controller
         ];
 
         $udModel->insert($data);
+        
+        return redirect()->to(site_url("$controller/deckPreview/{$idDeck}"));
     }
 
     public function decklab()
@@ -68,10 +77,11 @@ class UserController extends Controller
             $name  = $this->request->getVar('deckName');
             $rules = $this->request->getVar('rules');
             $globalRules = $this->request->getVar('globalRules');
-
+            $user=$this->session->get('user');
             $deckModel = new DeckModel();
+            $userDeckModel=new UserDeckModel();
             $data = [
-                'idUser' => 1,
+                'idUser' => $user->idUser,
                 'cardRules' => $rules,
                 'Cards' => $cards,
                 'descr' => $desc,
@@ -82,6 +92,7 @@ class UserController extends Controller
                 'numberOfPlays' => 0,
                 'numberOfRatings' => 0,
             ];
+
             $deckModel->insert($data);
             return redirect()->to(site_url("$controller/index"));
         }
@@ -119,11 +130,25 @@ class UserController extends Controller
             'Rating' => 0
         ];
         $udModel->insert($data);
-        return redirect()->to(site_url('Controller'));
+        $controller=$this->session->get('controller');
+        return redirect()->to(site_url("$controller"));
 
         
     }
 
+    public function listUserDecks()
+    {
+        $idUser = $_SESSION['user']->idUser;
+        $userDeckModel = new UserDeckModel();
+        $deckIDs = $userDeckModel->getUserEntries($idUser);
+        $deckModel=new DeckModel();
+        $decks=array();
+        foreach($deckIDs as $deckID){
+            array_push($decks,$deckModel->find($deckID->idDeck));
+        }
+        $controller=$this->session->get('controller');
+        return $this->show('userDeckList', ['controller'=>$controller,'decks'=>$decks]);
+    }
 
     public function logout() {
         $this->session->destroy();
