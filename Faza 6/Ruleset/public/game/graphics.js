@@ -16,22 +16,22 @@ const BGCOLOR = "#EEEEEE";
 
 const suitSprites = [];
 suitSprites['Clubs'] = new Image();
-suitSprites['Clubs'].src = '../assets/game/clubs.png';
+suitSprites['Clubs'].src = '../../assets/game/clubs.png';
 suitSprites['Hearts'] = new Image();
-suitSprites['Hearts'].src = '../assets/game/hearts.png';
+suitSprites['Hearts'].src = '../../assets/game/hearts.png';
 suitSprites['Spades'] = new Image();
-suitSprites['Spades'].src = '../assets/game/spades.png';
+suitSprites['Spades'].src = '../../assets/game/spades.png';
 suitSprites['Diamonds'] = new Image();
-suitSprites['Diamonds'].src = '../assets/game/diamonds.png';
+suitSprites['Diamonds'].src = '../../assets/game/diamonds.png';
 
 const cardHImg = new Image();
-cardHImg.src = '../assets/game/cardHover.png';
+cardHImg.src = '../../assets/game/cardHover.png';
 const cardBackImg = new Image();
-cardBackImg.src = '../assets/game/cardBack.png';
+cardBackImg.src = '../../assets/game/cardBack.png';
 const cardBackHImg = new Image();
-cardBackHImg.src = '../assets/game/cardBackHover.png';
+cardBackHImg.src = '../../assets/game/cardBackHover.png';
 const cardImg = new Image();
-cardImg.src = '../assets/game/card.png';
+cardImg.src = '../../assets/game/card.png';
 
 function getLines(ctx, text, maxWidth) {
     var words = text.split(" ");
@@ -115,6 +115,7 @@ class GraphicsManager {
 		}.bind(this), 33);
 
 		this.cards = [];
+		this.enemyCards = [];
 
 		//Listeners
 		this.mousemoveListener = this.updateLogic.bind(this);
@@ -145,7 +146,7 @@ class GraphicsManager {
 		}
 	}
 	chooseCharacter() {
-		this.choose=true;
+		this.choose=false;
 	}
 
 	newCard(name, suit) {
@@ -200,7 +201,7 @@ class GraphicsManager {
 			this.cards[c].draw(this.ctx, HAND_X + offsetX, HAND_Y);
 		}
 
-		let enemies = [{cardCount: 1}, {cardCount: 2}, {cardCount: 3}, {cardCount: 4},{cardCount: 5}, {cardCount: 6}, {cardCount: 7}, {cardCount: 8}, {cardCount: 9}];
+		let enemies = this.controller.enemyPlayers;
 		this.ctx.fillStyle = "#FFFFFF";
 		this.ctx.textAlign = "center";
 		this.ctx.font = CARD_FONT_XL.toString(10) + "px Calibri";
@@ -211,13 +212,13 @@ class GraphicsManager {
 		}
 
 		for (let e = 0; e < enemies.length; e++) {
-			enemies[e].cardBack = new CardBackSprite();
+			this.enemyCards[e] = new CardBackSprite();
 			let info = GraphicsManager.enemyLocations[enemies.length-1][e];
-			this.drawEnemy(info[1], info[2], enemies[e], info[0]);
+			this.drawEnemy(info[1], info[2], e, info[0]);
 		}
 	}
 
-	drawEnemy(curP, maxP, player, position) {
+	drawEnemy(curP, maxP, index, position) {
 		this.ctx.save();
 		let rotation=0;
 		let localX=this.lastX;
@@ -247,15 +248,15 @@ class GraphicsManager {
 
 		let offsetX = ((maxP + 1)/ 2-(curP + 1)) * CARD_W * 3 / 2;
 
-		player.cardBack.setXY(0 - offsetX - CARD_W / 2, 0);
-		if (this.choose) player.cardBack.setHover(player.cardBack.isHover(localX, localY));
+		this.enemyCards[index].setXY(0 - offsetX - CARD_W / 2, 0);
+		if (this.choose) this.enemyCards[index].setHover(this.enemyCards[index].isHover(localX, localY));
 
-		player.cardBack.draw(this.ctx, 0 - offsetX - CARD_W / 2, 0);
+		this.enemyCards[index].draw(this.ctx, 0 - offsetX - CARD_W / 2, 0);
 
 		this.ctx.translate(- offsetX, CARD_H / 2);
 		this.ctx.rotate(Math.PI * -rotation);
-		if (rotation == Math.floor(rotation)) this.ctx.fillText(player.cardCount, 0, 0);
-		else this.ctx.fillText(player.cardCount, 0, CARD_FONT_XL/3);
+		if (rotation == Math.floor(rotation)) this.ctx.fillText(this.controller.enemyPlayers[index].cardCount, 0, 0);
+		else this.ctx.fillText(this.controller.enemyPlayers[index].cardCount, 0, CARD_FONT_XL/3);
 		this.ctx.restore();
 	}
 }

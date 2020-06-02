@@ -1,8 +1,8 @@
 <html>
-<?php 
-    $idUser=4;
+<?php
+    $idUser=6;
     $idLobby=42;
-    $controller='controller';
+    $controller='Controller';
 ?>
 <head>
     <title>GAME TEST</title>
@@ -19,9 +19,7 @@
                 var myID = "<?php echo $idUser ?>";
                 var idLobby = "<?php echo $idLobby ?>";
 
-                
-
-                function draw(idUser, idUser2, num, source, card) {
+                function draw(idUser, idUser2, num, source) {
                     drawFunc(idUser, idUser2, num, source, card, idLobby).then((data) => {
                         if (idUser2 == myID) {
                             let con = Controller.getController();
@@ -31,12 +29,13 @@
                     });
                 }
 
-                async function drawFunc(idUser, idUser2, num, source, card, idLobby) {
+                async function drawFunc(idUser, idUser2, num, source, idLobby) {
                     var controller = "<?php echo $controller; ?>";
                     var response = await fetch("http://localhost:8080/" + controller + "/draw/" + idUser + "/" +
-                        idUser2 + "/" + num + "/" + source + "/" + card + "/" + idLobby, {
+                        idUser2 + "/" + num + "/" + source + "/" + idLobby, {
                             headers: {
-                                'Accept': 'application/json'
+                                'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                             },
                             method: "GET",
                             mode: "cors"
@@ -45,19 +44,20 @@
                     return returnData;
                 };
 
-                function skip(idUser) {
-                    skipFunc(idUser, idLobby).then((data) => {
+                function skip(idUser, idUser2) {
+                    skipFunc(idUser, idUser2, idLobby).then((data) => {
                         if (idUser2 == myID) Controller.getController().markSkip();
                         return; //zatraziti od Urosa da vraca nesto u backend php f-ji,recimo string done
                     });
                 }
 
-                async function skipFunc(idUser, idLobby) {
+                async function skipFunc(idUser, idUser2, idLobby) {
                     var controller = "<?php echo $controller; ?>";
                     var response = await fetch("http://localhost:8080/" + controller + "/skip/" + idUser + "/" +
-                        idLobby, {
+                        idUser2 + "/" + idLobby, {
                             headers: {
-                                'Accept': 'application/json'
+                                'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                             },
                             method: "GET",
                             mode: "cors"
@@ -81,7 +81,8 @@
                     var response = await fetch("http://localhost:8080/" + controller + "/viewCard/" + idUser +
                         "/" + source + "/" + num + "/" + idLobby, {
                             headers: {
-                                'Accept': 'application/json'
+                                'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                             },
                             method: "GET",
                             mode: "cors"
@@ -92,8 +93,7 @@
 
                 function update() {
                     updateFunc(idLobby).then((data) => {
-                        JSON.parse(data);
-                        //ovde javascript kod za podatke(refreshovati innerhtml,tako nesto) koji se vracaju,znace Damjan sta da radi sa tim
+                        Controller.getController().handleUpdate(data);
                     });
                 }
 
@@ -126,6 +126,7 @@
                     var controller = "<?php echo $controller; ?>";
                     var response = await fetch("http://localhost:8080/" + controller + "/myHand/" + idUser, {
                         headers: {
+                            'Content-Type': 'application/json',
                             'Accept': 'application/json'
                         },
                         method: "GET",
@@ -149,7 +150,8 @@
                     var response = await fetch("http://localhost:8080/" + controller + "/claimTurn/" + idUser +
                         "/" + idLobby + "/" + card, {
                             headers: {
-                                'Accept': 'application/json'
+                                'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                             },
                             method: "GET",
                             mode: "cors"
@@ -171,7 +173,8 @@
                     var response = await fetch("http://localhost:8080/" + controller + "/changeGlobalRule/" +
                         rule + "/" + newValue + "/" + card, {
                             headers: {
-                                'Accept': 'application/json'
+                                'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                             },
                             method: "GET",
                             mode: "cors"
@@ -193,7 +196,8 @@
                     var response = await fetch("http://localhost:8080/" + controller + "/claimTurn/" + idUser +
                         "/" + card + "/" + idLobby, {
                             headers: {
-                                'Accept': 'application/json'
+                                'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                             },
                             method: "GET",
                             mode: "cors"
@@ -235,12 +239,15 @@
         var ctx = c.getContext("2d");
 
         //var con = new Controller(numPlayers, rules, ids, idUser);
-        var con = new Controller(2, '', [69, 6], 69);
+        var con = Controller.getController(2, '', [6, 69], 69);
 
         window.addEventListener('resize', resizeGame, false);
         cardImg.onload = function () {
             gm = new GraphicsManager(con);
             con.addGM(gm);
+
+            con.startMe();
+
             gm.newCard('Jack', 'Diamonds');
             gm.newCard('Ace', 'Spades');
             gm.newCard('7', 'Spades');
@@ -253,6 +260,9 @@
             //     gm.newCard('Ace', 'Spades');
             //     gm.newCard('7', 'Spades');
             //     gm.newCard('Cmar', 'Hearts');
+        }
+        cardImg.onerror= function () {
+            console.log('ERROR-IMAGE IS AN ASSHOLE! src:' + cardImg.src);
         }
 
     });

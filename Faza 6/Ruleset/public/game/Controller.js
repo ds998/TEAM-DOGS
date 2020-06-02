@@ -1,12 +1,14 @@
 class Controller {
     static controller = null;
 
-    static getController(numPlayers, rules, deck_template) {
-        if (Controller.controller == null && numPlayers != null && rules != null && deck_template != null)
-            Controller.controller = new Controller(numPlayers, rules, deck_template);
+    static getController(numPlayers, rules, ids, playerId) {
+        if (Controller.controller == null && numPlayers != null && rules != null && ids != null && playerId != null)
+            Controller.controller = new Controller(numPlayers, rules, ids, playerId);
         return Controller.controller;
     }
 
+    diff (diffMe, diffBy) {diffMe.split(diffBy).join('');}
+    
     constructor(numPlayers, rules, ids, playerId) {
 
         //Ruleset
@@ -15,22 +17,22 @@ class Controller {
 
         //Deck
         this.deck = new Deck(ids[numPlayers]);
-        
+        this.lastData=null;
+
         //Discard pile
-        this.discard = new Discard(ids[numPlayers+1], null);
+        this.discard = new Discard(ids[numPlayers + 1], null);
 
         //Players
         this.curPlayer = 0;
         this.numPlayers = numPlayers;
-        this.players = [];
-        this.claimed=false;
+        this.enemyPlayers = [];
+        this.claimed = false;
         for (let i = 0; i < numPlayers; i++)
-            if (ids[i] == playerId) {
-                this.playerIndex = i;
-                this.player=this.players[i] = new Player(this, ids[i]);
-            } else {
-                this.players[i] = new EnemyPlayer(ids[i]);
-            }
+            if (ids[i] == playerId)
+                this.player = new Player(this, i, ids[i]);
+            else
+                this.enemyPlayers.push(new EnemyPlayer(ids[i], i, 0));
+
 
         //Event handler
         this.handler = new EventTarget();
@@ -40,7 +42,9 @@ class Controller {
         this.handler.addEventListener('cardPlayed', (e) => {
             this.ruleset.handleOnPlayEvent(e.detail);
         }, false);
+    }
 
+    startMe() {
         setInterval(this.updateState(), 200);
     }
 
@@ -65,16 +69,16 @@ class Controller {
     // TARGET FUNCTION IMPLEMENTATION
     // Return the player after the player sent as a paramater
     getNextPlayer() {
-        return (this.playerIndex+1)%this.numPlayers;
+        return (this.player.index + 1) % this.numPlayers;
     }
 
     // Return the player after the player sent as a paramater
     getPreviousPlayer() {
-        return (this.playerIndex-1+this.numPlayers)%this.numPlayers;
+        return (this.player.index - 1 + this.numPlayers) % this.numPlayers;
     }
 
     markSkip() {
-        this.skip=true;
+        this.skip = true;
     }
 
     chooseOther() {
@@ -95,11 +99,11 @@ class Controller {
     }
 
     drawFromDeck(num_cards = 1) {
-        if (myTurn()) draw(this.players[this.playerIndex].id, this.players[this.playerIndex].id, num_cards, this.deckId, null);
+        if (this.myTurn()) draw(this.player.id, this.player.id, num_cards, this.deckId);
     }
 
     myTurn() {
-        return (this.curPlayer == this.playerIndex) && this.claimed;
+        return (this.curPlayer == this.player.index) && this.claimed;
     }
 
     canPlay(card, cardDest) {
@@ -114,23 +118,94 @@ class Controller {
     }
 
     updateMe(data) {
-        this.curPlayer=data.curPlayer;
+        this.curPlayer = data.curPlayer;
         for (let i = 0; i < numPlayers; i++)
-            if (i == this.playerIndex) continue
-            else this.players[i].cardCount=data.cardCounts[i];
-        this.discard.top_card=data.disacrdCard;
-            
+            if (i == this.player.index) continue
+        else this.players[i].cardCount = data.cardCounts[i];
+        this.discard.top_card = data.disacrdCard;
+
     }
 
     randomPlayerIndex(canBeMe = true) {
-        let randIndex=Math.floor(Math.random() * Math.floor(this.numPlayers));
-        while (!canBeMe && randIndex==this.playerIndex) {
-            randIndex=Math.floor(Math.random() * Math.floor(this.numPlayers));
+        let randIndex = Math.floor(Math.random() * Math.floor(this.numPlayers));
+        while (!canBeMe && randIndex == this.player.index) {
+            randIndex = Math.floor(Math.random() * Math.floor(this.numPlayers));
         }
         return randIndex;
     }
 
     cardAt(n) {
         return this.player.hand[n];
+    }
+
+    handleUpdate(data) {
+        if (data == this.lastData) return;
+        let newCommands = this.diff(data, this.lastData);
+        this.lastData=data;
+        if (newCommands) {
+            let commands = newCommands.split(';');
+            
+            commands.forEach(command => {
+                parseRule(command);
+            });
+        }
+    }
+
+    parseRule(command) {
+        let args = command.split(',');
+        let idUserThrown, idUserAffected, numOfCards, idSource, rule, newValue, idUser, card;
+        switch (args[0]) {
+            case "draw":
+                idUserThrown = parseInt(args[1]);
+                idUserAffected = parseInt(args[2]);
+                numOfCards = parseInt(args[3]);
+                idSource = parseInt(args[4]);
+
+                imaginaryFunctionDraw(idUserThrown, idUserAffected, numOfCards, idSource);
+                break;
+            case "skip":
+                idUserThrown = parseInt(args[1]);
+                idUserAffected = parseInt(args[2]);
+
+                imaginaryFunctionSkip(idUserThrown, idUserAffected);
+                break;
+            case "view":
+                idUserThrown = parseInt(args[1]);
+                idSource = parseInt(args[2]);
+                numOfCards = parseInt(args[3]);
+            case "endTurn":
+                imaginaryFunctionEndTurn();
+                break;
+            case "claimed":
+                idUser = parseInt(args[1]);
+                imaginaryFunctionClaimed(idUser);
+                break;
+            case "cgr":
+                rule = args[1];
+                newValue = args[2];
+                imaginaryFunctionChangeGlobalRule(rule, newValue);
+                break;
+            case "throw":
+                idUser = parseInt(args[1]);
+                card = args[2];
+                imaginaryFunctionThrow(idUser, card);
+            default:
+                break;
+        }
+    }
+
+    handleDrawCommands(idUserThrown, idUserAffected, numOfCards, idSource) {
+        if ( idUserAffected!=this.player.id && idUserThrown == idUserAffected) {
+            //Draw
+            for(let e=0; e<this.enemyPlayers.length; e++) {
+                if (this.enemyPlayers[e].id == idUserThrown) {
+                    this.enemyPlayers[e].cardCount+=numOfCards;
+                    break;
+                }
+            }
+            
+        } else if (idUserAffected == this.player.id && idUserThrown != idUserAffected) {
+            draw(this.player.id, this.player.id, numOfCards, idSource);
+        }
     }
 }

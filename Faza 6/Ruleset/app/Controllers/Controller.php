@@ -462,7 +462,7 @@ class Controller extends BaseController
         $deckModel=new DeckModel();
         $lobbyModel=new LobbyModel();
         $lobbyDeckModel=new LobbyDeckModel();
-        $lobby=$lobbymodel->find($idLobby);
+        $lobby=$lobbyModel->find($idLobby);
         $deck=$deckModel->find($lobby->idDeck);
         $cards=$deck->Cards;
         $suits=$deck->suits;

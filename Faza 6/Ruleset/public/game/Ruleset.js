@@ -25,6 +25,10 @@ class Ruleset {
                     if (!(key in this.onDiscardMap)) this.onDiscardMap[key] = [];
                     this.onDiscardMap[key].push(this.generateEventHandler(rule));
                     break;
+                case triggers.PASSIVE:
+                    if (!(key in this.passiveMap)) this.passiveMap[key] = [];
+                    this.passiveMap[key].push(this.generateEventHandler(rule));
+                    break;
             }
         });
     }
@@ -127,12 +131,16 @@ class Ruleset {
         return ret;
     }
 
+    canJumpIn(card) {
+        
+    }
+
     static drawFromRule(controller, rule, event) {
         if (rule.type != types.DRAW_RULE) throw 'Error: Rule and handler missmatch!';
         let player = TargetFunctions[rule.detail.target](controller, rule, event);
         let source = TargetFunctions[rule.detail.source](controller, rule, event);
 
-        draw(event.detail.player, player, num, source, card);
+        draw(event.detail.player.id, player.id, num, source, card);
         //player.draw(rule.detail.num_cards, source);
     }
 
@@ -141,81 +149,102 @@ class Ruleset {
         let player = TargetFunctions[rule.detail.target](controller, rule, event);
         let source = TargetFunctions[rule.detail.source](controller, rule, event);
 
-        drawUntil(event.detail.player, player, source, card, rule.detail.target_card);
+        drawUntil(event.detail.player.id, player.id, source, card, rule.detail.target_card);
+    }
+
+    static skipRule(controller, rule, event) {
+        if (rule.type != types.SKIP_PLAYER_RULE) throw 'Error: Rule and handler missmatch!';
+        let player = TargetFunctions[rule.detail.target](controller, rule, event);
+
+        skip(event.detail.player.id, player.id);
+    }
+    
+    static changeRuleRule(controller, rule, event) {
+        if (rule.type != types.CHANGE_RULE_RULE) throw 'Error: Rule and handler missmatch!';
+        let source = TargetFunctions[rule.detail.source](controller, rule, event);
+
+        viewCard(event.detail.player.id, source);
+    }
+
+    static viewCardRule(controller, rule, event) {
+        if (rule.type != types.VIEW_CARD_RULE) throw 'Error: Rule and handler missmatch!';
+        let source = TargetFunctions[rule.detail.source](controller, rule, event);
+
+        viewCard(event.detail.player.id, source);
     }
 }
 
-function strToRules(str, cards, suits) {
-    let ret = str.split(';');
-    for (let r = 0; r < ret.length; r++) {
-        let ruleCode = ret[r].split(',');
-        let card = deck.values[ruleCode[0]];
-        let suit;
-        if (ruleCode[1] = 'a') suit = deck.suits[''];
-        else suit = deck.suits[ruleCode[1]];
-        let type = ruleCode[2];
+// function strToRules(str, cards, suits) {
+//     let ret = str.split(';');
+//     for (let r = 0; r < ret.length; r++) {
+//         let ruleCode = ret[r].split(',');
+//         let card = deck.values[ruleCode[0]];
+//         let suit;
+//         if (ruleCode[1] = 'a') suit = deck.suits[''];
+//         else suit = deck.suits[ruleCode[1]];
+//         let type = ruleCode[2];
 
-        switch (type) {
-            case types.DRAW_RULE:
-                let trigger = ruleCode[3];
-                let target = ruleCode[4];
-                let target_can_be_cur = false;
-                let source = ruleCode[5];
-                let num_cards = ruleCode[6];
-                let counteraction = ruleCode[7];
-                ret[r] = new DrawRule(card, suit, type, trigger, target, target_can_be_cur, source, num_cards, counteraction);
-                break;
-            case types.DRAW_UNTIL_RULE:
-                let trigger = ruleCode[3];
-                let target = ruleCode[4];
-                let target_can_be_cur = false;
-                let source = targets.DECK;
-                let target_card;
-                if (ruleCode[5]=='d') target_card='d';
-                else target_card = ruleCode[5];
-                let target_suit = ruleCode[6];
-                if (ruleCode[6]=='d') target_card='d';
-                else if (ruleCode[6]=='s') target_card='d';
-                else target_card = ruleCode[5];
-                let counteraction = ruleCode[7];
-                ret[r] = new DrawUntilRule(card, suit, type, trigger, target, target_can_be_cur, source, target_card, target_suit, counteraction);
-                break;
-            case types.SKIP_PLAYER_RULE:
-                let trigger = ruleCode[3];
-                let target = ruleCode[4];
-                let target_can_be_cur = false;
-                let source = ruleCode[5];
-                let num_cards = ruleCode[6];
-                let counteraction = ruleCode[7];
-                ret[r] = new DrawRule(card, suit, type, trigger, target, target_can_be_cur, source, num_cards, counteraction);
-                break;
-            case types.CHANGE_RULE_RULE:
-                let trigger = ruleCode[3];
-                let target = ruleCode[4];
-                let target_can_be_cur = false;
-                let source = ruleCode[5];
-                let num_cards = ruleCode[6];
-                let counteraction = ruleCode[7];
-                ret[r] = new DrawRule(card, suit, type, trigger, target, target_can_be_cur, source, num_cards, counteraction);
-                break;
-            case types.VIEW_CARD_RULE:
-                let trigger = ruleCode[3];
-                let target = ruleCode[4];
-                let target_can_be_cur = false;
-                let source = ruleCode[5];
-                let num_cards = ruleCode[6];
-                let counteraction = ruleCode[7];
-                ret[r] = new DrawRule(card, suit, type, trigger, target, target_can_be_cur, source, num_cards, counteraction);
-                break;
-            case types.JUMP_IN_RULE:
-                let trigger = ruleCode[3];
-                let target = ruleCode[4];
-                let target_can_be_cur = false;
-                let source = ruleCode[5];
-                let num_cards = ruleCode[6];
-                let counteraction = ruleCode[7];
-                ret[r] = new DrawRule(card, suit, type, trigger, target, target_can_be_cur, source, num_cards, counteraction);
-                break;
-        }
-    }
-}
+//         switch (type) {
+//             case types.DRAW_RULE:
+//                 let trigger = ruleCode[3];
+//                 let target = ruleCode[4];
+//                 let target_can_be_cur = false;
+//                 let source = ruleCode[5];
+//                 let num_cards = ruleCode[6];
+//                 let counteraction = ruleCode[7];
+//                 ret[r] = new DrawRule(card, suit, type, trigger, target, target_can_be_cur, source, num_cards, counteraction);
+//                 break;
+//             case types.DRAW_UNTIL_RULE:
+//                 let trigger = ruleCode[3];
+//                 let target = ruleCode[4];
+//                 let target_can_be_cur = false;
+//                 let source = targets.DECK;
+//                 let target_card;
+//                 if (ruleCode[5]=='d') target_card='d';
+//                 else target_card = ruleCode[5];
+//                 let target_suit = ruleCode[6];
+//                 if (ruleCode[6]=='d') target_card='d';
+//                 else if (ruleCode[6]=='s') target_card='d';
+//                 else target_card = ruleCode[5];
+//                 let counteraction = ruleCode[7];
+//                 ret[r] = new DrawUntilRule(card, suit, type, trigger, target, target_can_be_cur, source, target_card, target_suit, counteraction);
+//                 break;
+//             case types.SKIP_PLAYER_RULE:
+//                 let trigger = ruleCode[3];
+//                 let target = ruleCode[4];
+//                 let target_can_be_cur = false;
+//                 let source = ruleCode[5];
+//                 let num_cards = ruleCode[6];
+//                 let counteraction = ruleCode[7];
+//                 ret[r] = new DrawRule(card, suit, type, trigger, target, target_can_be_cur, source, num_cards, counteraction);
+//                 break;
+//             case types.CHANGE_RULE_RULE:
+//                 let trigger = ruleCode[3];
+//                 let target = ruleCode[4];
+//                 let target_can_be_cur = false;
+//                 let source = ruleCode[5];
+//                 let num_cards = ruleCode[6];
+//                 let counteraction = ruleCode[7];
+//                 ret[r] = new DrawRule(card, suit, type, trigger, target, target_can_be_cur, source, num_cards, counteraction);
+//                 break;
+//             case types.VIEW_CARD_RULE:
+//                 let trigger = ruleCode[3];
+//                 let target = ruleCode[4];
+//                 let target_can_be_cur = false;
+//                 let source = ruleCode[5];
+//                 let num_cards = ruleCode[6];
+//                 let counteraction = ruleCode[7];
+//                 ret[r] = new DrawRule(card, suit, type, trigger, target, target_can_be_cur, source, num_cards, counteraction);
+//                 break;
+//             case types.JUMP_IN_RULE:
+//                 let trigger = ruleCode[3];
+//                 let target = ruleCode[4];
+//                 let target_can_be_cur = false;
+//                 let source = ruleCode[5];
+//                 let num_cards = ruleCode[6];
+//                 let counteraction = ruleCode[7];
+//                 ret[r] = new DrawRule(card, suit, type, trigger, target, target_can_be_cur, source, num_cards, counteraction);
+//                 break;
+//         }
+//     }
+// }

@@ -1,14 +1,16 @@
 class EnemyPlayer {
-    constructor(id, cardCount) {
+    constructor(id, index, cardCount) {
         this.id=id;
+        this.index=index;
         this.cardCount = cardCount;
     }
 }
 
 class Player {
-    constructor(controller, id) {
+    constructor(controller, index, id) {
         this.hand = [];
         this.myController = controller;
+        this.index = index;
         this.id=id;
     }
 
