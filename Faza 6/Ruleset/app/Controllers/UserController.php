@@ -26,7 +26,12 @@ class UserController extends Controller
         }
 
         $this->session->set('controller', 'UserController');
-        return $this->show('main', ['controller'=>$this->session->get('controller')]);
+        $hdecksModel = new HDecksModel();
+        $hdecks = $hdecksModel->query(" select decc.name, decc.iddeck, hd.orderNum
+                                        from deck decc, hdecks hd
+                                        where hd.idDeck=decc.idDeck");
+        $hdecks = $hdecks->getResult();
+        return $this->show('main', ['controller'=>$this->session->get('controller'), 'hdecks'=> $hdecks]);
     }
     /**
     * Prikazivanje prikaza deljenja spilova
@@ -40,6 +45,18 @@ class UserController extends Controller
     public function share_a_deck($deck_id,$message=null){
         $controller = $this->session->get('controller');
         return $this->show('deljenje_spilova',['controller'=>$controller,'deck_id'=>$deck_id,'message'=>$message]);
+    }
+
+    public function listUserDecks()
+    {
+        $idUser = $_SESSION['user']->idUser;
+        $userDeckModel = new UserDeckModel();
+        $decks = $userDeckModel->query("select d.name, u.username, ud.rating, ud.idDeck 
+                                        from user u, user_decks ud, deck d
+                                        where ud.idUser=$idUser and ud.idDeck=d.idDeck and u.iduser=d.iduser");
+        $decks = $decks->getResult();
+
+        return $this->show('userDeckList', ['controller'=>$this->session->get('controller'),'decks'=>$decks]);
     }
 
     public function save_user_deck($idUser, $idDeck)
@@ -61,10 +78,9 @@ class UserController extends Controller
         return redirect()->to(site_url("usercontroller/listUserDecks"));
     }
 
-
     public function decklab()
     {
-        $controller=$this->session->get('controller');
+        $controller = $this->session->get('controller');
         if($this->request->getVar('deckDecription')){
             $desc  = $this->request->getVar('deckDecription');
             $cards = $this->request->getVar('cards');
@@ -72,11 +88,10 @@ class UserController extends Controller
             $name  = $this->request->getVar('deckName');
             $rules = $this->request->getVar('rules');
             $globalRules = $this->request->getVar('globalRules');
-            $user=$this->session->get('user');
+
             $deckModel = new DeckModel();
-            $userDeckModel=new UserDeckModel();
             $data = [
-                'idUser' => $user->idUser,
+                'idUser' => $_SESSION['user']->idUser,
                 'cardRules' => $rules,
                 'Cards' => $cards,
                 'descr' => $desc,
@@ -87,11 +102,10 @@ class UserController extends Controller
                 'numberOfPlays' => 0,
                 'numberOfRatings' => 0,
             ];
-
             $deckModel->insert($data);
             return redirect()->to(site_url("$controller/index"));
         }
-        else return $this->show('decklab',['controller'=>$controller]);
+        return $this->show('decklab',['controller'=> $controller]);
     }
 
     
@@ -131,17 +145,6 @@ class UserController extends Controller
         
     }
 
-    public function listUserDecks()
-    {
-        $idUser = $_SESSION['user']->idUser;
-        $userDeckModel = new UserDeckModel();
-        $decks = $userDeckModel->query("select d.name, u.username, ud.rating, ud.idDeck 
-                                        from user u, user_decks ud, deck d
-                                        where ud.idUser=$idUser and ud.idDeck=d.idDeck and u.iduser=d.iduser");
-        $decks = $decks->getResult();
-
-        return $this->show('userDeckList', ['decks'=>$decks]);
-    }
 
     public function logout() {
         $this->session->destroy();

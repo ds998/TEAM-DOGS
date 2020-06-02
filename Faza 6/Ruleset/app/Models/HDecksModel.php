@@ -12,7 +12,7 @@ class HDecksModel extends Model
             if(!$this->where('orderNum', 1)->findAll()){
                 for($i = 1; $i <= 9; $i++){
                     $data=[
-                        'idDeck' => 1,
+                        'idDeck' => 4,
                         'orderNum'=> $i
                     ];
                     $this->insert($data);

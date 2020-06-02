@@ -13,6 +13,7 @@ use App\Models\UserHandModel;
 use App\Models\DeckModel;
 use App\Models\UserDeckModel;
 use App\Models\AdminModel;
+use App\Models\HDecksModel;
 /**
 * Controller – opsta Controller klasa koja sadrzi funkcije za sve kategorije korisnika
 * 
@@ -55,8 +56,12 @@ class Controller extends BaseController
         }
 
         $_SESSION['user'] = $user[0];
-        
-        return $this->show("main",['controller'=>$this->session->get('controller')]);
+        $hdecksModel = new HDecksModel();
+        $hdecks = $hdecksModel->query(" select decc.name, decc.iddeck, hd.orderNum
+                                        from deck decc, hdecks hd
+                                        where hd.idDeck=decc.idDeck");
+        $hdecks = $hdecks->getResult();
+        return $this->show("main",['controller'=>$this->session->get('controller'), 'hdecks' => $hdecks]);
     }
     public function register()
     {
@@ -174,7 +179,8 @@ class Controller extends BaseController
             }
         }
         else{
-            return redirect()->to(site_url("Controller/lobby_password_page/{$idLobby}"));
+            $controller = $this->session->get('controller');
+            return redirect()->to(site_url("$controller/lobby_password_page/{$idLobby}"));
         }
     }
     /**

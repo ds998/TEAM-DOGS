@@ -69,7 +69,7 @@
                     <li class="nav-item">
                     <?php
                         if ($controller == "AdminController") {
-                          echo "<a class='nav-link' href='".site_url("$controller/changeHD")."'>Choose Highlighted Decks</a>";
+                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Choose Highlighted Decks</a>";
                         }
                     ?>
                     </li>
@@ -89,13 +89,12 @@
             <div id = "highlighted_div">
                 <table id = "table_deck">
                     <tr>
-                        <td><a href = "#"><img id ="deck_1" class = "hd_image" width="150" height = "150" src="<?php echo base_url('assets/navbar/dog_logo.png'); ?>"></a></td><td><a href = "#"><img id ="deck_2" class = "hd_image" width="150" height = "150" src="<?php echo base_url('assets/navbar/dog_logo.png'); ?>"></a></td><td><a href = "#"><img id ="deck_3" class = "hd_image" width="150" height = "150" src="<?php echo base_url('assets/navbar/dog_logo.png'); ?>"></a></td>
-                    </tr>
-                    <tr>
-                        <td><a href = "#"><img id ="deck_4" class = "hd_image" width="150" height = "150" src="<?php echo base_url('assets/navbar/dog_logo.png'); ?>"></a></td><td><a href = "#"><img id ="deck_5" class = "hd_image" width="150" height = "150" src="<?php echo base_url('assets/navbar/dog_logo.png'); ?>"></a></td><td><a href = "#"><img id ="deck_6" class = "hd_image" width="150" height = "150" src="<?php echo base_url('assets/navbar/dog_logo.png'); ?>"></a></td>
-                    </tr>
-                    <tr>
-                        <td><a href = "#"><img id ="deck_7" class = "hd_image" width="150" height = "150" src="<?php echo base_url('assets/navbar/dog_logo.png'); ?>"></a></td><td><a href = "#"><img id ="deck_8" class = "hd_image" width="150" height = "150" src="<?php echo base_url('assets/navbar/dog_logo.png'); ?>"></a></td><td><a href = "#"><img id ="deck_9" class = "hd_image" width="150" height = "150" src="<?php echo base_url('assets/navbar/dog_logo.png'); ?>"></a></td>
+                        <?php foreach ($hdecks as $hdeck){
+                            
+                            echo "<td><a href = '".site_url("$controller/deckpreview/$hdeck->iddeck")."'><img id =".$hdeck->name." class = 'hd_image' width='150' height='150' src='".base_url('assets/navbar/dog_logo.png')."'></a></td>";
+                            if($hdeck->orderNum%3==0&&$hdeck->orderNum!=0&&$hdeck->orderNum!=9)echo "</tr><tr>";    
+                        }
+                        ?>
                     </tr>
                 </table>
                 <p id = "table_title"></p>
@@ -112,7 +111,7 @@
                 <a class="btn btn-primary btn-effect" href="<?php echo site_url("$controller/decklist"); ?>" role="button">Create Lobby</a>
             </div>
         </div>
-
+<!--
         <div class = "welcome_popup" id = "main_popup">
             <div id = "popup_contain">
                 <h1>WELCOME</h1>
@@ -120,6 +119,7 @@
                 <button type="submit" class="btn btn-primary" onclick="closeForm()">Close</button>
             </div>
         </div>
+-->
     </container>
     <script src="<?php echo base_url('main/Main.js'); ?>"></script>
     <script src="<?php echo base_url('base/Base.js'); ?>"></script>
