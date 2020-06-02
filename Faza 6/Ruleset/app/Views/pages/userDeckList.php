@@ -25,7 +25,12 @@
     <script src="<?php echo base_url('base/Base.js'); ?>"></script>
     <script src="<?php echo base_url('deck_list/deckList.js'); ?>"></script>
 </head>
-
+<script>
+jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+});</script>
 <body>
 <div class="header">
         <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
@@ -95,7 +100,8 @@
                     
                     <thead>
                         <tr class="deckTableRowHeader topRow">
-                            <th scope="col">username</th>
+                            <th scope="col">Deck name</th>
+                            <th scope="col">Creator</th>
                             <th scope="col">Rating</th>
                         </tr>
                     </thead>
@@ -103,11 +109,10 @@
                         <?php 
                             foreach ($decks as $deck) {
                                 echo "
-                                <tr class='deckTableRow addCard clickable-row' data-href='".site_url("$controller/deckPreview/$deck->idDeck")."'> 
+                                <tr class='deckTableRow addCard clickable-row' data-href='deckPreview/$deck->idDeck'> 
                                     <td>{$deck->name}</td>
-                                    <td>{$deck->Rating}</td>
-                                    <td>{$deck->numberOfRatings}</td>
-                                    <td>{$deck->numberOfPlays}</td>
+                                    <td>{$deck->username}</td>
+                                    <td>{$deck->rating}</td>
                                 </tr>
                                     ";
                             }

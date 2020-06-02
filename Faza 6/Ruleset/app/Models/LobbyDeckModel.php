@@ -10,8 +10,8 @@ class LobbyDeckModel extends Model
         protected $allowedFields = ['idLobby','cards'];
 
         public function takeXCards($idLobby, $numOfCards){
-
             $temp = $this->getDeck($idLobby);
+            $stringEnv = "'";
             if (strlen($temp)>$numOfCards*2)
             {
                 $returnInfo = substr( $temp, 0, $numOfCards*2);
@@ -23,7 +23,7 @@ class LobbyDeckModel extends Model
                 $temp = "''";
             }
             
-            $temp = "'".$temp."'";
+            $temp = $stringEnv.$temp.$stringEnv;
             $qveri = $this->db->query("UPDATE lobby_deck SET cards = $temp WHERE idLobby = $idLobby;");
             return $returnInfo;
         }

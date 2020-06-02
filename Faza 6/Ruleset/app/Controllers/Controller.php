@@ -98,9 +98,16 @@ class Controller extends BaseController
     public function deckPreview($idDeck)
     {
         $deckModel = new DeckModel();
+        $userModel = new UserModel();
         $deck = $deckModel->find($idDeck);
         $user = $this->session->get('user');
-        return $this->show('deckPreview', ['deck'=>$deck, 'user' => $this->session->get('user'), 'controller'=>$this->session->get('controller')]);
+        $name = $userModel->query(" select u.username
+                                        from user u
+                                        where u.idUser=$deck->idUser");
+        $name = $name->getResult();
+        $name = $name[0]->username;
+        return $this->show('deckPreview', 
+            ['deck'=>$deck, 'user' => $this->session->get('user'), 'controller'=>$this->session->get('controller'),'username'=>$name]);
     }
     /**
     * Prikazivanje prikaza pregleda svih lobby-a

@@ -42,30 +42,25 @@ class UserController extends Controller
         return $this->show('deljenje_spilova',['controller'=>$controller,'deck_id'=>$deck_id,'message'=>$message]);
     }
 
-    public function save_user_deck($idDeck)
+    public function save_user_deck($idUser, $idDeck)
     {
-        $user=$this->session->get('user');
-        $idUser=$user->idUser;
         $udModel = new UserDeckModel();
         $dModel = new DeckModel();
-        $deck=$dModel->find($idDeck);
-        $creatorId = $deck->idUser;
-        $entries=$udModel->getEntry($idUser,$idDeck);
-        $controller=$this->session->get('controller');
-        if($entries!=null){
-            return redirect()->to(site_url("$controller/deckPreview/{$idDeck}"));
-        }
+        $creatorId = $dModel->find($idDeck)->idUser;
+
         $data = [
             'idUser' => $idUser,
             'idDeck' => $idDeck,
             'idCreator' => $creatorId,
             'Rating' => 5
         ];
-
-        $udModel->insert($data);
-        
-        return redirect()->to(site_url("$controller/deckPreview/{$idDeck}"));
+        $result= $udModel->query("select * from user_decks ud
+                    where $idUser=ud.idUser and ud.idDeck=$idDeck");
+        $result = $result->getResult();
+        if(!$result)$udModel->insert($data);
+        return redirect()->to(site_url("usercontroller/listUserDecks"));
     }
+
 
     public function decklab()
     {
@@ -140,14 +135,12 @@ class UserController extends Controller
     {
         $idUser = $_SESSION['user']->idUser;
         $userDeckModel = new UserDeckModel();
-        $deckIDs = $userDeckModel->getUserEntries($idUser);
-        $deckModel=new DeckModel();
-        $decks=array();
-        foreach($deckIDs as $deckID){
-            array_push($decks,$deckModel->find($deckID->idDeck));
-        }
-        $controller=$this->session->get('controller');
-        return $this->show('userDeckList', ['controller'=>$controller,'decks'=>$decks]);
+        $decks = $userDeckModel->query("select d.name, u.username, ud.rating, ud.idDeck 
+                                        from user u, user_decks ud, deck d
+                                        where ud.idUser=$idUser and ud.idDeck=d.idDeck and u.iduser=d.iduser");
+        $decks = $decks->getResult();
+
+        return $this->show('userDeckList', ['decks'=>$decks]);
     }
 
     public function logout() {
