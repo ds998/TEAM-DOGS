@@ -22,14 +22,18 @@ use App\Models\HDecksModel;
 class Controller extends BaseController
 {
     /**
-    * Prikazivanje prikaza
+    * Prikazivanje stranice
     *
     * @return void
     */
     protected function show($page,$data){
-        //echo view('navbar');
         echo view("pages/{$page}",$data);
     }
+    /**
+    * Prikazivanje pocetne stranice za Controller
+    *
+    * @return function show
+    */
     public function index(){
         $this->session->set('controller','Controller');
         $userModel=new UserModel();
@@ -221,6 +225,7 @@ class Controller extends BaseController
         }
         else return json_encode($lobby->PlayerList);
     }
+    
     /**
     * Izlazak iz lobby-a
     *
@@ -261,11 +266,25 @@ class Controller extends BaseController
         return redirect()->to(site_url("$controller/all_lobbies"));
     }
 
+    /**
+    * Prikaz login stranice
+    *
+    * 
+    * @return function show
+    *Maja Dimitrijevic 2017/0723
+    */
     public function login_page($error=null) {
         $controller=$this->session->get('controller');
         return $this->show('login',['controller'=>$this->session->get('controller'),'error'=>$error]);
     }
 
+    /**
+    * Pokusaj logovanja gosta
+    *
+    * 
+    * @return function login_page or redirect
+    *Maja Dimitrijevic 2017/0723
+    */
     public function login_submit() {
 
         $username = $this->request->getVar('user_name');
@@ -296,7 +315,7 @@ class Controller extends BaseController
                 if (password_verify($password,$user->passwordHash)) {
                     $controller = "";
                     $adminModel = new AdminModel();
-                    $ifAdmin = $adminModel->find($user->idUser);//umesto find treba checkIfAdmin
+                    $ifAdmin = $adminModel->find($user->idUser);
                     if ($ifAdmin == null) {
                         $controller = "UserController";
                     }
@@ -314,10 +333,24 @@ class Controller extends BaseController
 
     }
 
+    /**
+    * Prikaz stranice za lozinku za pristup lobby-ju
+    *
+    * 
+    * @return function show
+    *Maja Dimitrijevic 2017/0723
+    */
     public function lobby_password_page($idLobby, $error=null) {
         return $this->show('lobby_password',['idLobby'=>$idLobby, 'error'=>$error, 'controller'=>$this->session->get('controller')]);
     }
 
+    /**
+    * Pokusaj pristupanja lobby-ju
+    *
+    * 
+    * @return function lobby_password_page or redirect
+    *Maja Dimitrijevic 2017/0723
+    */
     public function lobby_password_submit($idLobby) {
 
         $lobbypassword = $this->request->getVar('lobby_password');
@@ -367,12 +400,26 @@ class Controller extends BaseController
 
     }
 
+    /**
+    * Prikaz stranice za kreiranje lobby-ja
+    *
+    * 
+    * @return function show
+    *Maja Dimitrijevic 2017/0723
+    */
     public function create_lobby_page($idDeck, $error=null) {
         $deckModel = new DeckModel();
         $deck = $deckModel->find($idDeck);
         return $this->show('create_lobby',['error'=>$error, 'controller'=>$this->session->get('controller'), 'idDeck'=>$idDeck, 'deckName'=>$deck->name]);
     }
 
+    /**
+    * Pokusaj kreiranja lobby-ja
+    *
+    * 
+    * @return function create_lobby_page or redirect
+    *Maja Dimitrijevic 2017/0723
+    */
     public function create_lobby_submit($idDeck) {
         $deckModel = new DeckModel();
         $lobbyModel = new LobbyModel();
@@ -415,7 +462,6 @@ class Controller extends BaseController
 
     }
     
-
     public function send_message($idLobby, $message) {
         echo $idLobby;
         $user = $this->session->get('user');
