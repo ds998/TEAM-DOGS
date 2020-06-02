@@ -38,17 +38,47 @@
 
             <div class="collapse navbar-collapse" id="navbarElements">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../decklab/decklab.html">Create Ruleset</a>
+                <li class="nav-item">
+                    <?php
+                        if ($_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url('Controller/login_page')."'>Login</a>";
+                        }
+                    ?>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../deck_list/deckList.html">Find Ruleset</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="../login/login.html">Login</a>
+                    <?php
+                        if ($_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url('UserController/register')."'>Register</a>";
+                        }
+                    ?>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../register/register.html">Register</a>
+                    <?php
+                        if (!$_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url('UserController/register')."'>Saved Decks</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if ($controller == "AdminController") {
+                          echo "<a class='nav-link' href='".site_url('AdminController/registerAdmin')."'>Choose Admin</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if ($controller == "AdminController") {
+                          echo "<a class='nav-link' href='".site_url('UserController/register')."'>Choose Highlighted Decks</a>";
+                        }
+                    ?>
+                    </li>
+                    <li class="nav-item">
+                    <?php
+                        if (!$_SESSION['user']->isGuest) {
+                          echo "<a class='nav-link' href='".site_url('UserController/logout')."'>Logout</a>";
+                        }
+                    ?>
                     </li>
                 </ul>
             </div>

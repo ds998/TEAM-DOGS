@@ -25,7 +25,7 @@
 
 <body>
     <div class="header">
-        <nav class="navbar bg-dark navbar-dark"> <!-- navbar-expand-lg -->
+        <nav class="navbar bg-dark navbar-dark">
             <a class="navbar-brand" href="../main/main.html">
                 <img id='logoRuleImage' src="<?php echo base_url('assets/navbar/rule_icon.png'); ?>" alt="Logo" class='logoImage'>
                 <img id='logoSetImage' src="<?php echo base_url('assets/navbar/set_icon.png'); ?>" alt="Logo" class='logoImage'>
@@ -101,7 +101,14 @@
                 <p id = "table_title"></p>
             </div>
             <div id = "buttons_div">
-                <a class="btn btn-primary btn-effect <?php if ($_SESSION['user']->isGuest)echo 'disabled'?>" role='button' href="<?php echo site_url('usercontroller/decklab'); ?>">Create Deck</a>
+                <?php
+                    if (!$_SESSION['user']->isGuest) {
+                        echo "<a class='btn btn-primary btn-effect' role='button' href='<?php echo site_url('usercontroller/decklab'); ?>Create Deck</a>";
+                    }
+                    else {
+                        echo "<button class='btn btn-primary disabled' role='button' href='<?php echo site_url('Controller/all_lobbies'); ?>Create Deck</button>";
+                    }
+                ?>
                 <br>
                 <a class="btn btn-primary btn-effect" href="<?php echo site_url("Controller/decklist"); ?>" role="button">List Decks</a>
                 <br>
@@ -109,7 +116,7 @@
                 <br>
                 <a class="btn btn-primary btn-effect" href="<?php echo site_url("Controller/all_lobbies"); ?>" role="button">Join Lobby</a>
                 <br>
-                <a class="btn btn-primary btn-effect <?php if ($_SESSION['user']->isGuest)echo 'disabled'?>" href="<?php echo site_url("Controller/decklist"); ?>" role="button">Create Lobby</a>
+                <a class="btn btn-primary btn-effect" href="<?php echo site_url("Controller/decklist"); ?>" role="button">Create Lobby</a>
             </div>
         </div>
 
