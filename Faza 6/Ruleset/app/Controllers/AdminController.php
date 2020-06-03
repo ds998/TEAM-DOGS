@@ -1,8 +1,18 @@
-<?php 
+<?php
+/**
+* AdminController.php – fajl za AdminController klasu
+* Uros Ugrinic 2017/0714; 
+* @version 1.0
+*/
 namespace App\Controllers;
 use App\Models\AdminModel;
 use App\Models\UserModel;
 use App\Models\HDecksModel;
+/**
+* UserController – klasa koja sadrzi funkcije za kategoriju Administrator
+* 
+* @version 1.0
+*/
 class AdminController extends UserController
 {
     public function index($idUser=null){

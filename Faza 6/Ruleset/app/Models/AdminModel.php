@@ -1,12 +1,32 @@
 <?php namespace App\Models;
-
+/**
+* AdminModel.php – fajl za klasu AdminModel
+*  Uros Ugrinic 2017/0714; 
+* @version 1.0
+*/
 use CodeIgniter\Model;
-
+/**
+* AdminModel – klasa za pristup tabeli chat od baze
+*
+* @version 1.0
+*/
 class AdminModel extends Model
 {
+        /**
+        * @var string $table table
+        */
         protected $table      = 'admins';
+        /**
+        * @var string $primaryKey PrimaryKey
+        */
         protected $primaryKey = 'idUser';
+        /**
+        * @var string $returnType returnType
+        */
         protected $returnType = 'object';
+        /**
+        * @var array $allowedFields allowedFields
+        */
         protected $allowedFields = ['idUser'];
 
         /** Stavlja idUser u tabelu admina 
@@ -23,7 +43,7 @@ class AdminModel extends Model
         }
 
         /** proverava da li je zadati idUser admin 
-        * @return isAdminBool
+        * @return integer
         * @param integer $idUser idUser
         */
         public function checkIfAdmin($idUser){

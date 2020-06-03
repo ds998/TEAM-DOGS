@@ -1,12 +1,32 @@
 <?php namespace App\Models;
-
+/**
+* GameUpdateModel.php – fajl za klasu GameUpdateModel
+*  Uros Ugrinic 2017/0714; 
+* @version 1.0
+*/
 use CodeIgniter\Model;
-
+/**
+* GameUpdateModel – klasa za pristup tabeli game_update od baze
+*
+* @version 1.0
+*/
 class GameUpdateModel extends Model
 {
+        /**
+        * @var string $table table
+        */
         protected $table      = 'game_update';
+        /**
+        * @var string $primaryKey PrimaryKey
+        */
         protected $primaryKey = 'idLobby';
+        /**
+        * @var string $returnType returnType
+        */
         protected $returnType = 'object';
+        /**
+        * @var array $allowedFields allowedFields
+        */
         protected $allowedFields = ['idLobby', 'idUser', 'updateF'];
 
         /** azurira gameupdate tabelu 

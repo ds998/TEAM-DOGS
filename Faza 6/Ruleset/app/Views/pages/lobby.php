@@ -1,10 +1,4 @@
-<?php
-/**
-* lobby.php – fajl za prikaz lobby-a
-* Danilo Stefanovic,2017/0475
-* @version 1.0
-*/
-?>
+
 
 <html>
     <head>

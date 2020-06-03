@@ -1,10 +1,4 @@
-<?php
-/**
-* deljenje_spilova.php – fajl za prikaz deljenja spilova
-* Danilo Stefanovic,2017/0475
-* @version 1.0
-*/
-?>
+
 
 <html>
     <head>

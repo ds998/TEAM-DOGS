@@ -1,12 +1,32 @@
 <?php namespace App\Models;
-
+/**
+* UserHandModel.php – fajl za klasu UserHandModel
+*  Uros Ugrinic 2017/0714; 
+* @version 1.0
+*/
 use CodeIgniter\Model;
-
+/**
+* UserHandModel – klasa za pristup tabeli user_hand od baze
+*
+* @version 1.0
+*/
 class UserHandModel extends Model
 {
+        /**
+        * @var string $table table
+        */
         protected $table      = 'user_hand';
+        /**
+        * @var string $primaryKey PrimaryKey
+        */
         protected $primaryKey = 'idUser';
+        /**
+        * @var string $returnType returnType
+        */
         protected $returnType = 'object';
+        /**
+        * @var array $allowedFields allowedFields
+        */
         protected $allowedFields = ['idLobby', 'idUser','cards'];
 
 

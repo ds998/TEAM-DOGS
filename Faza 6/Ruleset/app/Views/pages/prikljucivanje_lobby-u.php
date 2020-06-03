@@ -1,10 +1,4 @@
-<?php
-/**
-* prikljucivanje_lobby-u.php – fajl za prikaz prikljucivanja lobby-u
-* Danilo Stefanovic,2017/0475
-* @version 1.0
-*/
-?>
+
 
 <html>
     <head>
