@@ -83,8 +83,6 @@ CREATE INDEX `IX_Relationship6` ON `Lobby` (`idDeck`)
 ALTER TABLE `Lobby` ADD UNIQUE `idLobby` (`idLobby`)
 ;
 
-ALTER TABLE `Lobby` ADD UNIQUE `idUser` (`idUser`)
-;
 
 -- Table User_Decks
 
