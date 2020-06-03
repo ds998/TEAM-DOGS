@@ -40,7 +40,7 @@
     --input-bg-color: transparent;
 
     /*---Dodata promenljive---*/
-    --default-text-color: #ffffff66;
+    --default-text-color: #ffffffbe;
 
     /*Webkit-scrollbar-thumb*/
     --thumb-color: #033b4b;
@@ -106,6 +106,7 @@ body::-webkit-scrollbar-thumb {
 
 .customInput {
     background-color: var(--input-bg-color);
+    color: var(--default-text-color);
 }
 .customInput:active, .customInput:focus {
     background-color: var(--input-bg-color);
