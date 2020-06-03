@@ -326,10 +326,13 @@ class Controller {
 			let drawRule = new DrawUntilRule(0, 0, 0, 0, 0, 0, 0, code[0], code[1], false);
 
 			let matcher = drawRule.detail.matcher;
+			let startLen=this.player.hand.length
+			let drawn=0;
 			do {
-				if (this.player.hand.length+1> this.handLimit) break;
+				drawn++;
+				if (startLen+drawn> this.handLimit) break;
 				var newCard = await draw(myID, myID, 1, this.deck.id);
-			} while (!matcher.isMatch(newCard));
+			} while (!matcher.isMatch(newCard[0]));
 		}
 	}
 

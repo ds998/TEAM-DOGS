@@ -7,10 +7,10 @@ class CardMatcher {
     }
 
     isMatch(card) {
-        if (valMissMatch && this.value == card.value) return false;
+        if (this.valMissMatch && this.value == card.value) return false;
         else if (this.value != '' && this.value != card.value) return false;
         
-        if (suitMissMatch && this.suit == card.suit) return false;
+        if (this.suitMissMatch && this.suit == card.suit) return false;
         else if (this.suit != '' && this.suit != card.suit) return false;
 
         return true;

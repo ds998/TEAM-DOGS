@@ -21,6 +21,7 @@ class DrawRule extends Rule {
 class DrawUntilRule extends Rule {
     constructor(card, suit, type, trigger, target, target_can_be_cur, source, target_card, target_suit, counteraction) {
         super(card, suit, type, trigger);
+        this.detail.send = target_card+'-'+target_suit;
         this.detail.target = target;
         this.detail.target_can_be_cur = target_can_be_cur;
         this.detail.source = source;
@@ -30,16 +31,15 @@ class DrawUntilRule extends Rule {
         else if (target_card == 'd') {
             target_card = '';
             cardMissMatch=true;
-        }
+        } else target_card=cardNames[target_card];
         if (target_suit == 'a') target_suit = '';
         else if (target_suit == 's') target_suit = suit;
         else if (target_suit == 'd') {
             target_suit = '';
             suitMissMatch=true;
-        }
+        } else target_suit=suits[target_suit];
         this.detail.matcher = new CardMatcher(target_card, target_suit, cardMissMatch, suitMissMatch);
         this.detail.counteraction = counteraction;
-        this.detail.send = target_card+'-'+target_suit;
     }
 }
 
@@ -77,13 +77,13 @@ class JumpInRule extends Rule {
         else if (target_card == 'd') {
             target_card = '';
             cardMissMatch=true;
-        }
+        } else target_card=cardNames[target_card];
         if (target_suit == 'a') target_suit = '';
         else if (target_suit == 's') target_suit = suit;
         else if (target_suit == 'd') {
             target_suit = '';
             suitMissMatch=true;
-        }
+        } else target_suit=suits[target_suit];
         this.detail.matcher = new CardMatcher(target_card, target_suit, cardMissMatch, suitMissMatch);
     }
 }
