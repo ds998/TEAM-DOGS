@@ -4,8 +4,8 @@
     <title>Ruleset by team DOGS</title>
     <meta charset="UTF-8">
     <!--<link rel ="shortcut icon" type="image/png" href="<?php echo base_url('assets/navbar/corgi_pixel.png'); ?>">-->
-    <link rel="stylesheet" href="endgame_screen/endgame_screen.css" /><!--<link rel="stylesheet" href="<?php echo base_url('base/Base.css'); ?>" />-->
-    <link rel="stylesheet" href="base/Base.css" /><!--<link rel="stylesheet" href="<?php echo base_url('base/Base.css'); ?>" />-->
+    <link rel="stylesheet" href="<?php echo base_url('endgame_screen/endgame_screen.css'); ?>" /><!--<link rel="stylesheet" href="<?php echo base_url('base/Base.css'); ?>" />-->
+    <link rel="stylesheet" href="<?php echo base_url('base/Base.css'); ?>" /><!--<link rel="stylesheet" href="" />-->
     <script src="<?php echo base_url('base/Base.js'); ?>"></script>
 </head>
 
@@ -49,5 +49,34 @@
         </table>
     </div>
 </body>
+<script>
+    setTimeout(redir_func,10000);
+
+    function redir_func(){
+        var rating=0;
+        if(document.getElementById('star1').checked){
+            rating=1;
+        }
+        if(document.getElementById('star2').checked){
+            rating=2;
+        }
+        if(document.getElementById('star3').checked){
+            rating=3;
+        }
+        if(document.getElementById('star4').checked){
+            rating=4;
+        }
+        if(document.getElementById('star5').checked){
+            rating=5;
+        }
+        var controller="<?php echo $controller; ?>";
+        var idLobby="<?php echo $idLobby; ?>";
+        location.href="http://localhost:8080/"+controller+"/back_to_lobby/"+idLobby+"/"+rating;
+        return;
+    }
+    
+
+   
+</script>
 
 </html>

@@ -478,7 +478,15 @@ class Controller extends BaseController
         return redirect()->to(site_url("$controller/lobby/{$lobby->idLobby}"));
 
     }
-    
+     /**
+    * Slanje poruke tokom igre
+    *
+    * @param integer $idLobby idLobby
+    * @param string $message message
+    *
+    * @return json
+    * Danilo Stefanovic 2017/0475
+    */
     public function send_message($idLobby, $message) {
         echo $idLobby;
         $user = $this->session->get('user');
@@ -518,7 +526,15 @@ class Controller extends BaseController
         return json_encode("done");
 
     }
-
+     /**
+    * Azuriranje chat-a tokom igre
+    *
+    * @param integer $idLobby idLobby
+    * 
+    * @return json
+    *
+    * Danilo Stefanovic 2017/0475
+    */
     public function chat_update($idLobby) {
         $chatModel = new ChatModel();
         $chatRoom = $chatModel->find($idLobby);
@@ -641,6 +657,63 @@ class Controller extends BaseController
         }
 
     }
+     /**
+    * Zavrsavanje igre
+    *
+    * @param integer $idLobby idLobby
+    * 
+    *
+    * @return function show
+    * Danilo Stefanovic 2017/0475
+    */
+    public function end_game($idLobby){
+        $chatModel=new ChatModel();
+        $userHandModel=new UserHandModel();
+        $gameUpdateModel=new GameUpdateModel();
+        $lobbyDeckModel=new LobbyDeckModel();
+        $user=$this->session->get('user');
+        $chat=$chatModel->find($idLobby);
+        if($chat!=null) $chatModel->delete($idLobby);
+
+        $game_update=$gameUpdateModel->find($idLobby);
+        if($game_update!=null) $gameUpdateModel->delete($idLobby);
+
+        $lobbyDeck=$lobbyDeckModel->find($idLobby);
+        if($lobbyDeck!=null) $lobbyDeckModel->delete($idLobby);
+
+        $userHand=$userHandModel->find($user->idUser);
+        if($userHand!=null) $userHandModel->delete($user->idUser);
+
+        return $this->show('endgame_screen',['controller'=>$this->session->get('controller'),'idLobby'=>$idLobby]);
+    }
+     /**
+    * Povratak na lobby tokom kraja igre;moguce ocenjivanje spila
+    *
+    * @param integer $idLobby idLobby
+    * @param integer $rating rating
+    *
+    * @return function lobby
+    * Danilo Stefanovic 2017/0475
+    */
+    public function back_to_lobby($idLobby,$rating){
+       $lobbyModel=new LobbyModel();
+       $lobby=$lobbyModel->find($idLobby);
+       if($rating!=0)$this->rate_deck($lobby->idDeck,$rating);
+       if($lobby->inGame==1){
+            $data=[
+                'idDeck'=>$lobby->idDeck,
+                'idUser'=>$lobby->idUser,
+                'maxPlayers'=>$lobby->maxPlayers,
+                'PlayerList'=>$lobby->PlayerList,
+                'lobbyName'=>$lobby->lobbyName,
+                'password'=>$lobby->password,
+                'status'=>$lobby->status,
+                'inGame'=>0
+            ];
+            $lobbyModel->update($idLobby,$data);
+       }
+       return $this->lobby($idLobby);
+    }
     /**
     * Azuriranje statusa igre za prikaz lobby
     *
@@ -752,17 +825,8 @@ class Controller extends BaseController
         $update = $update.",".$idUserThrown.",".$idSource.",".$num.";";
         (new GameUpdateModel)->addToUpdate($idLobby, $update); // klasican update
 
-        if($idSource != 0)
-        {
         $userHandModel = new UserHandModel();
         $cardsToView = $userHandModel->getXCards($idSource, $num);
-        }
-        else
-        {
-            $ldModel = new LobbyDeckModel();
-            $cardsToView = $ldModel->getXCards($idLobby, $num);
-        }
-
         return json_encode($cardsToView);
     }
 

@@ -34,7 +34,7 @@ class LobbyDeckModel extends Model
         }
 
         
-        /** vraca sve karte iz spila 
+        /** uzima sve karte iz spila 
         * @return cards
         * @param integer $idLobby idLobby
         */
@@ -46,7 +46,7 @@ class LobbyDeckModel extends Model
         * @return cards
         * @param integer $idLobby idLobby
         */
-        public function getXCards($idLobby, $numOfCards){
+        public function getXCards($idLobby){
             $temp = $this->getDeck($idLobby);
             if (strlen($temp)>$numOfCards*2) return substr( $temp, 0, $numOfCards*2);
             else return $temp;

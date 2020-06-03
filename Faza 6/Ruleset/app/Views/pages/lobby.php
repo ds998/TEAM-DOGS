@@ -63,11 +63,6 @@
     <script>
             setInterval(update_lobby,1000);
             setInterval(update_game,1200);
-             /**
-             * Asinhrono azuriranje prikaza za igrace u lobby-u
-             *
-             * @return void
-             */
             function update_lobby(){
                 var controller="<?php echo $controller; ?>";
                 myTest().then((data)=>{
@@ -96,11 +91,6 @@
                 var returnData = await response.json();
                 return returnData;
             }
-            /**
-             * Asinhrono azuriranje statusa igre za igrace u lobby-u
-             *
-             * @return void
-             */
             function update_game(){
                 var controller="<?php echo $controller; ?>";
                 var idLobby="<?php echo $lobby->idLobby; ?>";

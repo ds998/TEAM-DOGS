@@ -110,11 +110,6 @@
     </body>
     <script>
         var myVar=setInterval(update_lobbies,10000);
-        /**
-        * Asinhrono azuriranje prikaza za lobby-e u bazi
-        *
-        * @return void
-        */
         function update_lobbies(){
             myTest().then((data)=>{
                 var controller="<?php echo $controller; ?>";
@@ -135,11 +130,6 @@
             var returnData = await response.json();
             return returnData;
         }
-        /**
-        * Pretraga specificnog lobby-a u prikazu
-        *
-        * @return void
-        */
         function dosearch(){
             var sf=document.searchform;
             var submitted=sf.search_textbox.value;
