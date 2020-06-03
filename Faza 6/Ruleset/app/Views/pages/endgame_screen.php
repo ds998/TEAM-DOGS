@@ -14,7 +14,7 @@
         <table id = "table_tag">
             <thead>
                 <tr>
-                    <th colspan ="3" id = "table_header">User has won</th>
+                    <th colspan ="3" id = "table_header"><?php echo $winner." has won!";?></th>
                 </tr>
             </thead>
             <tbody>

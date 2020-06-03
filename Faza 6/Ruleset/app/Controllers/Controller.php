@@ -661,12 +661,12 @@ class Controller extends BaseController
     * Zavrsavanje igre
     *
     * @param integer $idLobby idLobby
-    * 
+    * @param integer $idWinner idWinner
     *
     * @return function show
     * Danilo Stefanovic 2017/0475
     */
-    public function end_game($idLobby){
+    public function end_game($idLobby,$idWinner){
         $chatModel=new ChatModel();
         $userHandModel=new UserHandModel();
         $gameUpdateModel=new GameUpdateModel();
@@ -684,7 +684,10 @@ class Controller extends BaseController
         $userHand=$userHandModel->find($user->idUser);
         if($userHand!=null) $userHandModel->delete($user->idUser);
 
-        return $this->show('endgame_screen',['controller'=>$this->session->get('controller'),'idLobby'=>$idLobby]);
+        $userModel=new UserModel();
+        $winner=$userModel->find($idWinner);
+
+        return $this->show('endgame_screen',['controller'=>$this->session->get('controller'),'idLobby'=>$idLobby,'winner'=>$winner->username]);
     }
      /**
     * Povratak na lobby tokom kraja igre;moguce ocenjivanje spila

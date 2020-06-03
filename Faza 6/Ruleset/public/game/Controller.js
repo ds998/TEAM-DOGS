@@ -24,7 +24,6 @@ class Controller {
 
 		//Global Rules
 		this.turns_left=0;
-		this.winCon=parseInt(globalRules[0], 10);
 		this.order=parseInt(globalRules[4], 10);
 		this.startingCards=parseInt(globalRules[5], 10);
 		this.handLimit=parseInt(globalRules[6], 10);
@@ -51,7 +50,6 @@ class Controller {
 			this.turns_left=this.playsPerTurn;
 		}
 		this.skip=false;
-		this.chosenOne=null;
 
 		//Event handler
 		this.handler = new EventTarget();
@@ -81,7 +79,6 @@ class Controller {
 		this.discard.top_card=card;
 
 		throwf(this.player.id, unparseCard(card));
-		if(this.winCon == 1 && this.player.hand.length == 0) this.endGame(this.player.id);
 		this.turns_left--;
 		if (!this.turns_left) this.endTurn();
 	}
@@ -103,29 +100,12 @@ class Controller {
 			if (this.enemyPlayers[e].index == index) return this.enemyPlayers[e].id;
 	}
 
-	async markSkip() {
+	markSkip() {
 		this.skip = true;
-		if (this.curPlayer==this.player.index && this.skip) {
-			if (await claimTurn(this.player.id, 'null')) {
-				this.endTurn();
-			}
-		}
 	}
 
-	async chooseOther() {
-		this.gm.chooseCharacter();
-		do {
-			var promise = new Promise(function(resolve, reject) {
-				setTimeout(() => {
-					if (this.chosenOne!=null) resolve(false);
-					else resolve(true);
-				}, 500);
-			  }.bind(this));
-		} while (await promise);
-		let index = (this.player.index + this.chosenOne+1) % this.numPlayers;
-		this.chosenOne=null;
-		for (let e=0; e<this.enemyPlayers.length; e++)
-			if (this.enemyPlayers[e].index == index) return this.enemyPlayers[e].id;
+	chooseOther() {
+		//TO-DO
 	}
 
 	tryToPlay(card) {
@@ -241,7 +221,7 @@ class Controller {
 				idUserAffected = parseInt(args[2]);
 				card = args[3];
 				let matchCode = args[4];
-				this.handleDrawUntil(idUserThrown, idUserAffected, card, matchCode);
+				handleDrawUntil(idUserThrown, idUserAffected, card, matchCode);
 				break;
 			case "skip":
 				idUserThrown = parseInt(args[1]);
@@ -279,19 +259,13 @@ class Controller {
 			for(let e=0; e<this.enemyPlayers.length; e++) {
 				if (this.enemyPlayers[e].id == idUserThrown) {
 					this.enemyPlayers[e].cardCount+=numOfCards;
-					if (this.winCon == 2 && this.enemyPlayers[e].cardCount >= 20) this.endGame(this.enemyPlayers[e].id);
 					break;
 				}
 			}
 
 		} else if (idUserAffected == this.player.id && idUserThrown != idUserAffected) {
-			if (this.player.hand.length+numOfCards> this.handLimit) {
-				numOfCards = this.handLimit - this.player.hand.length;
-				if (numOfCards < 1) return;
-			}
-			if (this.winCon == 2 && this.player.hand.length+numOfCards >= 20) this.endGame(this.player.id);
 			draw(this.player.id, this.player.id, numOfCards, idSource);
-		} else if (idUserAffected == this.player.id) if (this.winCon == 2 && this.player.hand.length+numOfCards >= 20) this.endGame(this.player.id);
+		}
 	}
 
 	handleClaimed(idUser) {
@@ -308,10 +282,7 @@ class Controller {
 	}
 
 	handleThrow(idUser, card) {
-		if (idUser != this.player.id) {
-			this.idMap[idUser].cardCount--;
-			if (this.winCon == 1 && this.idMap[idUser].cardCount==0) this.endGame(idUser);
-		}
+		if (idUser != this.player.id) this.idMap[idUser].cardCount--;
 		this.discard.top_card=this.ruleset.parseCard(card);
 		this.gm.discardCard = new CardSprite(this.discard.top_card.name, this.discard.top_card.suit);
 	}
@@ -327,13 +298,8 @@ class Controller {
 
 			let matcher = drawRule.detail.matcher;
 			do {
-				if (this.player.hand.length+1> this.handLimit) break;
 				var newCard = await draw(myID, myID, 1, this.deck.id);
 			} while (!matcher.isMatch(newCard));
 		}
-	}
-
-	endGame(idWinner) {
-		this.gm.endGame();
 	}
 }

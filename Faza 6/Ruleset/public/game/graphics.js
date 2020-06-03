@@ -123,8 +123,6 @@ class GraphicsManager {
 		this.canvas.addEventListener("mousemove", this.mousemoveListener);
 		this.canvas.addEventListener("mouseup", this.mouseupListener);
 		window.addEventListener('resize', this.resizeGame.bind(this), false);
-
-		this.display=false;
 	}
 
 	resizeGame() {
@@ -138,37 +136,27 @@ class GraphicsManager {
 		let x = e.offsetX * this.scale;
 		let y = e.offsetY * this.scale;
 
-		if (this.choose) {
-			if (this.hovered != -1) {
-				this.controller.chosenOne=this.controller.player.index % (this.controller.enemyPlayers.length)+this.hovered;
-				this.hovered = -1;
-				this.choose = false;
-				this.overlay = false;
-			}
-		} else {
-			if (this.hovered != -1) {
-				switch (this.hovered) {
-					case -2:
-						if (this.deck) {
-							this.controller.drawFromDeck();
+		if (this.hovered != -1) {
+			switch (this.hovered) {
+				case -2:
+					if (this.deck) {
+						this.controller.drawFromDeck();
+					}
+					break;
+				default:
+					this.controller.tryToPlay(this.controller.cardAt(this.hovered)).then((success) =>{
+						if (success) {
+							this.discardCard = this.cards.splice(this.hovered, 1)[0];
+							this.discardCard.setHover(false);
+							this.hovered = -1;
 						}
-						break;
-					default:
-						this.controller.tryToPlay(this.controller.cardAt(this.hovered)).then((success) =>{
-							if (success) {
-								this.discardCard = this.cards.splice(this.hovered, 1)[0];
-								this.discardCard.setHover(false);
-								this.hovered = -1;
-							}
-						}); 
-						break;
-				}
+					}); 
+					break;
 			}
 		}
 	}
 	chooseCharacter() {
-		this.overlay=true;
-		this.choose=true;
+		this.choose=false;
 	}
 
 	newCard(name, suit) {
@@ -182,24 +170,23 @@ class GraphicsManager {
 
 	draw() {
 		this.hovered = -1;
-		if (!this.overlay) {
-			let hov = this.deckCard.isHover(this.lastX, this.lastY);
-			this.deckCard.setEnlarge(hov);
-			if (hov) this.hovered = -2;
-			else {
-				let c;
-				for (c = this.cards.length - 1; c >= 0; c--) {
-					hov = this.cards[c].isHover(this.lastX, this.lastY);
-					this.cards[c].setHover(hov);
-					if (hov) {
-						this.hovered = c;
-						break;
-					}
+		let hov = this.deckCard.isHover(this.lastX, this.lastY);
+		this.deckCard.setEnlarge(hov);
+		this.chooseCharacter()
+		if (hov) this.hovered = -2;
+		else {
+			let c;
+			for (c = this.cards.length - 1; c >= 0; c--) {
+				hov = this.cards[c].isHover(this.lastX, this.lastY);
+				this.cards[c].setHover(hov);
+				if (hov) {
+					this.hovered = c;
+					break;
 				}
-				c--;
-				for (c; c >= 0; c--) {
-					this.cards[c].setHover(false);
-				}
+			}
+			c--;
+			for (c; c >= 0; c--) {
+				this.cards[c].setHover(false);
 			}
 		}
 
@@ -223,49 +210,21 @@ class GraphicsManager {
 			this.cards[c].draw(this.ctx, HAND_X + offsetX, HAND_Y);
 		}
 
-		if (this.overlay) {
-			this.ctx.fillStyle = "#23232399";
-			this.ctx.fillRect(0, 0, canvasSize, canvasH);
-
-			if (this.choose) {
-				this.ctx.textAlign = "center";
-				this.ctx.font = "200px Calibri";
-				this.ctx.strokeStyle = 'black';
-				this.ctx.lineWidth = 8;
-				this.ctx.strokeText("Choose a player", canvasSize/2, canvasH/2);
-				this.ctx.fillStyle = "#FFBB00";
-				this.ctx.fillText("Choose a player", canvasSize/2, canvasH/2);
-			} else if (this.display) {
-				for(let c=0; c<this.displayCard.length;c++) {
-					let offsetX = ((c + 1) - (this.displayCard.length + 1) / 2) * CARD_W;
-					this.displayCard[c].draw(this.ctx, HAND_X + offsetX, canvasH/2);
-				}
-			} else if (this.gameOver) {
-				this.ctx.textAlign = "center";
-				this.ctx.font = "200px Calibri";
-				this.ctx.strokeStyle = 'black';
-				this.ctx.lineWidth = 8;
-				this.ctx.strokeText("GAME ENDED", canvasSize/2, canvasH/2);
-				this.ctx.fillStyle = "#FFBB00";
-				this.ctx.fillText("GAME ENDED", canvasSize/2, canvasH/2);
-			}
-		}
-
 		let enemies = this.controller.enemyPlayers;
 		this.ctx.fillStyle = "#FFFFFF";
 		this.ctx.textAlign = "center";
 		this.ctx.font = CARD_FONT_XL.toString(10) + "px Calibri";
 
-		let startIndex = this.controller.player.index % (enemies.length);
-		var index = startIndex;
-		var count = 0;
-		do {
-			this.enemyCards[index] = new CardBackSprite();
-			let info = GraphicsManager.enemyLocations[enemies.length-1][count];
-			this.drawEnemy(info[1], info[2], index, info[0]);
-			index= (index + 1) % (enemies.length);
-			count++;
-		} while (index != startIndex);
+		if (this.choose) {
+			this.ctx.fillStyle = "#23232399";
+			this.ctx.fillRect(0, 0, canvasSize, canvasH);
+		}
+
+		for (let e = 0; e < enemies.length; e++) {
+			this.enemyCards[e] = new CardBackSprite();
+			let info = GraphicsManager.enemyLocations[enemies.length-1][e];
+			this.drawEnemy(info[1], info[2], e, info[0]);
+		}
 	}
 
 	drawEnemy(curP, maxP, index, position) {
@@ -273,32 +232,23 @@ class GraphicsManager {
 		let rotation=0;
 		let localX=this.lastX;
 		let localY=this.lastY;
-		let temp;
 		switch (position) {
 			case 'right':
 				this.ctx.translate(canvasSize - CARD_H - CARD_HOVER, canvasH / 2);
-				localX -= canvasSize - CARD_HOVER;
-				localY -= canvasH / 2;
-				temp = localX;
-				localX = -localY;
-				localY = -temp;
+				localX += canvasSize - CARD_H - CARD_HOVER;
+				localY += canvasH / 2;
 				rotation = -0.5;
 				break;
 			case 'left':
 				this.ctx.translate(CARD_H + CARD_HOVER, canvasH / 2);
-				localX -= CARD_HOVER;
-				localY -= canvasH / 2;
-				temp = localX;
-				localX = localY;
-				localY = temp;
+				localX += CARD_H + CARD_HOVER;
+				localY += canvasH / 2;
 				rotation = 0.5;
 				break;
 			case 'up':
 				this.ctx.translate(canvasSize / 2, CARD_HOVER + CARD_H);
-				localX -= canvasSize / 2;
-				localY -= CARD_HOVER + CARD_H;
-				localX = -localX;
-				localY = -localY;
+				localX += canvasSize / 2;
+				localY += CARD_HOVER + CARD_H;
 				rotation = 1;
 				break;
 		}
@@ -308,11 +258,7 @@ class GraphicsManager {
 		let offsetX = ((maxP + 1)/ 2-(curP + 1)) * CARD_W * 3 / 2;
 
 		this.enemyCards[index].setXY(0 - offsetX - CARD_W / 2, 0);
-		if (this.choose) {
-			let hov = this.enemyCards[index].isHover(localX, localY);
-			this.enemyCards[index].setHover(hov);
-			if (hov) this.hovered = index;
-		}
+		if (this.choose) this.enemyCards[index].setHover(this.enemyCards[index].isHover(localX, localY));
 
 		this.enemyCards[index].draw(this.ctx, 0 - offsetX - CARD_W / 2, 0);
 
@@ -321,25 +267,6 @@ class GraphicsManager {
 		if (rotation == Math.floor(rotation)) this.ctx.fillText(this.controller.enemyPlayers[index].cardCount, 0, 0);
 		else this.ctx.fillText(this.controller.enemyPlayers[index].cardCount, 0, CARD_FONT_XL/3);
 		this.ctx.restore();
-	}
-
-	async displayCards(cards) {
-		this.overlay=true;
-		this.display=true;
-		this.displayCard=[];
-		cards.forEach(card => {
-			this.displayCard.push(new CardSprite(card.name, card.suit));
-		});
-		setTimeout(() => {
-			this.overlay=false;
-			this.display=false;
-			this.displayCard=null;
-		}, 6000);
-	}
-
-	endGame() {
-		this.overlay = true;
-		this.gameOver=true;
 	}
 }
 

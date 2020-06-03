@@ -143,40 +143,40 @@ class Ruleset {
         return false;
     }
 
-    static async drawFromRule(controller, rule, event) {
+    static drawFromRule(controller, rule, event) {
         if (rule.type != types.DRAW_RULE) throw 'Error: Rule and handler missmatch!';
-        let target = await TargetFunctions[rule.detail.target](controller, rule, event);
-        let source = await TargetFunctions[rule.detail.source](controller, rule, event);
+        let target = TargetFunctions[rule.detail.target](controller, rule, event);
+        let source = TargetFunctions[rule.detail.source](controller, rule, event);
 
         draw(event.player.id, target, rule.detail.num_cards, source);
         //player.draw(rule.detail.num_cards, source);
     }
 
-    static async drawUntilRule(controller, rule, event) {
+    static drawUntilRule(controller, rule, event) {
         if (rule.type != types.DRAW_UNTIL_RULE) throw 'Error: Rule and handler missmatch!';
-        let target = await TargetFunctions[rule.detail.target](controller, rule, event);
-        //let source = TargetFunctions[rule.detail.source](controller, rule, event);
+        let target = TargetFunctions[rule.detail.target](controller, rule, event);
+        let source = TargetFunctions[rule.detail.source](controller, rule, event);
 
-        drawUntil(event.player.id, target, 1, rule.detail.send);
+        drawUntil(event.player.id, target, 1, source, rule.detail.send);
     }
 
-    static async skipRule(controller, rule, event) {
+    static skipRule(controller, rule, event) {
         if (rule.type != types.SKIP_PLAYER_RULE) throw 'Error: Rule and handler missmatch!';
-        let target = await TargetFunctions[rule.detail.target](controller, rule, event);
+        let target = TargetFunctions[rule.detail.target](controller, rule, event);
 
         skip(event.player.id, target);
     }
 
-    static async changeRuleRule(controller, rule, event) {
+    static changeRuleRule(controller, rule, event) {
         if (rule.type != types.CHANGE_RULE_RULE) throw 'Error: Rule and handler missmatch!';
-        let source = await TargetFunctions[rule.detail.source](controller, rule, event);
+        let source = TargetFunctions[rule.detail.source](controller, rule, event);
 
         viewCard(event.player.id, source);
     }
 
-    static async viewCardRule(controller, rule, event) {
+    static viewCardRule(controller, rule, event) {
         if (rule.type != types.VIEW_CARD_RULE) throw 'Error: Rule and handler missmatch!';
-        let source = await TargetFunctions[rule.detail.source](controller, rule, event);
+        let source = TargetFunctions[rule.detail.source](controller, rule, event);
 
         viewCard(event.player.id, source, rule.detail.num_cards);
     }
@@ -248,8 +248,8 @@ function strToRules(str, cards) {
                 target = parseInt(ruleCode[4], 10);
                 target_can_be_cur = false;
                 source = targets.DECK;
-                target_card= ruleCode[5];
-                target_suit = ruleCode[6];
+                target_card= parseInt(ruleCode[5], 10);
+                target_suit = parseInt(ruleCode[6], 10);
                 counteraction = parseInt(ruleCode[7], 10);
                 ret[r] = new DrawUntilRule(card, suit, type, trigger, target, target_can_be_cur, source, target_card, target_suit, counteraction);
                 break;
@@ -274,8 +274,8 @@ function strToRules(str, cards) {
                 break;
             case types.JUMP_IN_RULE:
                 trigger=triggers.PASSIVE;
-                target_card= ruleCode[3];
-                target_suit = ruleCode[4];
+                target_card= parseInt(ruleCode[3], 10);
+                target_suit = parseInt(ruleCode[4], 10);
                 ret[r] = new JumpInRule(card, suit, type, trigger, target_card, target_suit);
                 break;
         }
