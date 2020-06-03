@@ -245,7 +245,8 @@
 
     <link rel="stylesheet" href="<?php echo base_url('base/Navbar.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url('base/Base.css') ?>" />
-    <link rel="stylesheet" href="<?php echo base_url('game/Game.css'); ?>" />
+	<link rel="stylesheet" href="<?php echo base_url('game/Game.css'); ?>" />
+	<link rel="stylesheet" href="<?php echo base_url('cet/cet.css'); ?>" />
 </head>
 
 <body>
@@ -257,10 +258,16 @@
             </canvas>
 
         </div>
-    </div>
-</body>
+	</div>
+	<div id = "chat_div">
+		<div id = "display_messages"></div>
+		<div id = "text_area_div">
+			<input type="text" class="form-control customInput mediumInput" id = "enter_message_area" placeholder="Enter Message" onkeydown="if(event.keyCode==13) {send_message();}">
+		</div>
+	</div>
 
-<script type="text/javascript">
+	<script type="text/javascript">
+	setInterval(chat_update,300);
     $(document).ready(function () {
 
         var c = document.getElementById("canvas");
@@ -281,7 +288,7 @@
 
     });
 
-    setInterval(chat_update,300);
+    
     function send_message() {
         var text_area = document.getElementById("enter_message_area");
         var new_message = text_area.value;
@@ -330,6 +337,10 @@
         return returnData;
     }
 </script>
+
+</body>
+
+
 
 
 </html>

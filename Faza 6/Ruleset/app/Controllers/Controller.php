@@ -7,6 +7,7 @@
 */
 use App\Models\LobbyModel;
 use App\Models\UserModel;
+use App\Models\ChatModel;
 use App\Models\GameUpdateModel;
 use App\Models\LobbyDeckModel;
 use App\Models\UserHandModel;
