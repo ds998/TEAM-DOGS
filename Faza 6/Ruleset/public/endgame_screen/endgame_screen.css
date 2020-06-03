@@ -1,0 +1,77 @@
+#table_div {
+    display:flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+}
+
+#table_tag {
+    text-align: center;
+}
+
+#table_tag td{
+ display: flex;
+ align-items: center;
+ align-content: center;
+}
+
+.cell {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    justify-content: center;
+}
+
+.label_text {
+    color: var(--default-text-color);
+    font-size: 30px;
+}
+
+#table_header {
+    font-size: 100px;
+    padding-bottom: 50px;
+    color: var(--main-brand-color);
+}
+
+#ruleset_played {
+    color: var(--main-brand-color);
+    font-size: 20px;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+.rate {
+    text-align: center;
+    position: relative;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:var(--input-text-color);
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: var(--main-brand-color);    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: var(--main-brand-color);  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: var(--main-brand-color);
+}
