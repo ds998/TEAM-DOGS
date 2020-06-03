@@ -67,6 +67,8 @@ class Controller extends BaseController
         $hdecks = $hdecks->getResult();
         return $this->show("main",['controller'=>$this->session->get('controller'), 'hdecks' => $hdecks]);
     }
+
+    // registruje korisnika (ako vec nije registrovan i ako je unique email i username) @return stranicaZaReq || @return redirectToUserMainMenu
     public function register()
     {
         if($this->request->getVar('username'))
@@ -97,6 +99,8 @@ class Controller extends BaseController
         return json_encode((new DeckModel)->findAll());
     }
 
+    
+    //  nalazi i pokazuje sve spilove @return deckListStranica
     public function decklist()
     {
         $deckModel = new DeckModel();
@@ -104,6 +108,8 @@ class Controller extends BaseController
         $controller=$this->session->get('controller');
         return $this->show('deckList', ['decks'=>$decks,'controller'=>$controller]);
     }
+
+    //  nalazi i pokazuje prikaz spila @return deckPreviewStranica
     public function deckPreview($idDeck)
     {
         $deckModel = new DeckModel();
@@ -638,6 +644,8 @@ class Controller extends BaseController
         else return json_encode("no");
 
     }
+
+    //ocenjivanje spila @return void
     public function rate_deck($idDeck, $Rating)
     {
         $dModel = new DeckModel();
@@ -652,6 +660,7 @@ class Controller extends BaseController
     //--------------------------------------------------------------------
     
     //-------------GAME RELATED-------------------------------------------
+    //  uzimanje karata iz spila/od drugih korisnika @return $cards
     public function draw( $idUserThrown, $idUserAffected, $numOfCards, $idSource, $idLobby)
     {
         // update poteza koji trenutno $idUserThrown igra da bi svi znali sta se radi u igri (ali ne vide koje se karte vuku itd)
@@ -681,12 +690,15 @@ class Controller extends BaseController
         else return null;
     
     }
+
+    //  stavlja u update da neko mora da vuce do neke karte @return void
     public function drawUntil($idUserThrown, $idUserAffected, $card, $matchCard, $idLobby)
     {
         $update = "drawUntil".",".$idUserThrown.",".$idUserAffected.",".$card.",".$matchCard.",".$card.";";
         (new GameUpdateModel)->addToUpdate($idLobby, $update);
     }
 
+    //  stavlja u update da neko mora da vuce do neke karte @return json_encode("topcina")
     public function skip($idUserThrown, $idUserAffected, $idLobby)
     {
         $update = "skip";
@@ -697,6 +709,7 @@ class Controller extends BaseController
         // i kada dodje red na njega on samo moze da zavrsi potez
     }
 
+    // vraca karte sa vrha spila ili iz ruka drugih korisnika @return cards
     public function viewCard($idUserThrown, $idSource, $num, $idLobby)
     {
         $update = "view";
@@ -708,22 +721,26 @@ class Controller extends BaseController
         return json_encode($cardsToView);
     }
 
+    // vraca sve sto se dogodilo u trenutnom potezu @return update
     public function update($idLobby)
     {
         return json_encode((new GameUpdateModel())->getUpdate($idLobby));
     }
 
+    //  vraca ruku od korisnika koji je pozvao @return cards
     public function myHand($idUser)
     {
         return json_encode((new UserHandModel())->getUserHand($idUser));
     }
 
+    //  postavlja potez kao zavrsen u apdejtu @return void
     public function endTurn($idLobby)
     {
         $update = "endTurn".";";
         (new GameUpdateModel)->addToUpdate($idLobby, $update);
     }
 
+    // postavlja trenutni potez na nekog korisnika ako uspe i azurira update @return isClaimed
     public function claimTurn($idUser, $idLobby, $cardThrown)
     {
         $gum = new GameUpdateModel();
@@ -738,12 +755,14 @@ class Controller extends BaseController
         return json_encode(true);
     }
 
+    //  menja globalno pravilo i azurira update @return void
     public function changeGlobalRule( $rule, $newValue, $idLobby)
     {
         $update = "cgr,".$rule.",".$newValue.";";
         (new GameUpdateModel)->addToUpdate($idLobby, $update);
     }
 
+    // baca kartu na talon i azurira update @return void
     public function throw($idUser, $card, $idLobby)
     {
         $userHandModel = new UserHandModel();

@@ -23,6 +23,7 @@ class AdminController extends UserController
 
 	//--------------------------------------------------------------------
 
+    //  postavlja zeljenog korisnika kao admina @return registerAdminStranica || @return redirectToMainMenu
     public function registerAdmin(){
         if($this->request->getVar('userID'))
 		{
@@ -35,6 +36,7 @@ class AdminController extends UserController
         else return $this->show('registeradmin',['controller'=>$this->session->get('controller')]);
     }
     
+    //  azurira neki HDeck @ return stranicaZaMenjanjeIstaknutihSpilova || @return redirectToMainMenu 
     public function changeHD()
     {
         $controller=$this->session->get('controller');
@@ -57,6 +59,7 @@ class AdminController extends UserController
         }
     }
 
+    // nalazi i vraca istaknute spilove @return hdecks
     public function viewHDecks(){
         $hdecksModel = new HDecksModel();
         return $hdecksModel->findAll();

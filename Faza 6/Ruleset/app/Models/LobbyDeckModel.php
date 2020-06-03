@@ -9,6 +9,7 @@ class LobbyDeckModel extends Model
         protected $returnType = 'object';
         protected $allowedFields = ['idLobby','cards'];
 
+        // uzima x karata iz spila @return cards
         public function takeXCards($idLobby, $numOfCards){
             $temp = $this->getDeck($idLobby);
             $stringEnv = "'";
@@ -28,10 +29,13 @@ class LobbyDeckModel extends Model
             return $returnInfo;
         }
 
+        
+        // uzima sve karte iz spila @return cards
         public function getDeck($idLobby){
             return $this->find($idLobby)->cards;
         }
 
+        // vraca x karata iz spila (ali ih ne uzima) @return cards
         public function getXCards($idLobby){
             $temp = $this->getDeck($idLobby);
             if (strlen($temp)>$numOfCards*2) return substr( $temp, 0, $numOfCards*2);

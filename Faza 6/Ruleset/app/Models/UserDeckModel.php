@@ -12,6 +12,7 @@ class UserDeckModel extends Model
                 return $this->where('idDeck',$idDeck)->where('idUser',$idUser)->findAll();
         }
 
+        // nalazi sve sacuvane spilove za nekog korisnika @return user_decks
         public function getUserEntries($idUser){
                 return $this->where('idUser',$idUser)->findAll();
         }
