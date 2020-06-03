@@ -752,8 +752,17 @@ class Controller extends BaseController
         $update = $update.",".$idUserThrown.",".$idSource.",".$num.";";
         (new GameUpdateModel)->addToUpdate($idLobby, $update); // klasican update
 
+        if($idSource != 0)
+        {
         $userHandModel = new UserHandModel();
         $cardsToView = $userHandModel->getXCards($idSource, $num);
+        }
+        else
+        {
+            $ldModel = new LobbyDeckModel();
+            $cardsToView = $ldModel->getXCards($idLobby, $num);
+        }
+
         return json_encode($cardsToView);
     }
 
