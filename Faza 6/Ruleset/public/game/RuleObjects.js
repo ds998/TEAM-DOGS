@@ -39,6 +39,7 @@ class DrawUntilRule extends Rule {
         }
         this.detail.matcher = new CardMatcher(target_card, target_suit, cardMissMatch, suitMissMatch);
         this.detail.counteraction = counteraction;
+        this.detail.send = target_card+'-'+target_suit;
     }
 }
 
@@ -59,9 +60,9 @@ class ChangeRuleRule extends Rule {
 }
 
 class ViewCardRule extends Rule {
-    constructor(card, suit, type, trigger, target, target_can_be_cur, num_cards) {
+    constructor(card, suit, type, trigger, source, target_can_be_cur, num_cards) {
         super(card, suit, type, trigger);
-        this.detail.target = target;
+        this.detail.source = source;
         this.detail.target_can_be_cur = target_can_be_cur;
         this.detail.num_cards = num_cards;
     }

@@ -93,7 +93,7 @@ class Ruleset {
                 };
             case types.SKIP_PLAYER_RULE:
                 return (event) => {
-                    Ruleset.skip(this.myController, rule, event);
+                    Ruleset.skipRule(this.myController, rule, event);
                 };
             case types.CHANGE_RULE_RULE:
                 return (event) => {
@@ -101,12 +101,12 @@ class Ruleset {
                 };
             case types.VIEW_CARD_RULE:
                 return (event) => {
-                    Ruleset.viewCard(this.myController, rule, event);
+                    Ruleset.viewCardRule(this.myController, rule, event);
                 };
-            case types.JUMP_IN_RULE:
-                return (event) => {
-                    Ruleset.jumpIn(this.myController, rule, event);
-                };
+            // case types.JUMP_IN_RULE:
+            //     return (event) => {
+            //         Ruleset.jumpIn(this.myController, rule, event);
+            //     };
         }
     }
 
@@ -137,49 +137,48 @@ class Ruleset {
     canJumpIn(card, cardDest) {
         if (!card || !cardDest) return false;
         if (this.sameCardJumpIn && card.suit == cardDest.suit && card.value == cardDest.value) return true;
-        else if (card in this.passiveMap) {
-            let cm=new CardMatcher(this.passiveMap[card].target_card,this.passiveMap[card].target_suit);
-            return cm.isMatch(card);
+        else if (card.name in this.passiveMap || card.value in this.passiveMap || card.suit in this.passiveMap) {
+            return true;
         }
+        return false;
     }
 
     static drawFromRule(controller, rule, event) {
         if (rule.type != types.DRAW_RULE) throw 'Error: Rule and handler missmatch!';
-        let player = TargetFunctions[rule.detail.target](controller, rule, event);
+        let target = TargetFunctions[rule.detail.target](controller, rule, event);
         let source = TargetFunctions[rule.detail.source](controller, rule, event);
 
-        draw(event.detail.player.id, player.id, num, source, card);
+        draw(event.player.id, target, rule.detail.num_cards, source);
         //player.draw(rule.detail.num_cards, source);
     }
 
     static drawUntilRule(controller, rule, event) {
         if (rule.type != types.DRAW_UNTIL_RULE) throw 'Error: Rule and handler missmatch!';
-        let player = TargetFunctions[rule.detail.target](controller, rule, event);
+        let target = TargetFunctions[rule.detail.target](controller, rule, event);
         let source = TargetFunctions[rule.detail.source](controller, rule, event);
-        let matcher = rule.detail.matcher;
 
-        drawUntil(event.detail.player.id, player.id, source, card, rule.detail.target_card);
+        drawUntil(event.player.id, target, 1, source, rule.detail.send);
     }
 
     static skipRule(controller, rule, event) {
         if (rule.type != types.SKIP_PLAYER_RULE) throw 'Error: Rule and handler missmatch!';
-        let player = TargetFunctions[rule.detail.target](controller, rule, event);
+        let target = TargetFunctions[rule.detail.target](controller, rule, event);
 
-        skip(event.detail.player.id, player.id);
+        skip(event.player.id, target);
     }
-    
+
     static changeRuleRule(controller, rule, event) {
         if (rule.type != types.CHANGE_RULE_RULE) throw 'Error: Rule and handler missmatch!';
         let source = TargetFunctions[rule.detail.source](controller, rule, event);
 
-        viewCard(event.detail.player.id, source);
+        viewCard(event.player.id, source);
     }
 
     static viewCardRule(controller, rule, event) {
         if (rule.type != types.VIEW_CARD_RULE) throw 'Error: Rule and handler missmatch!';
         let source = TargetFunctions[rule.detail.source](controller, rule, event);
 
-        viewCard(event.detail.player.id, source);
+        viewCard(event.player.id, source, rule.detail.num_cards);
     }
 
     parseCard(card) {
@@ -277,7 +276,7 @@ function strToRules(str, cards) {
                 trigger=triggers.PASSIVE;
                 target_card= parseInt(ruleCode[3], 10);
                 target_suit = parseInt(ruleCode[4], 10);
-                ret[r] = new JumpInRule(card, suit, type, target_card, target_suit);
+                ret[r] = new JumpInRule(card, suit, type, trigger, target_card, target_suit);
                 break;
         }
     }
