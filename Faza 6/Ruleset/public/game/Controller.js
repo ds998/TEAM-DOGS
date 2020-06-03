@@ -1,15 +1,18 @@
 class Controller {
 	static controller = null;
 
-	static getController(rules, ids, playerId) {
-		if (Controller.controller == null && rules != null && ids != null && playerId != null)
-			Controller.controller = new Controller(rules, ids, playerId);
+	static getController(rules) {
+		if (Controller.controller == null && rules != null)
+			Controller.controller = new Controller(rules);
 		return Controller.controller;
 	}
 
 	diff (diffMe, diffBy) {return diffMe.split(diffBy).join('');}
 
-	constructor(rules, ids, playerId) {
+	constructor(rules) {
+
+		//Audio Controller
+		this.ac=new AudioController();
 
 		//Ruleset
 		this.ruleset = new Ruleset(strToRules(rules, cardNames), this);
@@ -34,22 +37,10 @@ class Controller {
 
 		//Players
 		this.curPlayer = 0;
-		this.numPlayers = ids.length;
 		this.enemyPlayers = [];
 		this.idMap = [];
 		this.claimed = false;
-		for (let i = 0; i < this.numPlayers; i++)
-			if (ids[i] == playerId)
-				this.idMap[ids[i]] = this.player = new Player(this, i, ids[i]);
-			else {
-				let newLen = this.enemyPlayers.push(new EnemyPlayer(ids[i], i, 0));
-				this.idMap[ids[i]] = this.enemyPlayers[newLen-1];
-			}
-
-		if(this.curPlayer == this.player.index) {
-			this.claimed=true;
-			this.turns_left=this.playsPerTurn;
-		}
+		
 		this.skip=false;
 		this.chosenOne=null;
 
@@ -63,7 +54,21 @@ class Controller {
 		}, false);
 	}
 
-	startMe() {
+	startMe(ids, playerId, playerNames) {
+		this.numPlayers = ids.length;
+		for (let i = 0; i < this.numPlayers; i++)
+			if (ids[i] == playerId)
+				this.idMap[ids[i]] = this.player = new Player(this, i, ids[i], playerNames[i]);
+			else {
+				let newLen = this.enemyPlayers.push(new EnemyPlayer(ids[i], i, 0, playerNames[i]));
+				this.idMap[ids[i]] = this.enemyPlayers[newLen-1];
+			}
+
+		if(this.curPlayer == this.player.index) {
+			this.claimed=true;
+			this.turns_left=this.playsPerTurn;
+		}
+		
 		draw(this.player.id, this.player.id, this.startingCards, this.deck.id);
 		setInterval(function() {update()}, 200);
 	}
@@ -77,6 +82,7 @@ class Controller {
 	}
 
 	playerPlayCard(card, sendSignal = true) {
+		this.ac.place();
 		this.player.play(card, sendSignal);
 		this.discard.top_card=card;
 
@@ -252,6 +258,7 @@ class Controller {
 				idUserThrown = parseInt(args[1]);
 				idSource = parseInt(args[2]);
 				numOfCards = parseInt(args[3]);
+				break;
 			case "endTurn":
 				this.handleEndTurn();
 				break;
@@ -267,7 +274,8 @@ class Controller {
 			case "throw":
 				idUser = parseInt(args[1]);
 				card = args[2];
-				this.handleThrow(idUser, card);
+				this.handleThrow(idUser, card)
+				break;
 			default:
 				break;
 		}
@@ -279,6 +287,7 @@ class Controller {
 			for(let e=0; e<this.enemyPlayers.length; e++) {
 				if (this.enemyPlayers[e].id == idUserThrown) {
 					this.enemyPlayers[e].cardCount+=numOfCards;
+					this.ac.draw();
 					if (this.winCon == 2 && this.enemyPlayers[e].cardCount >= 20) this.endGame(this.enemyPlayers[e].id);
 					break;
 				}
@@ -289,8 +298,8 @@ class Controller {
 				numOfCards = this.handLimit - this.player.hand.length;
 				if (numOfCards < 1) return;
 			}
-			if (this.winCon == 2 && this.player.hand.length+numOfCards >= 20) this.endGame(this.player.id);
 			draw(this.player.id, this.player.id, numOfCards, idSource);
+			if (this.winCon == 2 && this.player.hand.length+numOfCards >= 20) this.endGame(this.player.id);	
 		} else if (idUserAffected == this.player.id) if (this.winCon == 2 && this.player.hand.length+numOfCards >= 20) this.endGame(this.player.id);
 	}
 
@@ -310,6 +319,7 @@ class Controller {
 	handleThrow(idUser, card) {
 		if (idUser != this.player.id) {
 			this.idMap[idUser].cardCount--;
+			this.ac.place();
 			if (this.winCon == 1 && this.idMap[idUser].cardCount==0) this.endGame(idUser);
 		}
 		this.discard.top_card=this.ruleset.parseCard(card);

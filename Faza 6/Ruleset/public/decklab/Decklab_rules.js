@@ -9,7 +9,7 @@ function addRule(adderRow, rule = null) {
         count.textContent = (parseInt(count.textContent, 10) + 1).toString(10);
     }
 
-    addRule.rules = ['Draw', 'Draw until', 'Skip', '', 'View Card', 'Jump-in']; //Change Global Rule
+    addRule.rules = ['Draw', 'Draw until', 'Skip', '', '', 'Jump-in']; //Change Global Rule, View Card
     if (!isValid()) return;
 
     var newRow = ruleTableRef.insertRow($(adderRow).index() + 1);

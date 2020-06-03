@@ -589,13 +589,15 @@ class Controller extends BaseController
         ];
         $userHandModel->insert($data);
         $players=array();
+        $playerNames=array();
         $pl=explode(",",$lobby->PlayerList);
         for($i=0;$i<count($pl);$i++){
             $ll=$userModel->findName($pl[$i]);
             array_push($players,$ll[0]->idUser);
+            array_push($playerNames,$ll[0]->username);
         }
         $F_DECK=(new DeckModel())->find($lobby->idDeck);
-        return $this->show('game',['controller'=>$this->session->get('controller'),'players'=>$players,'idLobby'=>$idLobby, 'idUser'=>$this_user->idUser, 'deck'=>$F_DECK]);
+        return $this->show('game',['controller'=>$this->session->get('controller'),'players'=>$players,'playerNames'=>$playerNames,'idLobby'=>$idLobby, 'idUser'=>$this_user->idUser, 'deck'=>$F_DECK]);
         
 
     }
@@ -830,9 +832,17 @@ class Controller extends BaseController
         $update = $update.",".$idUserThrown.",".$idSource.",".$num.";";
         (new GameUpdateModel)->addToUpdate($idLobby, $update); // klasican update
 
-        $userHandModel = new UserHandModel();
-        $cardsToView = $userHandModel->getXCards($idSource, $num);
-        return json_encode($cardsToView);
+        if($idSource == 0) // znaci da se vuce iz spila
+        {
+            $LobbyDeckModel = new LobbyDeckModel();
+            $cardsToView = $LobbyDeckModel->getXCards($idLobby, $num);
+            return json_encode($cardsToView);
+        }
+        else {
+            $userHandModel = new UserHandModel();
+            $cardsToView = $userHandModel->getXCards($idSource, $num);
+            return json_encode($cardsToView);
+        }
     }
 
     /** vraca sve sto se dogodilo u trenutnom potezu
@@ -904,7 +914,7 @@ class Controller extends BaseController
     public function throw($idUser, $card, $idLobby)
     {
         $userHandModel = new UserHandModel();
-        $userHandModel->takeSpecificCard($idUserThrown, $card);
+        $userHandModel->takeSpecificCard($idUser, $card);
         $update = "throw,".$idUser.",".$card.";";
         (new GameUpdateModel)->addToUpdate($idLobby, $update);
     }

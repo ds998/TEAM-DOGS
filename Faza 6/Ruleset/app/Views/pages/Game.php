@@ -14,6 +14,7 @@
 		var myID = "<?php echo $idUser ?>";
 		var idLobby = "<?php echo $idLobby ?>";
 		var playerIDs = <?php echo json_encode($players) ?>;
+		var playerNames = <?php echo json_encode($playerNames) ?>;
 		var cardNames = "<?php echo $deck->Cards ?>";
 		cardNames = cardNames.split(',');
 		var rulesSTRING = "<?php echo $deck->cardRules ?>";
@@ -245,6 +246,7 @@
     <script src="<?php echo base_url('game/Deck.js'); ?>"></script>
     <script src="<?php echo base_url('game/Player.js'); ?>"></script>
     <script src="<?php echo base_url('game/Ruleset.js'); ?>"></script>
+	<script src="<?php echo base_url('game/AudioController.js'); ?>"></script>
     <script src="<?php echo base_url('game/Controller.js'); ?>"></script>
     <script src="<?php echo base_url('game/graphics.js'); ?>"></script>
 
@@ -256,13 +258,17 @@
 
 <body>
     <div class="fluid-container">
-        <div class="col-md-12">
+	</br>
+		<div class="row">
+			<div class="col-0 col-lg-1"></div>
+			<div class="col-lg-10">
 
-            <canvas id="canvas" width="3200" height="1800">
-                Sorry, your browser doesn't support the &lt;canvas&gt; element.
-            </canvas>
+				<canvas id="canvas" width="3200" height="1800">
+					Sorry, your browser doesn't support the &lt;canvas&gt; element.
+				</canvas>
 
-        </div>
+			</div>
+		</div>
 	</div>
 	<div id = "chat_div">
 		<div id = "display_messages"></div>
@@ -279,13 +285,13 @@
         var ctx = c.getContext("2d");
 
         //var con = new Controller(rules, ids, idUser);
-        var con = Controller.getController(rulesSTRING, playerIDs, myID);
+        var con = Controller.getController(rulesSTRING);
 
         cardImg.onload = function () {
             gm = new GraphicsManager(con);
             con.addGM(gm);
 
-            con.startMe();
+            con.startMe(playerIDs, myID, playerNames);
         }
         cardImg.onerror= function () {
             console.log('ERROR-IMAGE IS AN ASSHOLE! src:' + cardImg.src);
