@@ -47,7 +47,9 @@ class UserController extends Controller
         return $this->show('deljenje_spilova',['controller'=>$controller,'deck_id'=>$deck_id,'message'=>$message]);
     }
 
-    // prikazuje sacuvane spilove @return userDeckListStranicu
+    /** prikazuje sacuvane spilove
+    * @return userDeckListStranicu
+    */
     public function listUserDecks()
     {
         $idUser = $_SESSION['user']->idUser;
@@ -60,7 +62,11 @@ class UserController extends Controller
         return $this->show('userDeckList', ['controller'=>$this->session->get('controller'),'decks'=>$decks]);
     }
 
-    //  Cuva zadati spil u korisnicke spilove @return redirectToListUserDecksStranicu
+    /** Cuva zadati spil u korisnicke spilove
+    * @return redirectToListUserDecksStranicu
+    * @param integer $idUser idUser
+    * @param integer $idDeck idDeck
+    */
     public function save_user_deck($idUser, $idDeck)
     {
         $udModel = new UserDeckModel();
@@ -80,7 +86,10 @@ class UserController extends Controller
         return redirect()->to(site_url("usercontroller/listUserDecks"));
     }
 
-    //  Uzima informacije iz stranice za pravljenje spilova ili vodi na nju @return deckLabStranicu || @return redirectToMainMenu
+    /** 
+     *  Uzima informacije iz stranice za pravljenje spilova ili vodi na nju
+    * @return deckLabStranicu || @return redirectToMainMenu
+    */
     public function decklab()
     {
         $controller = $this->session->get('controller');
