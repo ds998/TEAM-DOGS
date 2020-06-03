@@ -17,7 +17,12 @@ class UserModel extends Model
                 return $this->where('email',$email)->findAll();
         }
 
-        // dodaje u user tabelu novog korisnika @return isInserted
+        /** dodaje u user tabelu novog korisnika 
+        * @return isInserted
+        * @param string $username username
+        * @param string $email email
+        * @param string $passwordHash passwordHash
+        */
         public function register($username, $email, $passwordHash){
                 if($this->where('username',$username)->findAll()!=null)return -2;
                 if($this->where('email',$email)->findAll()!=null)return -1;

@@ -8,7 +8,11 @@ class HDecksModel extends Model
         protected $returnType = 'object';
         protected $allowedFields = ['idDeck', 'orderNum'];
     
-        // azurira hdecks tabelu @return void
+        /** azurira hdecks tabelu 
+        * @return void
+        * @param integer $newID newID
+        * @param integer $order order
+        */
         public function change_HD($newID, $order){
             if(!$this->where('orderNum', $order)->findAll()){
                     $data=[
@@ -23,7 +27,9 @@ class HDecksModel extends Model
             }
         }
 
-        // vraca sve istaknute spilove @return hdecks
+        /** vraca sve istaknute spilove 
+        * @return hdecks
+        */
         public function getAll(){
             return $this->findAll();
         }
