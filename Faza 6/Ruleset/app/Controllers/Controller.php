@@ -638,6 +638,17 @@ class Controller extends BaseController
         else return json_encode("no");
 
     }
+    public function rate_deck($idDeck, $Rating)
+    {
+        $dModel = new DeckModel();
+        $deck = $dModel->find($idDeck);
+        $numberOfRatings = $deck->numberOfRatings + 1;
+        $prevRating = $deck->Rating;
+        $newRating = $prevRating*($numberOfRatings - 1) + $Rating;
+        $newRating = $newRating/$numberOfRatings;
+        
+        $dModel->query("UPDATE deck SET Rating = $newRating, numberOfRatings = $numberOfRatings WHERE idDeck = $idDeck;");
+    }
     //--------------------------------------------------------------------
     
     //-------------GAME RELATED-------------------------------------------
