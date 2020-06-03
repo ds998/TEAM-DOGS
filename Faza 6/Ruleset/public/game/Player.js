@@ -1,17 +1,19 @@
 class EnemyPlayer {
-    constructor(id, index, cardCount) {
+    constructor(id, index, cardCount, name) {
         this.id=id;
         this.index=index;
         this.cardCount = cardCount;
+        this.name=name;
     }
 }
 
 class Player {
-    constructor(controller, index, id) {
+    constructor(controller, index, id, name) {
         this.hand = [];
         this.myController = controller;
         this.index = index;
         this.id=id;
+        this.name=name;
     }
 
     // draw num_cards from souce
@@ -22,8 +24,9 @@ class Player {
 
             //Check source empty
             if (newCard == null) break;
-
+            
             this.hand.push(newCard);
+            this.myController.ac.draw();
 
             if (sendSignal && (newCard.events[1][0] || newCard.events[1][1] || newCard.events[1][2]))
                 this.myController.dispatchEvent(new CustomEvent('cardDrawn', {

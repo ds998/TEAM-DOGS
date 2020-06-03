@@ -66,9 +66,9 @@ class LobbyDeckModel extends Model
         * @return cards
         * @param integer $idLobby idLobby
         */
-        public function getXCards($idLobby){
+        public function getXCards($idLobby, $numOfCards){
             $temp = $this->getDeck($idLobby);
-            if (strlen($temp)>$numOfCards*2) return substr( $temp, 0, $numOfCards*2);
+            if (strlen($temp)>$numOfCards*2) return substr($temp, -$numOfCards*2);
             else return $temp;
         }
 }

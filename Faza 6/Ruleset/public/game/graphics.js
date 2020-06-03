@@ -24,6 +24,8 @@ suitSprites['Spades'].src = '../../assets/game/spades.png';
 suitSprites['Diamonds'] = new Image();
 suitSprites['Diamonds'].src = '../../assets/game/diamonds.png';
 
+const bgImg = new Image();
+bgImg.src = '../../assets/game/bg.png';
 const cardHImg = new Image();
 cardHImg.src = '../../assets/game/cardHover.png';
 const cardBackImg = new Image();
@@ -154,9 +156,10 @@ class GraphicsManager {
 						}
 						break;
 					default:
-						this.controller.tryToPlay(this.controller.cardAt(this.hovered)).then((success) =>{
+						var selected = this.hovered;
+						this.controller.tryToPlay(this.controller.cardAt(selected)).then((success) =>{
 							if (success) {
-								this.discardCard = this.cards.splice(this.hovered, 1)[0];
+								this.discardCard = this.cards.splice(selected, 1)[0];
 								this.discardCard.setHover(false);
 								this.hovered = -1;
 							}
@@ -203,8 +206,13 @@ class GraphicsManager {
 			}
 		}
 
-		this.ctx.fillStyle = BGCOLOR;
-		this.ctx.fillRect(0, 0, canvasSize, canvasH);
+		this.ctx.drawImage(bgImg, 0, 0, canvasSize, canvasH)
+		if (!this.overlay && this.controller.myTurn()){
+			this.ctx.fillStyle = "#F69D52";
+			this.ctx.fillRect(HAND_X/2 - CARD_W/2, HAND_Y-CARD_HOVER, HAND_W+ CARD_W, CARD_H + 2*CARD_HOVER);
+		}
+		//this.ctx.fillStyle = BGCOLOR;
+		//this.ctx.fillRect(0, 0, canvasSize, canvasH);
 
 		if (this.deck) this.deckCard.draw(this.ctx, 1200, 700);
 		if (this.discardCard) this.discardCard.draw(this.ctx, 1600, 700);
@@ -252,9 +260,6 @@ class GraphicsManager {
 		}
 
 		let enemies = this.controller.enemyPlayers;
-		this.ctx.fillStyle = "#FFFFFF";
-		this.ctx.textAlign = "center";
-		this.ctx.font = CARD_FONT_XL.toString(10) + "px Calibri";
 
 		let startIndex = this.controller.player.index % (enemies.length);
 		var index = startIndex;
@@ -316,10 +321,22 @@ class GraphicsManager {
 
 		this.enemyCards[index].draw(this.ctx, 0 - offsetX - CARD_W / 2, 0);
 
+		this.ctx.fillStyle = "#FFFFFF";
+		this.ctx.textAlign = "center";
+		this.ctx.font = CARD_FONT_XL.toString(10) + "px Calibri";
+
 		this.ctx.translate(- offsetX, CARD_H / 2);
 		this.ctx.rotate(Math.PI * -rotation);
-		if (rotation == Math.floor(rotation)) this.ctx.fillText(this.controller.enemyPlayers[index].cardCount, 0, 0);
-		else this.ctx.fillText(this.controller.enemyPlayers[index].cardCount, 0, CARD_FONT_XL/3);
+		if (rotation == Math.floor(rotation)) {
+			this.ctx.fillText(this.controller.enemyPlayers[index].cardCount, 0, 0);
+			this.ctx.font = CARD_FONT_S.toString(10) + "px Calibri";
+			this.ctx.fillText(this.controller.enemyPlayers[index].name, 0, -CARD_FONT_XL+CARD_HOVER);
+		}
+		else {
+			this.ctx.fillText(this.controller.enemyPlayers[index].cardCount, 0, CARD_FONT_XL/3);
+			this.ctx.font = CARD_FONT_S.toString(10) + "px Calibri";
+			this.ctx.fillText(this.controller.enemyPlayers[index].name, 0, CARD_FONT_XL/3-CARD_FONT_XL+CARD_HOVER);
+		}
 		this.ctx.restore();
 	}
 
