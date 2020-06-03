@@ -85,22 +85,22 @@
         <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
             <form action="<?= site_url("usercontroller/register/{}") ?>">
                 <br>
-                <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input type="email" class="form-control" name="email" aria-describedby="emailHelp"
+                <div class="form-group" align=center>
+                    <label for="email label_class" class="label_class">Email address</label>
+                    <input type="email" class="form-control customInput mediumInput" name="email" aria-describedby="emailHelp"
                         placeholder="Enter email">
                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                         else.</small>
                 </div>
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" aria-describedby="emailHelp"
+                <div class="form-group" align=center>
+                    <label for="username" class="label_class">Username</label>
+                    <input type="text" class="form-control customInput mediumInput" name="username" aria-describedby="emailHelp"
                         placeholder="Enter username">
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
+                <div class="form-group" align=center>
+                    <label for="password" class="label_class">Password</label>
                     <input type="password" pattern=".{8,}" required title="Password needs to be at least 8 characters"
-                        class="form-control" name="password" placeholder="Password">
+                        class="form-control customInput mediumInput" name="password" placeholder="Password">
                     <small name="passwordHelp" class="form-text text-muted">Password needs to be at least 8
                         characters</small>
                 </div>
@@ -108,10 +108,11 @@
                 <br>
                 <div class="text-center">
                     <button type="submit" name="register" class="btn btn-primary">Register</button>
+                    <small id="haveAccount" class="form-text text-muted">Already have an account? <a
+                        href="<?php echo site_url("$controller/login_page");?>">LOGIN</a></small>
                 </div>
 
-                <small id="haveAccount" class="form-text text-muted">Already have an account? <a
-                        href="login.html">LOGIN</a></small>
+                
                             
             </form>
         </div>

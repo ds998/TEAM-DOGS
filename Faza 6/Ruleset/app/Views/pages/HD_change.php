@@ -81,23 +81,34 @@
             </div>
         </nav>
     </div>
+    <style>
+        .centershit{
+            text-align:center;
+            position:relative;
+            padding-bottom: 10px;
+            }
+            .customInput {
+    background-color: var(--input-bg-color);
+}
+    </style>
     <container>
         <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
             <form action="<?= site_url("$controller/changeHD") ?>">
                 <br>
-                <div class="form-group">
-                    <label for="idDeck">idDeck</label>
-                    <input type="text" name="idDeck" 
+                <div class="form-group" align="center">
+                    <label for="idDeck" class="label_class">idDeck: </label>
+                    <input type="text" class="form-control customInput mediumInput" name="idDeck" 
                         placeholder="Enter deck id">
-                    
-                    <label for="seq">Number#</label>
-                    <input type="text" name="seq" placeholder="1-9">
+                    <br>
+                    <br>
+                    <label for="seq" class="label_class">Number: </label>
+                    <input type="text" class="form-control customInput mediumInput" name="seq" placeholder="1-9">
                         
                 </div>
 
                 <br>
                 <div class="text-center">
-                    <button type="submit" name="changeHD" class="btn btn-primary">Change highlighted deck</button>
+                    <button type="submit" name="changeHD" class="btn btn-primary">Change Highlighted Deck</button>
                 </div>
                             
             </form>
