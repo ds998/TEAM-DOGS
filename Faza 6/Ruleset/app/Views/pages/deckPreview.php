@@ -86,12 +86,17 @@
     <div class="welcome_popup" id="main_popup">
         <div id="deckPopup">
             <div id="testTest">
+                <div width="20%">
+                    <button class="btn btn-primary baton" onclick="history.go(-1);">Close</button>
+                </div>
                 <div id="deckTitleDiv">
+            
                     <h1 id="deckName"><?php echo $deck->name ?></h1>
                     <h4 id="deckCreatorName">by <?php echo $username?></h4>
                 </div>
 
                 <div id="deckInfoCol">
+                
                     <p id="deckDescription"><?php echo $deck->descr ?>
                     </p>
                     <h5>Played by <?php echo $deck->numberOfPlays ?> player/s</h5>
