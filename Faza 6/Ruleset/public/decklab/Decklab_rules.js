@@ -9,7 +9,7 @@ function addRule(adderRow, rule = null) {
         count.textContent = (parseInt(count.textContent, 10) + 1).toString(10);
     }
 
-    addRule.rules = ['Draw', 'Draw until', 'Skip', 'Change Global Rule', 'View Card', 'Jump-in'];
+    addRule.rules = ['Draw', 'Draw until', 'Skip', '', 'View Card', 'Jump-in']; //Change Global Rule
     if (!isValid()) return;
 
     var newRow = ruleTableRef.insertRow($(adderRow).index() + 1);
@@ -528,8 +528,8 @@ function addGlobalRules(globalRules = null) {
             case 0:
                 newElem = document.createElement('select');
                 $(newElem).addClass('custom-select winConSelect');
-                if (globalRules) addOptions(newElem, ["First to empty their hand wins", "First to X number of cards wins", "Last person with cards in their hand wins"], ['1', '2', '3'], true, globalRules.winCon);
-                else addOptions(newElem, ["First to empty their hand wins.", "First to X number of cards wins", "Last person with cards in their hand wins"], ['1', '2', '3'], true);
+                if (globalRules) addOptions(newElem, ["First to empty their hand wins", "First to 20 number of cards wins"], ['1', '2'], true, globalRules.winCon); //, "Last person with cards in their hand wins"
+                else addOptions(newElem, ["First to empty their hand wins.", "First to 20 number of cards wins"], ['1', '2'], true);
                 newCell.appendChild(newElem);
                 newElem.addEventListener('focusout', function () {
                     globalRules.winCon = this.value;
