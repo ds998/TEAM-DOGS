@@ -9,11 +9,11 @@ TargetFunctions[targets.PREV] = function (controller, rule, event) {
 }
 
 TargetFunctions[targets.CHOOSE] = function (controller, rule, event) {
-    return event.player.choosePlayer(rule.detail.target_can_be_cur);
+    return controller.chooseOther();
 }
 
-TargetFunctions[targets.RANDOM] = function (controller, rule, event) {
-    return controller.randomPlayer(rule.detail.target_can_be_cur);
+TargetFunctions[targets.RANDOM] = async function (controller, rule, event) {
+    return await controller.randomPlayer(rule.detail.target_can_be_cur);
 }
 
 TargetFunctions[targets.CURRENT] = function (controller, rule, event) {

@@ -57,7 +57,7 @@
 		}
 		async function drawUntilFunc(idUser, idUser2, card, matchCode, idLobby) {
 			var controller = "<?php echo $controller; ?>";
-			await fetch("http://localhost:8080/" + controller + "/drawFunc/" + idUser + "/" +
+			await fetch("http://localhost:8080/" + controller + "/drawUntil/" + idUser + "/" +
 				idUser2 + "/" + card + "/" + matchCode + "/" + idLobby, {
 					headers: {
 						'Content-Type': 'application/json',
@@ -93,12 +93,12 @@
 		function viewCard(idUser, source, num) {
 			viewCardFunc(idUser, source, num, idLobby).then((data) => {
 				let con = Controller.getController();
-					let cards = data.match(/.{1,2}/g);
-					for(let c=0; c<cards.length;c++) {
-						cards[c]=con.ruleset.parseCard(cards[c]);
-					}
-					
-				con.gm.display(cards);
+				let cards = data.match(/.{1,2}/g);
+				for(let c=0; c<cards.length;c++) {
+					cards[c]=con.ruleset.parseCard(cards[c]);
+				}
+				
+				con.gm.displayCards(cards);
 			});
 		}
 		async function viewCardFunc(idUser, source, num, idLobby) {

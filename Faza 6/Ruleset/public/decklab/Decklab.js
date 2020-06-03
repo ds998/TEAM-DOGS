@@ -268,6 +268,7 @@ function addOptions(select, names, values, isSelected = false, selectedValue = n
     // option if no selectedValue is given
     let opt;
     for (let i = 0; i < names.length; i++) {
+        if (names[i] == '') continue;
         opt = document.createElement('option');
         opt.appendChild(document.createTextNode(names[i]));
         opt.value = values[i];
