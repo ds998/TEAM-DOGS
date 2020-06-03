@@ -17,13 +17,13 @@ TargetFunctions[targets.RANDOM] = function (controller, rule, event) {
 }
 
 TargetFunctions[targets.CURRENT] = function (controller, rule, event) {
-    return event.player;
+    return event.player.id;
 }
 
 TargetFunctions[targets.DECK] = function (controller, rule, event) {
-    return controller.deck;
+    return controller.deck.id;
 }
 
 TargetFunctions[targets.DISCARD_PILE] = function (controller, rule, event) {
-    return controller.discardPile;
+    return -1;
 }

@@ -11,28 +11,6 @@ function deckChangeName(index, name) {
     sessionStorage.setItem("deck", JSON.stringify(deck));
 }
 
-function KeyCheck(event) {
-    var KeyID = event.keyCode;
-    switch (KeyID) {
-        case 8:
-            //backspace
-        case 46:
-            //delete
-            if (selected != null) {
-                if (selectedInput.value == "") {
-                    // If names empty
-                    deleteCard();
-                } else if (!$(selectedInput).is(":focus")) {
-                    // If names not empty, but name is not being edited
-                    deleteCard();
-                }
-            }
-            break;
-        default:
-            break;
-    }
-}
-
 function deleteCard(index = selectedIndex) {
     if ($(".deckTableRow")[index].cells[0].children[0].textContent != "0") {
         if (!confirm("Are you sure you want to delte this card? Doing so will lose all the rules in it!")) return;
@@ -167,7 +145,6 @@ function addCard(adderRow, card = null) {
 $(document).ready(function () {
     cardTableRef = document.getElementById('cardTable');
     ruleTableRef = document.getElementById('ruleTable');
-    document.addEventListener("keydown", KeyCheck);
 
     // - Loading from Memory --------------------------
     // --------- Deck ---------------------------------

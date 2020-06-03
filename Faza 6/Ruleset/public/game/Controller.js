@@ -1,281 +1,305 @@
 class Controller {
-    static controller = null;
+	static controller = null;
 
-    static getController(rules, ids, playerId) {
-        if (Controller.controller == null && rules != null && ids != null && playerId != null)
-            Controller.controller = new Controller(rules, ids, playerId);
-        return Controller.controller;
-    }
+	static getController(rules, ids, playerId) {
+		if (Controller.controller == null && rules != null && ids != null && playerId != null)
+			Controller.controller = new Controller(rules, ids, playerId);
+		return Controller.controller;
+	}
 
-    diff (diffMe, diffBy) {return diffMe.split(diffBy).join('');}
-    
-    constructor(rules, ids, playerId) {
+	diff (diffMe, diffBy) {return diffMe.split(diffBy).join('');}
 
-        //Ruleset
-        this.ruleset = new Ruleset(strToRules(rules, cardNames), this);
-        this.ruleset.addEventHandlers();
+	constructor(rules, ids, playerId) {
 
-        //Deck
-        this.deck = new Deck(0);
-        this.lastData=null;
+		//Ruleset
+		this.ruleset = new Ruleset(strToRules(rules, cardNames), this);
+		this.ruleset.addEventHandlers();
 
-        //Discard pile
-        this.discard = new Discard(-1, null);
+		//Deck
+		this.deck = new Deck(0);
+		this.lastData=null;
 
-        //Global Rules
-        this.turns_left=0;
-        this.order=parseInt(globalRules[4], 10);
-        this.startingCards=parseInt(globalRules[5], 10);
-        this.handLimit=parseInt(globalRules[6], 10);
-        this.cardsPerTurn=parseInt(globalRules[7], 10);
-        this.playsPerTurn=parseInt(globalRules[8], 10);
-        this.cantPlay=parseInt(globalRules[9], 10);
+		//Discard pile
+		this.discard = new Discard(-1, null);
 
-        //Players
-        this.curPlayer = 0;
-        this.numPlayers = ids.length;
-        this.enemyPlayers = [];
-        this.idMap = [];
-        this.claimed = false;
-        for (let i = 0; i < this.numPlayers; i++)
-            if (ids[i] == playerId)
-                this.idMap[ids[i]] = this.player = new Player(this, i, ids[i]);
-            else {
-                let newLen = this.enemyPlayers.push(new EnemyPlayer(ids[i], i, 0));
-                this.idMap[ids[i]] = this.enemyPlayers[newLen-1];
-            }
+		//Global Rules
+		this.turns_left=0;
+		this.order=parseInt(globalRules[4], 10);
+		this.startingCards=parseInt(globalRules[5], 10);
+		this.handLimit=parseInt(globalRules[6], 10);
+		this.cardsPerTurn=parseInt(globalRules[7], 10);
+		this.playsPerTurn=parseInt(globalRules[8], 10);
+		this.cantPlay=parseInt(globalRules[9], 10);
 
-        if(this.curPlayer == this.player.index) {
-            this.claimed=true;
-            this.turns_left=this.playsPerTurn;
-        }
-        this.skip=false;
+		//Players
+		this.curPlayer = 0;
+		this.numPlayers = ids.length;
+		this.enemyPlayers = [];
+		this.idMap = [];
+		this.claimed = false;
+		for (let i = 0; i < this.numPlayers; i++)
+			if (ids[i] == playerId)
+				this.idMap[ids[i]] = this.player = new Player(this, i, ids[i]);
+			else {
+				let newLen = this.enemyPlayers.push(new EnemyPlayer(ids[i], i, 0));
+				this.idMap[ids[i]] = this.enemyPlayers[newLen-1];
+			}
 
-        //Event handler
-        this.handler = new EventTarget();
-        this.handler.addEventListener('cardDrawn', (e) => {
-            this.ruleset.handleOnDrawEvent(e.detail);
-        }, false);
-        this.handler.addEventListener('cardPlayed', (e) => {
-            this.ruleset.handleOnPlayEvent(e.detail);
-        }, false);
-    }
+		if(this.curPlayer == this.player.index) {
+			this.claimed=true;
+			this.turns_left=this.playsPerTurn;
+		}
+		this.skip=false;
 
-    startMe() {
-        draw(this.player.id, this.player.id, this.startingCards, this.deck.id);
-        setInterval(function() {update()}, 200);
-    }
+		//Event handler
+		this.handler = new EventTarget();
+		this.handler.addEventListener('cardDrawn', (e) => {
+			this.ruleset.handleOnDrawEvent(e.detail);
+		}, false);
+		this.handler.addEventListener('cardPlayed', (e) => {
+			this.ruleset.handleOnPlayEvent(e.detail);
+		}, false);
+	}
 
-    addGM(gm) {
-        this.gm = gm;
-    }
+	startMe() {
+		draw(this.player.id, this.player.id, this.startingCards, this.deck.id);
+		setInterval(function() {update()}, 200);
+	}
 
-    dispatchEvent(event) {
-        this.handler.dispatchEvent(event);
-    }
+	addGM(gm) {
+		this.gm = gm;
+	}
 
-    playerPlayCard(card, sendSignal = true) {
-        this.player.play(card, sendSignal);
-        this.discard.top_card=card;
+	dispatchEvent(event) {
+		this.handler.dispatchEvent(event);
+	}
 
-        throwf(this.player.id, unparseCard(card));
-        this.turns_left--;
-        if (!this.turns_left) this.endTurn();
-    }
+	playerPlayCard(card, sendSignal = true) {
+		this.player.play(card, sendSignal);
+		this.discard.top_card=card;
 
-    // TARGET FUNCTION IMPLEMENTATION
-    // Return the player after the player sent as a paramater
-    getNextPlayer() {
-        return (this.player.index + 1) % this.numPlayers;
-    }
+		throwf(this.player.id, unparseCard(card));
+		this.turns_left--;
+		if (!this.turns_left) this.endTurn();
+	}
 
-    // Return the player after the player sent as a paramater
-    getPreviousPlayer() {
-        return (this.player.index - 1 + this.numPlayers) % this.numPlayers;
-    }
+	// TARGET FUNCTION IMPLEMENTATION
+	// Return the player after the player sent as a paramater
+	getNextPlayer() {
+		let index = (this.player.index + 1) % this.numPlayers;
+		if (this.player.index == index) return this.player.id;
+		else for (let e=0; e<this.enemyPlayers.length; e++)
+			if (this.enemyPlayers[e].index == index) return this.enemyPlayers[e].id;
+	}
 
-    markSkip() {
-        this.skip = true;
-    }
+	// Return the player after the player sent as a paramater
+	getPreviousPlayer() {
+		let index = (this.player.index - 1 + this.numPlayers) % this.numPlayers;
+		if (this.player.index == index) return this.player.id;
+		else for (let e=0; e<this.enemyPlayers.length; e++)
+			if (this.enemyPlayers[e].index == index) return this.enemyPlayers[e].id;
+	}
 
-    chooseOther() {
-        //TO-DO
-    }
+	markSkip() {
+		this.skip = true;
+	}
 
-    tryToPlay(card) {
-        return new Promise(async function(resolve, reject) {
-            var success = false;
-            if (this.canPlay(card, this.discard.top_card)) {
-                if (this.claimed) {
-                    this.playerPlayCard(card, true);
-                    success = true;
-                } else {
-                    if (await claimTurn(this.player.id, card)) {
-                        this.turns_left = this.playsPerTurn;
-                        this.claimed=true;
-                        this.playerPlayCard(card, true);
-                        success = true;
-                    }
-                }
-            }
-          if ( success ) {
-            resolve(true);
-          } else {
-            resolve(false);
-          }
-        }.bind(this));
-    }
+	chooseOther() {
+		//TO-DO
+	}
 
-    async drawFromDeck(num_cards = 1) {
-        if (this.cantPlay == 3) return;
-        if (this.myTurn()) {
-            if (this.player.hand.length+num_cards> this.handLimit) {
-                num_cards = this.handLimit - this.player.hand.length;
-                if (num_cards < 1) return;
-            }
-            if (this.claimed) {
-                draw(this.player.id, this.player.id, num_cards, this.deck.id);
-                if (this.cantPlay == 1) this.endTurn();
-            } else if (await claimTurn(this.player.id, 'null')) {
-                this.turns_left = this.playsPerTurn;
-                this.claimed=true;
-                draw(this.player.id, this.player.id, num_cards, this.deck.id);
-                if (this.cantPlay == 1) this.endTurn();
-            }
-        }
-    }
+	tryToPlay(card) {
+		return new Promise(async function(resolve, reject) {
+			var success = false;
+			if (this.canPlay(card, this.discard.top_card)) {
+				if (this.claimed) {
+					this.playerPlayCard(card, true);
+					success = true;
+				} else {
+					if (await claimTurn(this.player.id, card)) {
+						this.turns_left = this.playsPerTurn;
+						this.claimed=true;
+						this.playerPlayCard(card, true);
+						success = true;
+					}
+				}
+			}
+		  if ( success ) {
+			resolve(true);
+		  } else {
+			resolve(false);
+		  }
+		}.bind(this));
+	}
 
-    myTurn() {
-        return this.curPlayer == this.player.index;
-    }
+	async drawFromDeck(num_cards = 1) {
+		if (this.cantPlay == 3) return;
+		if (this.myTurn()) {
+			if (this.player.hand.length+num_cards> this.handLimit) {
+				num_cards = this.handLimit - this.player.hand.length;
+				if (num_cards < 1) return;
+			}
+			if (this.claimed) {
+				draw(this.player.id, this.player.id, num_cards, this.deck.id);
+				if (this.cantPlay == 1) this.endTurn();
+			} else if (await claimTurn(this.player.id, 'null')) {
+				this.turns_left = this.playsPerTurn;
+				this.claimed=true;
+				draw(this.player.id, this.player.id, num_cards, this.deck.id);
+				if (this.cantPlay == 1) this.endTurn();
+			}
+		}
+	}
 
-    amPlaying() {
-        return (this.myTurn() && this.claimed);
-    }
+	myTurn() {
+		return this.curPlayer == this.player.index;
+	}
 
-    canPlay(card, cardDest) {
-        if (this.myTurn() && (cardDest==null ||(card.suit == cardDest.suit || card.value == cardDest.value))) return true;
-        else if (this.ruleset.canJumpIn(card, cardDest)) return true;
-        else return false;
-    }
+	amPlaying() {
+		return (this.myTurn() && this.claimed);
+	}
 
-    updateMe(data) {
-        this.curPlayer = data.curPlayer;
-        for (let i = 0; i < numPlayers; i++)
-            if (i == this.player.index) continue
-        else this.players[i].cardCount = data.cardCounts[i];
-        this.discard.top_card = data.disacrdCard;
+	canPlay(card, cardDest) {
+		if (this.myTurn() && (cardDest==null ||(card.suit == cardDest.suit || card.value == cardDest.value))) return true;
+		else if (this.ruleset.canJumpIn(card, cardDest)) return true;
+		else return false;
+	}
 
-    }
+	updateMe(data) {
+		this.curPlayer = data.curPlayer;
+		for (let i = 0; i < numPlayers; i++)
+			if (i == this.player.index) continue
+		else this.players[i].cardCount = data.cardCounts[i];
+		this.discard.top_card = data.disacrdCard;
 
-    randomPlayerIndex(canBeMe = true) {
-        let randIndex = Math.floor(Math.random() * Math.floor(this.numPlayers));
-        while (!canBeMe && randIndex == this.player.index) {
-            randIndex = Math.floor(Math.random() * Math.floor(this.numPlayers));
-        }
-        return randIndex;
-    }
+	}
 
-    endTurn() {
-        this.claimed=false;
-        endTurn();
-    }
+	randomPlayerIndex(canBeMe = true) {
+		let randIndex = Math.floor(Math.random() * Math.floor(this.numPlayers));
+		while (!canBeMe && randIndex == this.player.index) {
+			randIndex = Math.floor(Math.random() * Math.floor(this.numPlayers));
+		}
+		return randIndex;
+	}
 
-    cardAt(n) {
-        return this.player.hand[n];
-    }
+	endTurn() {
+		this.skip=false;
+		this.claimed=false;
+		endTurn();
+	}
 
-    handleUpdate(data) {
-        if (data == this.lastData) return;
-        let newCommands = this.diff(data, this.lastData);
-        this.lastData=data;
-        if (newCommands) {
-            let commands = newCommands.split(';');
-            
-            commands.forEach(command => {
-                this.parseRule(command);
-            });
-        }
-    }
+	cardAt(n) {
+		return this.player.hand[n];
+	}
 
-    parseRule(command) {
-        let args = command.split(',');
-        let idUserThrown, idUserAffected, numOfCards, idSource, rule, newValue, idUser, card;
-        switch (args[0]) {
-            case "draw":
-                idUserThrown = parseInt(args[1]);
-                idUserAffected = parseInt(args[2]);
-                numOfCards = parseInt(args[3]);
-                idSource = parseInt(args[4]);
+	handleUpdate(data) {
+		if (data == this.lastData) return;
+		let newCommands = this.diff(data, this.lastData);
+		this.lastData=data;
+		if (newCommands) {
+			let commands = newCommands.split(';');
 
-                this.handleDrawCommands(idUserThrown, idUserAffected, numOfCards, idSource);
-                break;
-            case "skip":
-                idUserThrown = parseInt(args[1]);
-                idUserAffected = parseInt(args[2]);
+			commands.forEach(command => {
+				this.parseRule(command);
+			});
+		}
+	}
 
-                this.handleSkip(idUserThrown, idUserAffected);
-                break;
-            case "view":
-                idUserThrown = parseInt(args[1]);
-                idSource = parseInt(args[2]);
-                numOfCards = parseInt(args[3]);
-            case "endTurn":
-                this.handleEndTurn();
-                break;
-            case "claimed":
-                idUser = parseInt(args[1]);
-                this.handleClaimed(idUser);
-                break;
-            case "cgr":
-                rule = args[1];
-                newValue = args[2];
-                imaginaryFunctionChangeGlobalRule(rule, newValue);
-                break;
-            case "throw":
-                idUser = parseInt(args[1]);
-                card = args[2];
-                this.handleThrow(idUser, card);
-            default:
-                break;
-        }
-    }
+	parseRule(command) {
+		let args = command.split(',');
+		let idUserThrown, idUserAffected, numOfCards, idSource, rule, newValue, idUser, card;
+		switch (args[0]) {
+			case "draw":
+				idUserThrown = parseInt(args[1]);
+				idUserAffected = parseInt(args[2]);
+				numOfCards = parseInt(args[3]);
+				idSource = parseInt(args[4]);
+				this.handleDrawCommands(idUserThrown, idUserAffected, numOfCards, idSource);
+				break;
+			case "drawUntil":
+				idUserThrown = parseInt(args[1]);
+				idUserAffected = parseInt(args[2]);
+				card = args[3];
+				let matchCode = args[4];
+				handleDrawUntil(idUserThrown, idUserAffected, card, matchCode);
+				break;
+			case "skip":
+				idUserThrown = parseInt(args[1]);
+				idUserAffected = parseInt(args[2]);
+				this.handleSkip(idUserThrown, idUserAffected);
+				break;
+			case "view":
+				idUserThrown = parseInt(args[1]);
+				idSource = parseInt(args[2]);
+				numOfCards = parseInt(args[3]);
+			case "endTurn":
+				this.handleEndTurn();
+				break;
+			case "claimed":
+				idUser = parseInt(args[1]);
+				this.handleClaimed(idUser);
+				break;
+			case "cgr":
+				rule = args[1];
+				newValue = args[2];
+				imaginaryFunctionChangeGlobalRule(rule, newValue);
+				break;
+			case "throw":
+				idUser = parseInt(args[1]);
+				card = args[2];
+				this.handleThrow(idUser, card);
+			default:
+				break;
+		}
+	}
 
-    handleDrawCommands(idUserThrown, idUserAffected, numOfCards, idSource) {
-        if ( idUserAffected!=this.player.id && idUserThrown == idUserAffected) {
-            //Draw
-            for(let e=0; e<this.enemyPlayers.length; e++) {
-                if (this.enemyPlayers[e].id == idUserThrown) {
-                    this.enemyPlayers[e].cardCount+=numOfCards;
-                    break;
-                }
-            }
-            
-        } else if (idUserAffected == this.player.id && idUserThrown != idUserAffected) {
-            draw(this.player.id, this.player.id, numOfCards, idSource);
-        }
-    }
+	handleDrawCommands(idUserThrown, idUserAffected, numOfCards, idSource) {
+		if ( idUserAffected!=this.player.id && idUserThrown == idUserAffected) {
+			//Draw
+			for(let e=0; e<this.enemyPlayers.length; e++) {
+				if (this.enemyPlayers[e].id == idUserThrown) {
+					this.enemyPlayers[e].cardCount+=numOfCards;
+					break;
+				}
+			}
 
-    handleClaimed(idUser) {
-        this.curPlayer=this.idMap[idUser].index;
-    }
+		} else if (idUserAffected == this.player.id && idUserThrown != idUserAffected) {
+			draw(this.player.id, this.player.id, numOfCards, idSource);
+		}
+	}
 
-    async handleEndTurn() {
-        this.curPlayer=(this.curPlayer+this.numPlayers+this.order)%this.numPlayers;
-        if (this.curPlayer==this.player.index && this.skip) {
-            if (await claimTurn(this.player.id, 'null')) {
-                this.endTurn();
-            }
-        }
-    }
+	handleClaimed(idUser) {
+		this.curPlayer=this.idMap[idUser].index;
+	}
 
-    handleThrow(idUser, card) {
-        if (idUser != this.player.id) this.idMap[idUser].cardCount--;
-        this.discard.top_card=this.ruleset.parseCard(card);
-        this.gm.discardCard = new CardSprite(this.discard.top_card.name, this.discard.top_card.suit);
-    }
+	async handleEndTurn() {
+		this.curPlayer=(this.curPlayer+this.numPlayers+this.order)%this.numPlayers;
+		if (this.curPlayer==this.player.index && this.skip) {
+			if (await claimTurn(this.player.id, 'null')) {
+				this.endTurn();
+			}
+		}
+	}
 
-    handleSkip(idUserThrown, idUserAffected) {
-        if (idUserAffected == this.player.id) this.markSkip();
-    }
+	handleThrow(idUser, card) {
+		if (idUser != this.player.id) this.idMap[idUser].cardCount--;
+		this.discard.top_card=this.ruleset.parseCard(card);
+		this.gm.discardCard = new CardSprite(this.discard.top_card.name, this.discard.top_card.suit);
+	}
+
+	handleSkip(idUserThrown, idUserAffected) {
+		if (idUserAffected == this.player.id) this.markSkip();
+	}
+
+	async handleDrawUntil(idUserThrown, idUserAffected, card, matchCode) {
+		if (idUserAffected == myID) {
+			let code = matchCode.split('-');
+			let drawRule = new DrawUntilRule(0, 0, 0, 0, 0, 0, 0, code[0], code[1], false);
+
+			let matcher = drawRule.detail.matcher;
+			do {
+				var newCard = await draw(myID, myID, 1, this.deck.id);
+			} while (!matcher.isMatch(newCard));
+		}
+	}
 }

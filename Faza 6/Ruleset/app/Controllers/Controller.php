@@ -589,19 +589,19 @@ class Controller extends BaseController
             for($j=0;$j<count($c);$j++){
                 $str="";
                 if($suits[0]=='1'){
-                    $str=chr($j+48).'c';
+                    $str=chr($j+64).'c';
                     array_push($arr,$str);
                 }
                 if($suits[1]=='1'){
-                    $str=chr($j+48).'d';
+                    $str=chr($j+64).'d';
                     array_push($arr,$str);
                 }
                 if($suits[2]=='1'){
-                    $str=chr($j+48).'s';
+                    $str=chr($j+64).'s';
                     array_push($arr,$str);
                 }
                 if($suits[3]=='1'){
-                    $str=chr($j+48).'h';
+                    $str=chr($j+64).'h';
                     array_push($arr,$str);
                 }
             }
