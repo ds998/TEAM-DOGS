@@ -624,6 +624,11 @@ class Controller extends BaseController
         else return null;
     
     }
+    public function drawUntil($idUserThrown, $idUserAffected, $card, $matchCard, $idLobby)
+    {
+        $update = "drawUntil".",".$idUserThrown.",".$idUserAffected.",".$card.",".$matchCard.",".$card.";";
+        (new GameUpdateModel)->addToUpdate($idLobby, $update);
+    }
 
     public function skip($idUserThrown, $idUserAffected, $idLobby)
     {
