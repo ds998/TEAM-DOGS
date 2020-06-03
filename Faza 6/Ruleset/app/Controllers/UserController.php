@@ -145,7 +145,13 @@ class UserController extends Controller
         
     }
 
-
+    /**
+    * Logout korisnika
+    *
+    * 
+    * @return function redirect
+    *Maja Dimitrijevic 2017/0723
+    */
     public function logout() {
         $this->session->destroy();
         return redirect()->to(site_url("Controller"));
