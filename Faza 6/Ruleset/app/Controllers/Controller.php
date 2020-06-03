@@ -439,6 +439,9 @@ class Controller extends BaseController
         if (empty($lobby_name)) {
             return $this->create_lobby_page($idDeck, "Empty lobby name field");
         }
+        if (strlen($lobby_name) > 15) {
+            return $this->create_lobby_page($idDeck, "Lobby name must be less than 15 characters long");
+        }
         if ($private_checkmark != null && empty($create_lobby_password)) {
             return $this->create_lobby_page($idDeck, "Empty lobby password field");
         }

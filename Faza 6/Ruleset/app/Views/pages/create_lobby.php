@@ -94,7 +94,7 @@
                             <!---enterlobby name-->
                             <input type="text" name = "lobby_name" class="form-control customInput mediumInput <?=  isset($error) ? 'has-error'  : ''   ?>" id="inputLobbyName" placeholder="Choose Lobby Name">
                             <?php
-                                if ($error == "Empty lobby name field") {
+                                if ($error == "Empty lobby name field" || $error == "Lobby name must be less than 15 characters long") {
                                     echo "<div class='error'>".$error."</div>";
                                 }
                             ?>
