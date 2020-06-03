@@ -67,7 +67,7 @@
                 var controller="<?php echo $controller; ?>";
                 myTest().then((data)=>{
                     if(data=="Nothing!"){
-                        location.href="http://localhost:8080/"+controller+"all_lobbies";
+                        location.href="http://localhost:8080/"+controller+"/all_lobbies";
                     }
                     else{
                         var players=data.split(",");

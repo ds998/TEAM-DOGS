@@ -335,5 +335,6 @@ class Controller {
 
 	endGame(idWinner) {
 		this.gm.endGame();
+		end_game(idWinner);
 	}
 }

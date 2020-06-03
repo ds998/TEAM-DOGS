@@ -669,14 +669,10 @@ class Controller extends BaseController
     public function end_game($idLobby,$idWinner){
         $chatModel=new ChatModel();
         $userHandModel=new UserHandModel();
-        $gameUpdateModel=new GameUpdateModel();
         $lobbyDeckModel=new LobbyDeckModel();
         $user=$this->session->get('user');
         $chat=$chatModel->find($idLobby);
         if($chat!=null) $chatModel->delete($idLobby);
-
-        $game_update=$gameUpdateModel->find($idLobby);
-        if($game_update!=null) $gameUpdateModel->delete($idLobby);
 
         $lobbyDeck=$lobbyDeckModel->find($idLobby);
         if($lobbyDeck!=null) $lobbyDeckModel->delete($idLobby);
@@ -701,6 +697,11 @@ class Controller extends BaseController
     public function back_to_lobby($idLobby,$rating){
        $lobbyModel=new LobbyModel();
        $lobby=$lobbyModel->find($idLobby);
+       $gameUpdateModel=new GameUpdateModel();
+
+       $game_update=$gameUpdateModel->find($idLobby);
+       if($game_update!=null) $gameUpdateModel->delete($idLobby);
+
        if($rating!=0)$this->rate_deck($lobby->idDeck,$rating);
        if($lobby->inGame==1){
             $data=[
@@ -745,8 +746,9 @@ class Controller extends BaseController
         $prevRating = $deck->Rating;
         $newRating = $prevRating*($numberOfRatings - 1) + $Rating;
         $newRating = $newRating/$numberOfRatings;
+        $numberOfPlays = $deck->numberOfPlays + 1;
         
-        $dModel->query("UPDATE deck SET Rating = $newRating, numberOfRatings = $numberOfRatings WHERE idDeck = $idDeck;");
+        $dModel->query("UPDATE deck SET Rating = $newRating, numberOfRatings = $numberOfRatings, numberOfPlays = $numberOfPlays WHERE idDeck = $idDeck;");
     }
     //--------------------------------------------------------------------
     

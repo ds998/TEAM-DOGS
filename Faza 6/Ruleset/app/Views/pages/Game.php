@@ -217,6 +217,11 @@
 			return 'topcina';
 		};
 
+		function end_game(idWinner) {
+			var controller = "<?php echo $controller; ?>";
+			location.href="http://localhost:8080/"+ controller + "/end_game/" + idLobby + "/" + idWinner;
+			return;
+		}
 		function endTurn() {
 			endTurnFunc(idLobby).then((data) => {
 			});
