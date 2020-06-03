@@ -69,7 +69,7 @@
                     <li class="nav-item">
                     <?php
                         if ($controller == "AdminController") {
-                          echo "<a class='nav-link' href='".site_url("$controller/register")."'>Choose Highlighted Decks</a>";
+                          echo "<a class='nav-link' href='".site_url("$controller/changeHD")."'>Choose Highlighted Decks</a>";
                         }
                     ?>
                     </li>

@@ -13,7 +13,12 @@ class AdminController extends UserController
         }
 
         $this->session->set('controller', 'AdminController');
-        return $this->show('main', ['controller'=>$this->session->get('controller')]);
+        $hdecksModel = new HDecksModel();
+        $hdecks = $hdecksModel->query(" select decc.name, decc.iddeck, hd.orderNum
+                                        from deck decc, hdecks hd
+                                        where hd.idDeck=decc.idDeck");
+        $hdecks = $hdecks->getResult();
+        return $this->show('main', ['controller'=>$this->session->get('controller'),'hdecks'=>$hdecks]);
     }
 
 	//--------------------------------------------------------------------
