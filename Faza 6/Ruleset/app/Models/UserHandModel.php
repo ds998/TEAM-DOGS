@@ -45,6 +45,9 @@ class UserHandModel extends Model
         */
         public function getXCards($idUser, $numOfCards){
             $temp = $this->getUserHand($idUser);
+            $arrayOfCards = str_split($temp, 2);
+            shuffle($arrayOfCards);
+            $temp = implode($arrayOfCards);
             if (strlen($temp)>$numOfCards*2) return substr( $temp, 0, $numOfCards*2);
             else return $temp;
         }
@@ -59,6 +62,18 @@ class UserHandModel extends Model
             $temp = $this->find($idUser)->cards;
             $temp = $temp.$cards;
             $temp = $stringEnv.$temp.$stringEnv;
+            $qveri = $this->db->query("UPDATE user_hand SET cards = $temp WHERE idUser = $idUser;");
+        }
+
+        public function takeSpecificCard($idUser, $card)
+        {
+            $temp = $this->getUserHand($idUser);
+            $numOfSameCards = substr_count($temp, $card);
+            strtr($temp, $card, "");
+            for($i=0;$i<$numOfSameCards-1;$i++)
+            {
+                $temp = $temp.$card;
+            }
             $qveri = $this->db->query("UPDATE user_hand SET cards = $temp WHERE idUser = $idUser;");
         }
 
