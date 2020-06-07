@@ -116,7 +116,7 @@
             </div>
             <div class="right col-sm-6 col-md-6 col-lg-6">
                 <div class="deckButton">
-                    <a class="btn btn-primary" href="" role="button">Examine Deck</a>
+                    <a class="btn btn-primary" href="<?= site_url("$controller/deckPreview/{$lobby->idDeck}") ?>" role="button">Examine Deck</a>
                 </div>
                 <?php 
                    if(!empty($error)){

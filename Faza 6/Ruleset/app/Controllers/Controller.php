@@ -567,7 +567,12 @@ class Controller extends BaseController
         $lobbyModel=new LobbyModel();
         $userModel=new UserModel();
         $lobby=$lobbyModel->find($idLobby);
-        
+        $sef=explode(",",$lobby->PlayerList);
+        if(count($sef)<2){
+            $controller=$this->session->get('controller');
+            $message="Too little players in the lobby.";
+            return redirect()->to(site_url("$controller/lobby/$idLobby/$message"));
+        }
         $this_user=$this->session->get('user');
         if($lobby->idUser==$this_user->idUser){
             $gameUpdateModel=new GameUpdateModel();

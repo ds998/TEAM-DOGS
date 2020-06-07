@@ -1,17 +1,13 @@
 .container-fluid{
     height:80%;
-    text-align:center;
     display:flex;
+    text-align:center;
     flex-direction:column;
     justify-content:center;
     
 }
 .share_button{
     padding-top:20px;
-}
-#errors{
-    padding-top:5px;
-    color:#e06377;
 }
 .form-control{
     margin-left:auto;

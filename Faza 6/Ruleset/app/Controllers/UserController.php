@@ -130,19 +130,24 @@ class UserController extends Controller
     */
     public function share_deck_submit($deck_id){
         if(!$this->validate(['share_textbox'=>'required'])){
-            return $this->share_a_deck($this->session->get('controller'),$deck_id,'Textbox is empty.&nbsp;&nbsp;&nbsp;');
+            return $this->share_a_deck($deck_id,'Textbox is empty.&nbsp;&nbsp;&nbsp;');
+        }
+        $username=$this->request->getVar('share_textbox');
+        if(strlen($username)>15){
+            return $this->share_a_deck($deck_id,'The input is too long for a username.');
         }
         $userModel=new UserModel();
         $s_user=$userModel->findName($this->request->getVar('share_textbox'));
+        
         if($s_user==null){
-            return $this->share_a_deck($this->session->get('controller'),$deck_id,'That user does not exist.');
+            return $this->share_a_deck($deck_id,'That user does not exist.');
         }
         $deckModel=new DeckModel();
         $creatorId=($deckModel->find($deck_id))->idUser;
         $udModel=new UserDeckModel();
         $udVar=$udModel->getEntry($s_user[0]->idUser,$deck_id);//username treba da bude unique
         if($udVar!=null){
-            return $this->share_a_deck($this->session->get('controller'),$deck_id,'That user already has this deck.');
+            return $this->share_a_deck($deck_id,'That user already has this deck.');
         }
         $data = [
             'idUser' => $s_user[0]->idUser,
@@ -152,9 +157,7 @@ class UserController extends Controller
         ];
         $udModel->insert($data);
         $controller=$this->session->get('controller');
-        return redirect()->to(site_url("$controller"));
-
-        
+        return redirect()->to(site_url("$controller/deckPreview/{$deck_id}"));
     }
 
     /**

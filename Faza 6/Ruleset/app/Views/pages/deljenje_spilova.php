@@ -81,13 +81,14 @@
     </div>
         <div class="container-fluid">
             <form name="shareform" action="<?= site_url("$controller/share_deck_submit/{$deck_id}") ?>">
-                <input type="text" class="form-control" name="share_textbox"  placeholder="Name of the user">
+                <label for="inputUsername" class="label_class">Username</label>
+                <input type="text" class="form-control customInput mediumInput <?=  isset($message) ? 'has-error'  : ''   ?>" name="share_textbox" id="inputUsername" placeholder="Name of the user">
                 <?php 
                     if(!empty($message)) 
-                        echo "<div id='errors'>".$message."</div>";
+                        echo "<div class='error'>".$message."</div>";
                 ?>
                 <div class="share_button"><input type="submit" name="share_submit" class="btn btn-primary" value="Share Request"></div>
             </form>
         </div>
     </body>
-</html
+</html>

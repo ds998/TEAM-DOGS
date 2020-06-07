@@ -40,7 +40,9 @@
                 </table>
                 <?php  
                    if($error!=null){
-                       echo "<div id='errors'>".$error."</div>";
+                        $error_frag=explode("%20",$error);
+                        $new_error=implode(" ",$error_frag);
+                        echo "<div id='errors'>".$new_error."</div>";
                    }
                    $user=$_SESSION["user"];
                    if($user->idUser==$lobby->idUser){
