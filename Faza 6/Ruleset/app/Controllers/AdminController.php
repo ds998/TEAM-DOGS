@@ -60,6 +60,9 @@ class AdminController extends UserController
         if($this->request->getVar('idDeck'))
         {
             $idDeck = $this->request->getVar('idDeck');
+            $deckModel = new DeckModel();
+            $response = $deckModel->find($idDeck);
+            if($response == null)return $this->show('HD_change',['controller'=>$controller]);
             $seqNum = $this->request->getVar('seq');
             if($seqNum <= 9 && $seqNum > 0)
             {
