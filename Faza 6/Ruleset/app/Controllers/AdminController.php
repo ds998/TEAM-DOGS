@@ -58,7 +58,7 @@ class AdminController extends UserController
         {
             $idDeck = $this->request->getVar('idDeck');
             $seqNum = $this->request->getVar('seq');
-            if($seqNum < 9 && $seqNum > 0)
+            if($seqNum <= 9 && $seqNum > 0)
             {
                 $hdecksmodel = new HDecksModel();
                 $hdecksmodel->change_HD($idDeck, $seqNum);
