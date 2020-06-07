@@ -103,9 +103,6 @@ ALTER TABLE `Deck` ADD PRIMARY KEY (`idDeck`)
 ALTER TABLE `Deck` ADD UNIQUE `idDeck` (`idDeck`)
 ;
 
-ALTER TABLE `Deck` ADD UNIQUE `idUser` (`idUser`)
-;
-
 -- Table Admins
 
 CREATE TABLE `Admins`
