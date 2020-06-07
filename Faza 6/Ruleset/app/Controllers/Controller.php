@@ -131,7 +131,7 @@ class Controller extends BaseController
         $name = $name[0]->username;
 
         $isSaved = false;
-        if($user->idUser)
+        if($user->isGuest == 0)
         {
             $userDeckModel = new UserDeckModel();
             $response = $userDeckModel->getEntry($idUser, $idDeck);

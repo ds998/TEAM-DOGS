@@ -73,6 +73,7 @@ class UserController extends Controller
         $response = $userDeckModel->getEntry($idUser, $idDeck);
         if($response == null) $isDeckSaved = false;
         else $isDeckSaved = true;
+        return json_encode($isDeckSaved);
     }
 
     /** Cuva zadati spil u korisnicke spilove
@@ -97,6 +98,17 @@ class UserController extends Controller
         $result = $result->getResult();
         if(!$result)$udModel->insert($data);
         return redirect()->to(site_url("usercontroller/listUserDecks"));
+    }
+    /** Brise sacuvan spil
+    * @return redirectToListUserDecksStranicu
+    * @param integer $idUser idUser
+    * @param integer $idDeck idDeck
+    */
+    public function delete_user_deck($idUser, $idDeck)
+    {
+        $udModel = new UserDeckModel();
+        $result= $udModel->query("DELETE FROM user_decks WHERE $idUser = idUser and $idDeck = idDeck;");
+        return json_encode("topcina");
     }
 
     /** 
