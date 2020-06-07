@@ -125,49 +125,12 @@ class Controller extends BaseController
         $deck = $deckModel->find($idDeck);
         $user = $this->session->get('user');
         $name = $userModel->query(" select u.username
-                                    from user u
-                                    where u.idUser=$deck->idUser");
+                                        from user u
+                                        where u.idUser=$deck->idUser");
         $name = $name->getResult();
         $name = $name[0]->username;
-
-        $isSaved = false;
-        if($user->isGuest == 0)
-        {
-            $userDeckModel = new UserDeckModel();
-            $response = $userDeckModel->getEntry($idUser, $idDeck);
-            if($response != null) $isSaved = true;
-        }
-
         return $this->show('deckPreview', 
-            ['deck'=>$deck, 'user' => $this->session->get('user'), 'controller'=>$this->session->get('controller'),'username'=>$name, 'isSaved', $isSaved]);
-    }
-
-        /**  nalazi i pokazuje prikaz spila
-    * @return deckPreviewStranica
-    * @param integer $idDeck idDeck
-    */
-    public function deckPAPAPreview($idDeck)
-    {
-        $deckModel = new DeckModel();
-        $userModel = new UserModel();
-        $deck = $deckModel->find($idDeck);
-        $user = $this->session->get('user');
-        $name = $userModel->query(" select u.username
-                                    from user u
-                                    where u.idUser=$deck->idUser");
-        $name = $name->getResult();
-        $name = $name[0]->username;
-
-        $isSaved = false;
-        if($user->isGuest == 0)
-        {
-            $userDeckModel = new UserDeckModel();
-            $response = $userDeckModel->getEntry($idUser, $idDeck);
-            if($response != null) $isSaved = true;
-        }
-
-        return json_encode($this->show('deckPreview', 
-            ['deck'=>$deck, 'user' => $this->session->get('user'), 'controller'=>$this->session->get('controller'),'username'=>$name, 'isSaved', $isSaved]));
+            ['deck'=>$deck, 'user' => $this->session->get('user'), 'controller'=>$this->session->get('controller'),'username'=>$name]);
     }
     /**
     * Prikazivanje prikaza pregleda svih lobby-a
@@ -349,6 +312,10 @@ class Controller extends BaseController
             $error_msg .= "empty password";
         }
 
+        if (strlen($username) > 15) {
+            $error_msg = "username too long";
+        }
+
         if (!($error_msg == "")) {
             return $this->login_page($error_msg);
         }
@@ -489,10 +456,16 @@ class Controller extends BaseController
         if ($private_checkmark != null && empty($create_lobby_password)) {
             return $this->create_lobby_page($idDeck, "Empty lobby password field");
         }
+        if ($private_checkmark != null && strlen($create_lobby_password) > 10) {
+            return $this->create_lobby_page($idDeck, "Lobby password must be less than 10 characters long");
+        }
         if ($maxplayercount < 2 || $maxplayercount > 10) {
             return $this->create_lobby_page($idDeck, "Max Player Count out of range");
         }
-        
+        $check_lobby = $lobbyModel->findByName($lobby_name);
+        if ($check_lobby != null) {
+            return $this->create_lobby_page($idDeck, "Lobby with this name already exists");
+        }
         $user = $this->session->get('user');
         $status = ($private_checkmark == null)? 1:0;
 

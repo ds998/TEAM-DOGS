@@ -62,20 +62,6 @@ class UserController extends Controller
         return $this->show('userDeckList', ['controller'=>$this->session->get('controller'),'decks'=>$decks]);
     }
 
-    /** Kaze da li je spil vec sacuvan
-     * @return booleanIsSaved
-     * @param integer $idUser idUser
-     * @param integer $idDeck idDeck
-     */
-    public function isDeckSaved($idUser, $idDeck)
-    {
-        $userDeckModel = new UserDeckModel();
-        $response = $userDeckModel->getEntry($idUser, $idDeck);
-        if($response == null) $isDeckSaved = false;
-        else $isDeckSaved = true;
-        return json_encode($isDeckSaved);
-    }
-
     /** Cuva zadati spil u korisnicke spilove
     * @return redirectToListUserDecksStranicu
     * @param integer $idUser idUser
@@ -98,17 +84,6 @@ class UserController extends Controller
         $result = $result->getResult();
         if(!$result)$udModel->insert($data);
         return redirect()->to(site_url("usercontroller/listUserDecks"));
-    }
-    /** Brise sacuvan spil
-    * @return redirectToListUserDecksStranicu
-    * @param integer $idUser idUser
-    * @param integer $idDeck idDeck
-    */
-    public function delete_user_deck($idUser, $idDeck)
-    {
-        $udModel = new UserDeckModel();
-        $result= $udModel->query("DELETE FROM user_decks WHERE $idUser = idUser and $idDeck = idDeck;");
-        return json_encode("topcina");
     }
 
     /** 

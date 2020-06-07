@@ -94,7 +94,7 @@
                             <!---enterlobby name-->
                             <input type="text" name = "lobby_name" class="form-control customInput mediumInput <?=  isset($error) ? 'has-error'  : ''   ?>" id="inputLobbyName" placeholder="Choose Lobby Name">
                             <?php
-                                if ($error == "Empty lobby name field" || $error == "Lobby name must be less than 15 characters long") {
+                                if ($error == "Empty lobby name field" || $error == "Lobby name must be less than 15 characters long" || $error == "Lobby with this name already exists") {
                                     echo "<div class='error'>".$error."</div>";
                                 }
                             ?>
@@ -113,7 +113,7 @@
                             <label for="inputLobbyPassword" class="label_class"> Lobby Password</label>
                             <input type="password" name = "create_lobby_password" class="form-control customInput mediumInput <?=  isset($error) ? 'has-error'  : ''   ?>" id="inputLobbyPassword" placeholder="Choose Lobby Password">
                             <?php
-                                if ($error == "Empty lobby password field") {
+                                if ($error == "Empty lobby password field" || $error == "Lobby password must be less than 10 characters long") {
                                     echo "<div class='error'>".$error."</div>";
                                 }
                             ?>

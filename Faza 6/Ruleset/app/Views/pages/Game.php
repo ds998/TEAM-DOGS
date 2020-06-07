@@ -304,6 +304,9 @@
         var text_area = document.getElementById("enter_message_area");
         var new_message = text_area.value;
         text_area.value = "";
+		if (new_message.length > 52) {
+			return;
+		}
         var controller = "<?php echo $controller; ?>";
         var idLobby = "<?php echo $idLobby; ?>";
         send_message_func(new_message, controller, idLobby).then((data) => {return;});

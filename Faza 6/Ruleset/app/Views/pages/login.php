@@ -97,6 +97,9 @@
                         if (strpos($error, "exist") !== false) {
                             echo "<div class='error'>User doesn't exist</div>";
                         }
+                        if (strpos($error, "too") !== false) {
+                            echo "<div class='error'>Username too long. Must be less than 15 characters.</div>";
+                        }
                     ?>
                 </div>
                 <div class="form-group">
@@ -107,7 +110,9 @@
                             echo "<div class='error'>Empty password field</div>";
                         }
                         else {
-                            echo "<div class='error'>".$error."</div>";
+                            if (strpos($error, "Incorrect") !== false) {
+                                echo "<div class='error'>Incorrect password</div>";
+                            }
                         }
                     ?>
                 </div>
