@@ -40,6 +40,9 @@ class AdminController extends UserController
         if($this->request->getVar('userID'))
 		{
             $userID=$this->request->getVar('userID');
+            $userModel = new UserModel();
+            $exists = $userModel->find($userID);
+            if($exists == null) return $this->show('registeradmin',['controller'=>$this->session->get('controller')]);
             $adminModel = new AdminModel();
             $adminModel->registerAdmin($userID, 0);
             $controller=$this->session->get('controller');
