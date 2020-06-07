@@ -141,6 +141,34 @@ class Controller extends BaseController
         return $this->show('deckPreview', 
             ['deck'=>$deck, 'user' => $this->session->get('user'), 'controller'=>$this->session->get('controller'),'username'=>$name, 'isSaved', $isSaved]);
     }
+
+        /**  nalazi i pokazuje prikaz spila
+    * @return deckPreviewStranica
+    * @param integer $idDeck idDeck
+    */
+    public function deckPAPAPreview($idDeck)
+    {
+        $deckModel = new DeckModel();
+        $userModel = new UserModel();
+        $deck = $deckModel->find($idDeck);
+        $user = $this->session->get('user');
+        $name = $userModel->query(" select u.username
+                                    from user u
+                                    where u.idUser=$deck->idUser");
+        $name = $name->getResult();
+        $name = $name[0]->username;
+
+        $isSaved = false;
+        if($user->isGuest == 0)
+        {
+            $userDeckModel = new UserDeckModel();
+            $response = $userDeckModel->getEntry($idUser, $idDeck);
+            if($response != null) $isSaved = true;
+        }
+
+        return json_encode($this->show('deckPreview', 
+            ['deck'=>$deck, 'user' => $this->session->get('user'), 'controller'=>$this->session->get('controller'),'username'=>$name, 'isSaved', $isSaved]));
+    }
     /**
     * Prikazivanje prikaza pregleda svih lobby-a
     *
