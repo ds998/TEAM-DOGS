@@ -498,8 +498,9 @@ class Controller extends BaseController
     * Danilo Stefanovic 2017/0475
     */
     public function send_message($idLobby, $message) {
-        echo $idLobby;
         $user = $this->session->get('user');
+        $mess_arr=explode("%20",$message);
+        $message=implode(" ",$mess_arr);
         $message = $user->username." : ".$message;
         $chatModel = new ChatModel();
         $chatRoom = $chatModel->find($idLobby);
