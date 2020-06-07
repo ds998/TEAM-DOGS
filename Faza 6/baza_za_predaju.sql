@@ -11,21 +11,19 @@ Database: MySQL 8.0
 
 CREATE TABLE `User`
 (
-  `idUser` Int NOT NULL,
+  `idUser` Int NOT NULL AUTO_INCREMENT,
   `username` Varchar(40) NOT NULL,
   `email` Varchar(40) NOT NULL,
   `passwordHash` Varchar(60) NOT NULL,
-  `isGuest` Int
+  `isGuest` int,
+   PRIMARY KEY(`idUser`)
 )
-;
-
-ALTER TABLE `User` ADD PRIMARY KEY (`idUser`)
 ;
 
 ALTER TABLE `User` ADD UNIQUE `username` (`username`)
 ;
 
-ALTER TABLE `User` ADD UNIQUE `Attribute1` (`email`)
+ALTER TABLE `User` ADD UNIQUE `email` (`email`)
 ;
 
 ALTER TABLE `User` ADD UNIQUE `idUser` (`idUser`)
@@ -35,32 +33,62 @@ ALTER TABLE `User` ADD UNIQUE `idUser` (`idUser`)
 
 CREATE TABLE `Lobby`
 (
-  `idLobby` Int NOT NULL,
+  `idLobby` Int NOT NULL AUTO_INCREMENT,
   `idDeck` Int NOT NULL,
   `idUser` Int NOT NULL,
   `maxPlayers` Int NOT NULL DEFAULT 10,
+  `PlayerList` VARCHAR(120),
   `lobbyName` Varchar(15) NOT NULL,
   `password` Varchar(10),
-  `PlayerList` Varchar(120),
-  `status` Varchar(3),
-  `inGame` Int
+  `status` varchar(3),
+  `inGame` int,
+   PRIMARY KEY(`idLobby`)
 )
+;
+
+-- Table Deck
+
+CREATE TABLE `Deck`
+(
+  `idDeck` Int NOT NULL AUTO_INCREMENT,
+  `idUser` Int NOT NULL,
+  `cardRules` Varchar(640) NOT NULL,
+  `name` VARCHAR(30) not null,
+  `descr` varchar(280) not null,
+  `Cards` Varchar(260) NOT NULL,
+  `globalRules` Varchar(25) NOT NULL,
+  `suits` Varchar(4) not null,
+  `Rating` Double,
+  `numberOfPlays` Int,
+  `numberOfRatings` Int,
+   PRIMARY KEY(`idDeck`)
+)
+;
+
+CREATE INDEX `IX_Relationship5` ON `Deck` (`idUser`)
+;
+
+ALTER TABLE `Deck` ADD UNIQUE `idDeck` (`idDeck`)
+;
+
+CREATE TABLE `HDecks`(
+    `idDeck` int not null,
+	`orderNum` int not null
+);
+
+ALTER TABLE `HDecks` ADD CONSTRAINT `Relationship5` FOREIGN KEY (`idDeck`) REFERENCES `Deck` (`idDeck`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+ALTER TABLE `Deck` ADD CONSTRAINT `Relationship5698` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+ALTER TABLE `Lobby` ADD CONSTRAINT `Relationship420` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
 CREATE INDEX `IX_Relationship6` ON `Lobby` (`idDeck`)
 ;
 
-ALTER TABLE `Lobby` ADD PRIMARY KEY (`idLobby`)
-;
-
 ALTER TABLE `Lobby` ADD UNIQUE `idLobby` (`idLobby`)
 ;
 
-ALTER TABLE `Lobby` ADD UNIQUE `idDeck` (`idDeck`)
-;
-
-ALTER TABLE `Lobby` ADD UNIQUE `idUser` (`idUser`)
-;
 
 -- Table User_Decks
 
@@ -73,34 +101,37 @@ CREATE TABLE `User_Decks`
 )
 ;
 
-ALTER TABLE `User_Decks` ADD PRIMARY KEY (`idDeck`, `idUser`)
-;
-
--- Table Deck
-
-CREATE TABLE `Deck`
+CREATE TABLE `Chat`
 (
-  `idDeck` Int NOT NULL,
-  `idUser` Int NOT NULL,
-  `cardRules` Varchar(210) NOT NULL,
-  `Cards` Varchar(120) NOT NULL,
-  `globalRules` Varchar(20) NOT NULL,
-  `Rating` Double,
-  `numberOfPlays` Int,
-  `numberOfRatings` Int,
-  `descr` Varchar(280) NOT NULL,
-  `suits` Varchar(4),
-  `name` Varchar(30) NOT NULL
+  `idLobby` Int NOT NULL,
+  `chat` varchar(800)
 )
 ;
 
-CREATE INDEX `IX_Relationship5` ON `Deck` (`idUser`)
+CREATE TABLE `User_Hand`
+(
+  `idLobby` Int NOT NULL,
+  `idUser` Int NOT NULL,
+  `cards` Varchar(200)
+)
 ;
 
-ALTER TABLE `Deck` ADD PRIMARY KEY (`idDeck`)
+CREATE TABLE `Lobby_Deck`
+(
+  `idLobby` Int NOT NULL,
+  `cards` Varchar(1280)
+)
 ;
 
-ALTER TABLE `Deck` ADD UNIQUE `idDeck` (`idDeck`)
+CREATE TABLE `Game_Update`
+(
+  `idLobby` Int NOT NULL,
+  `idUser` int,
+  `updateF` Varchar(420)
+)
+;
+
+ALTER TABLE `User_Decks` ADD PRIMARY KEY (`idDeck`, `idUser`)
 ;
 
 -- Table Admins
@@ -114,66 +145,21 @@ CREATE TABLE `Admins`
 ALTER TABLE `Admins` ADD PRIMARY KEY (`idUser`)
 ;
 
--- Table Hdecks
+-- Create foreign keys (relationships) section -------------------------------------------------
 
-CREATE TABLE `Hdecks`
-(
-  `idDeck` Int NOT NULL,
-  `orderNum` Int NOT NULL
-)
+ALTER TABLE `User_Decks` ADD CONSTRAINT `User to Deck` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
-ALTER TABLE `Hdecks` ADD PRIMARY KEY (`idDeck`)
+ALTER TABLE `User_Decks` ADD CONSTRAINT `I` FOREIGN KEY (`idDeck`) REFERENCES `Deck` (`idDeck`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
--- Table Chat
-
-CREATE TABLE `Chat`
-(
-  `idLobby` Int NOT NULL,
-  `chat` Varchar(800)
-)
+ALTER TABLE `Deck` ADD CONSTRAINT `Relationship5789` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
-ALTER TABLE `Chat` ADD PRIMARY KEY (`idLobby`)
+ALTER TABLE `Lobby` ADD CONSTRAINT `Relationship6hil` FOREIGN KEY (`idDeck`) REFERENCES `Deck` (`idDeck`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
--- Table User_Hand
-
-CREATE TABLE `User_Hand`
-(
-  `idLobby` Int NOT NULL,
-  `idUser` Int NOT NULL,
-  `cards` Varchar(200)
-)
-;
-
-ALTER TABLE `User_Hand` ADD PRIMARY KEY (`idLobby`, `idUser`)
-;
-
--- Table Lobby_Deck
-
-CREATE TABLE `Lobby_Deck`
-(
-  `idLobby` Int NOT NULL,
-  `cards` Varchar(1280)
-)
-;
-
-ALTER TABLE `Lobby_Deck` ADD PRIMARY KEY (`idLobby`)
-;
-
--- Table Game_Update
-
-CREATE TABLE `Game_Update`
-(
-  `idLobby` Int NOT NULL,
-  `idUser` Int NOT NULL,
-  `updateF` Varchar(420)
-)
-;
-
-ALTER TABLE `Game_Update` ADD PRIMARY KEY (`idUser`, `idLobby`)
+ALTER TABLE `Admins` ADD CONSTRAINT `Relationship7ko` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ;
 
 
