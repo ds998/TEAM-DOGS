@@ -62,6 +62,19 @@ class UserController extends Controller
         return $this->show('userDeckList', ['controller'=>$this->session->get('controller'),'decks'=>$decks]);
     }
 
+    /** Kaze da li je spil vec sacuvan
+     * @return booleanIsSaved
+     * @param integer $idUser idUser
+     * @param integer $idDeck idDeck
+     */
+    public function isDeckSaved($idUser, $idDeck)
+    {
+        $userDeckModel = new UserDeckModel();
+        $response = $userDeckModel->getEntry($idUser, $idDeck);
+        if($response == null) $isDeckSaved = false;
+        else $isDeckSaved = true;
+    }
+
     /** Cuva zadati spil u korisnicke spilove
     * @return redirectToListUserDecksStranicu
     * @param integer $idUser idUser

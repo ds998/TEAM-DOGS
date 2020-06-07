@@ -125,12 +125,21 @@ class Controller extends BaseController
         $deck = $deckModel->find($idDeck);
         $user = $this->session->get('user');
         $name = $userModel->query(" select u.username
-                                        from user u
-                                        where u.idUser=$deck->idUser");
+                                    from user u
+                                    where u.idUser=$deck->idUser");
         $name = $name->getResult();
         $name = $name[0]->username;
+
+        $isSaved = false;
+        if($user->idUser)
+        {
+            $userDeckModel = new UserDeckModel();
+            $response = $userDeckModel->getEntry($idUser, $idDeck);
+            if($response != null) $isSaved = true;
+        }
+
         return $this->show('deckPreview', 
-            ['deck'=>$deck, 'user' => $this->session->get('user'), 'controller'=>$this->session->get('controller'),'username'=>$name]);
+            ['deck'=>$deck, 'user' => $this->session->get('user'), 'controller'=>$this->session->get('controller'),'username'=>$name, 'isSaved', $isSaved]);
     }
     /**
     * Prikazivanje prikaza pregleda svih lobby-a
