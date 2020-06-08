@@ -48,7 +48,7 @@ INSERT INTO `user` (`idUser`, `username`, `email`, `passwordHash`, `isGuest`) VA
 (20, 'Guest20', 'o52hoo2fbivjfk5qf7ing8r6b2583a0l', 'who cares', 1),
 (21, 'caobrt123', 'whenVNCE@gmail.com', '$2y$10$tFsVwI5oL10cyO1xGOiPRe2fJ6npiNktuxwGhdhrxVjP..SQZXpuC', 0),
 (22, 'Guest22', 'nr9hjaa65acl8sb0vmd6i7naa6hqm8r9', 'who cares', 1),
-(23, 'nevergonnagiveyouup', 'user@mail.com', '$2y$10$x2sw6UZFCnoLemWmJ8AsdeMJezfG1E9IyTm8NOwLeGNMQebjJ3U3S', 0),
+(23, 'nevergonnagivey', 'user@mail.com', '$2y$10$x2sw6UZFCnoLemWmJ8AsdeMJezfG1E9IyTm8NOwLeGNMQebjJ3U3S', 0),
 (24, 'Guest24', 'dt0v5skq1afj6pvu2vhjmjg8ca3sbiut', 'who cares', 1),
 (25, 'Guest25', 'bt9r2dholvuiqn40ks3cstdk41d4a7i0', 'who cares', 1),
 (26, 'Guest26', '32snpase5dra3mej579d9pk3feulfur3', 'who cares', 1),
