@@ -17,6 +17,11 @@ use App\Models\HDecksModel;
 */
 class UserController extends Controller
 {
+    /**
+    * Prikazivanje pocetne stranice za UserController
+    *
+    * @return function show
+    */
     public function index($idUser = null){
 
         if ($idUser != null) {

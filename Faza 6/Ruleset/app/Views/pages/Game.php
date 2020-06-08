@@ -316,6 +316,7 @@
     function send_message() {
         var text_area = document.getElementById("enter_message_area");
         var new_message = text_area.value;
+		if(new_message.length>34)return;
         text_area.value = "";
         var controller = "<?php echo $controller; ?>";
         var idLobby = "<?php echo $idLobby; ?>";

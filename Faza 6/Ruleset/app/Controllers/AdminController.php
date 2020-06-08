@@ -15,6 +15,11 @@ use App\Models\HDecksModel;
 */
 class AdminController extends UserController
 {
+    /**
+    * Prikazivanje pocetne stranice za AdminController
+    *
+    * @return function show
+    */
     public function index($idUser=null){
         if ($idUser != null) {
             $userModel = new UserModel();
