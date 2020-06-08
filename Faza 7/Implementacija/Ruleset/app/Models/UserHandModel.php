@@ -69,11 +69,12 @@ class UserHandModel extends Model
         {
             $temp = $this->getUserHand($idUser);
             $numOfSameCards = substr_count($temp, $card);
-            strtr($temp, $card, "");
-            for($i=0;$i<$numOfSameCards-1;$i++)
-            {
-                $temp = $temp.$card;
+            
+            $arraytemp = str_split($temp, 2);
+            for($i = 0; $i < sizeof($arraytemp);$i++){
+                if($arraytemp[$i] == $card) {$arraytemp[$i]=''; break;}
             }
+            $temp = implode($arraytemp);
             $stringEnv = "'";
             $temp = $stringEnv.$temp.$stringEnv;
             $qveri = $this->db->query("UPDATE user_hand SET cards = $temp WHERE idUser = $idUser;");
