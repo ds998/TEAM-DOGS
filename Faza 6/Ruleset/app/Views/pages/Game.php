@@ -139,8 +139,24 @@
 		function myHand(idUser) {
 			myHandFunc(idUser).then((data) => {
 				let con = Controller.getController();
-				con.player.hand = data.cards;
-				con.gm.cards=data.cards;    //Treba konverzija
+				if (idUser == con.player.id) {
+					if (!data || data.length == 0) {
+						draw(con.player.id, con.player.id, con.startingCards, con.deck.id);
+					} else {
+						let cards = data.match(/.{1,2}/g);
+						for(let c=0; c<cards.length;c++) {
+							cards[c]=con.ruleset.parseCard(cards[c]);
+							con.gm.newCard(cards[c].name, cards[c].suit);
+						}
+						con.player.hand=cards;
+					}
+					
+					
+					con.gm.displayCards(cards);
+				}
+				else {
+					if (data != null) con.idMap[idUser].cardCount=data.length/2;
+				}
 			});
 		}
 		async function myHandFunc(idUser) {
@@ -304,9 +320,6 @@
         var text_area = document.getElementById("enter_message_area");
         var new_message = text_area.value;
         text_area.value = "";
-		if (new_message.length > 34) {
-			return;
-		}
         var controller = "<?php echo $controller; ?>";
         var idLobby = "<?php echo $idLobby; ?>";
         send_message_func(new_message, controller, idLobby).then((data) => {return;});

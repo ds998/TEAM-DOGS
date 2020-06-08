@@ -69,8 +69,10 @@ class Controller {
 			this.turns_left=this.playsPerTurn;
 		}
 		this.gm.updateActive(this.curPlayer);
-
-		draw(this.player.id, this.player.id, this.startingCards, this.deck.id);
+		myHand(playerId);
+		this.enemyPlayers.forEach(enemy => {
+			myHand(enemy.id);
+		});
 		setInterval(function() {update()}, 100);
 	}
 
