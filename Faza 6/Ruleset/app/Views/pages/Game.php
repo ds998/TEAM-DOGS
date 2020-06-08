@@ -150,9 +150,6 @@
 						}
 						con.player.hand=cards;
 					}
-					
-					
-					con.gm.displayCards(cards);
 				}
 				else {
 					if (data != null) con.idMap[idUser].cardCount=data.length/2;
