@@ -24,6 +24,8 @@ suitSprites['Spades'].src = '../../assets/game/spades.png';
 suitSprites['Diamonds'] = new Image();
 suitSprites['Diamonds'].src = '../../assets/game/diamonds.png';
 
+const skipImg = new Image();
+skipImg.src = '../../assets/game/skip.png';
 const bgImg = new Image();
 bgImg.src = '../../assets/game/bg.png';
 const cardHImg = new Image();
@@ -32,6 +34,8 @@ const cardBackImg = new Image();
 cardBackImg.src = '../../assets/game/cardBack.png';
 const cardBackHImg = new Image();
 cardBackHImg.src = '../../assets/game/cardBackHover.png';
+const cardBackAImg = new Image();
+cardBackAImg.src = '../../assets/game/cardBackActive.png';
 const cardImg = new Image();
 cardImg.src = '../../assets/game/card.png';
 
@@ -111,10 +115,15 @@ class GraphicsManager {
 		this.deck = true;
 		this.deckCard = new CardBackSprite();
 
+		//Discard
 		this.discardCard = null;
+		this.discardX=1600;
+		this.discardY=700;
+
+		this.fps=30;
 		setInterval(function () {
 			this.draw();
-		}.bind(this), 33);
+		}.bind(this), Math.floor(1000/this.fps));
 
 		this.cards = [];
 		this.enemyCards = [];
@@ -123,10 +132,11 @@ class GraphicsManager {
 		this.mousemoveListener = this.updateLogic.bind(this);
 		this.mouseupListener = this.click.bind(this);
 		this.canvas.addEventListener("mousemove", this.mousemoveListener);
-		this.canvas.addEventListener("mouseup", this.mouseupListener);
+		this.canvas.addEventListener("click", this.mouseupListener);
 		window.addEventListener('resize', this.resizeGame.bind(this), false);
 
 		this.display=false;
+		this.animPCq=[];
 	}
 
 	resizeGame() {
@@ -137,12 +147,15 @@ class GraphicsManager {
 	}
 
 	click(e) {
+		if (this.handelingClick) return;
+		this.handelingClick=true;
 		let x = e.offsetX * this.scale;
 		let y = e.offsetY * this.scale;
 
 		if (this.choose) {
 			if (this.hovered != -1) {
 				this.controller.chosenOne=this.controller.player.index % (this.controller.enemyPlayers.length)+this.hovered;
+				this.enemyCards[this.hovered].setHover(false);
 				this.hovered = -1;
 				this.choose = false;
 				this.overlay = false;
@@ -156,18 +169,23 @@ class GraphicsManager {
 						}
 						break;
 					default:
-						var selected = this.hovered;
-						this.controller.tryToPlay(this.controller.cardAt(selected)).then((success) =>{
-							if (success) {
-								this.discardCard = this.cards.splice(selected, 1)[0];
-								this.discardCard.setHover(false);
-								this.hovered = -1;
-							}
-						}); 
+						if (this.animPCq.length == 0) {
+							var selected = this.hovered;
+							this.controller.tryToPlay(this.controller.cardAt(selected)).then((success) =>{
+								if (success) {
+									let pCard = this.cards.splice(selected, 1)[0];
+									pCard.setHover(false);
+									this.playAnimation(pCard);
+									
+									this.hovered = -1;
+								}
+							}); 
+						}
 						break;
 				}
 			}
 		}
+		this.handelingClick=false;
 	}
 	chooseCharacter() {
 		this.overlay=true;
@@ -181,6 +199,17 @@ class GraphicsManager {
 	updateLogic(e) {
 		this.lastX = e.offsetX * this.scale;
 		this.lastY = e.offsetY * this.scale;
+	}
+
+	updateActive(activePlayer) {
+		let playerIndex = this.controller.player.index;
+		
+		if (activePlayer == playerIndex) activePlayer=this.enemyCards.length;
+		else if (activePlayer > playerIndex) activePlayer--;
+		for (let p=0; p<this.enemyCards.length; p++) {
+			if (p == activePlayer) this.enemyCards[p].setActive(true);
+			else this.enemyCards[p].setActive(false);
+		}
 	}
 
 	draw() {
@@ -215,7 +244,7 @@ class GraphicsManager {
 		//this.ctx.fillRect(0, 0, canvasSize, canvasH);
 
 		if (this.deck) this.deckCard.draw(this.ctx, 1200, 700);
-		if (this.discardCard) this.discardCard.draw(this.ctx, 1600, 700);
+		if (this.discardCard) this.discardCard.draw(this.ctx, this.discardX, this.discardY);
 
 		for (let c = 0; c < this.cards.length; c++) {
 			let offsetX;
@@ -231,6 +260,18 @@ class GraphicsManager {
 			this.cards[c].draw(this.ctx, HAND_X + offsetX, HAND_Y);
 		}
 
+		if(this.animPCq.length > 0) {
+			this.animPCq[0].paX+=this.animPCq[0].incX;
+			this.animPCq[0].paY+=this.animPCq[0].incY;
+			this.animPCq[0].card.draw(this.ctx, this.animPCq[0].paX, this.animPCq[0].paY);
+
+			if ( (Math.abs(this.discardX-this.animPCq[0].paX)<=Math.abs(this.animPCq[0].incX)+1) && (Math.abs(this.discardY-this.animPCq[0].paY)<=Math.abs(this.animPCq[0].incY)+1) ) {
+				this.discardCard=this.animPCq[0].card;
+				this.animPCq.shift();
+			}
+		}
+		if (this.controller.skip) this.ctx.drawImage(skipImg, HAND_X , HAND_Y+CARD_H/2- (CARD_W-CARD_HOVER)/2, CARD_W-CARD_HOVER, CARD_W-CARD_HOVER);
+
 		if (this.overlay) {
 			this.ctx.fillStyle = "#23232399";
 			this.ctx.fillRect(0, 0, canvasSize, canvasH);
@@ -239,7 +280,7 @@ class GraphicsManager {
 				this.ctx.textAlign = "center";
 				this.ctx.font = "200px Calibri";
 				this.ctx.strokeStyle = 'black';
-				this.ctx.lineWidth = 8;
+				this.ctx.lineWidth = 12;
 				this.ctx.strokeText("Choose a player", canvasSize/2, canvasH/2);
 				this.ctx.fillStyle = "#FFBB00";
 				this.ctx.fillText("Choose a player", canvasSize/2, canvasH/2);
@@ -252,13 +293,56 @@ class GraphicsManager {
 				this.ctx.textAlign = "center";
 				this.ctx.font = "200px Calibri";
 				this.ctx.strokeStyle = 'black';
-				this.ctx.lineWidth = 8;
+				this.ctx.lineWidth = 12;
 				this.ctx.strokeText("GAME ENDED", canvasSize/2, canvasH/2);
 				this.ctx.fillStyle = "#FFBB00";
 				this.ctx.fillText("GAME ENDED", canvasSize/2, canvasH/2);
 			}
 		}
 
+		if (this.enemyCards.length==0) this.setEnemySprites();
+		else {
+			let enemies = this.controller.enemyPlayers;
+
+			let startIndex = this.controller.player.index % (enemies.length);
+			var index = startIndex;
+			var count = 0;
+			do {
+				let info = GraphicsManager.enemyLocations[enemies.length-1][count];
+				this.drawEnemy(info[1], info[2], index, info[0]);
+				index= (index + 1) % (enemies.length);
+				count++;
+			} while (index != startIndex);
+		}
+		
+	}
+
+	playAnimation(card, startX=null, startY=null) {
+		const time= 200;
+		let animInfo = (card, startX, startY) => {
+			let paX
+			let paY
+			if (startX) paX=startX;
+			else paX=card.x;
+			if (startY) paY=startY;
+			else paY=card.y;
+			let incX = (this.discardX-paX) / ((time/1000)*this.fps);
+			let incY = (this.discardY-paY) / ((time/1000)*this.fps);
+
+			return {
+				'card': card,
+				'paX': paX,
+				'paY': paY,
+				'incX': incX,
+				'incY': incY
+			}
+		}
+		
+
+		this.animPCq.push(animInfo(card, startX, startY));
+	}
+
+	setEnemySprites() {
 		let enemies = this.controller.enemyPlayers;
 
 		let startIndex = this.controller.player.index % (enemies.length);
@@ -321,20 +405,37 @@ class GraphicsManager {
 
 		this.enemyCards[index].draw(this.ctx, 0 - offsetX - CARD_W / 2, 0);
 
-		this.ctx.fillStyle = "#FFFFFF";
 		this.ctx.textAlign = "center";
 		this.ctx.font = CARD_FONT_XL.toString(10) + "px Calibri";
 
 		this.ctx.translate(- offsetX, CARD_H / 2);
 		this.ctx.rotate(Math.PI * -rotation);
 		if (rotation == Math.floor(rotation)) {
+			this.ctx.strokeStyle = 'black';
+			this.ctx.lineWidth = 12;
+			this.ctx.strokeText(this.controller.enemyPlayers[index].cardCount, 0, 0);
+			this.ctx.fillStyle = "#FFFFFF";
 			this.ctx.fillText(this.controller.enemyPlayers[index].cardCount, 0, 0);
+
 			this.ctx.font = CARD_FONT_S.toString(10) + "px Calibri";
+			this.ctx.strokeStyle = 'black';
+			this.ctx.lineWidth = 12;
+			this.ctx.strokeText(this.controller.enemyPlayers[index].name, 0, -CARD_FONT_XL+CARD_HOVER);
+			this.ctx.fillStyle = "#FFFFFF";
 			this.ctx.fillText(this.controller.enemyPlayers[index].name, 0, -CARD_FONT_XL+CARD_HOVER);
 		}
 		else {
+			this.ctx.strokeStyle = 'black';
+			this.ctx.lineWidth = 12;
+			this.ctx.strokeText(this.controller.enemyPlayers[index].cardCount, 0, CARD_FONT_XL/3);
+			this.ctx.fillStyle = "#FFFFFF";
 			this.ctx.fillText(this.controller.enemyPlayers[index].cardCount, 0, CARD_FONT_XL/3);
+
 			this.ctx.font = CARD_FONT_S.toString(10) + "px Calibri";
+			this.ctx.strokeStyle = 'black';
+			this.ctx.lineWidth = 12;
+			this.ctx.strokeText(this.controller.enemyPlayers[index].name, 0, CARD_FONT_XL/3-CARD_FONT_XL+CARD_HOVER);
+			this.ctx.fillStyle = "#FFFFFF";
 			this.ctx.fillText(this.controller.enemyPlayers[index].name, 0, CARD_FONT_XL/3-CARD_FONT_XL+CARD_HOVER);
 		}
 		this.ctx.restore();
@@ -357,6 +458,35 @@ class GraphicsManager {
 	endGame() {
 		this.overlay = true;
 		this.gameOver=true;
+	}
+
+	getEnemyCenter(n) {
+		let info = GraphicsManager.enemyLocations[this.controller.enemyPlayers.length-1][n];
+
+		let position=info[0];
+		let curP=info[1];
+		let maxP=info[2];
+
+		let offsetX = ((maxP + 1)/ 2-(curP + 1)) * CARD_W * 3 / 2;
+
+		let localX=0;
+		let localY=0;
+		switch (position) {
+			case 'right':
+				localX += canvasSize - CARD_HOVER - CARD_H/2- CARD_W/2;
+				localY += (canvasH / 2) - CARD_H/2 - offsetX;
+				break;
+			case 'left':
+				localX += CARD_HOVER + CARD_H/2 - CARD_W/2;
+				localY += (canvasH / 2) - CARD_H/2 + offsetX;
+				break;
+			case 'up':
+				localX += (canvasSize / 2) - offsetX - CARD_W/2;
+				localY += CARD_HOVER;
+				break;
+		}
+
+		return {'x':localX , 'y':localY}
 	}
 }
 
@@ -426,6 +556,8 @@ class CardBackSprite {
 	constructor() {
 		this.enlarge = false;
 		this.hover = false;
+		this.active = false;
+		this.skip = false;
 	}
 
 	setXY(x, y) {
@@ -441,12 +573,22 @@ class CardBackSprite {
 		this.hover = val;
 	}
 
+	setSkip(val) {
+		this.skip=val;
+	}
+
+	setActive(val) {
+		this.active = val;
+	}
+
 	draw(ctx, x, y) {
 		this.x = x;
 		this.y = y;
 		if (this.enlarge) ctx.drawImage(cardBackImg, x - CARD_HOVER / 2, y - CARD_HOVER / 2, CARD_W + CARD_HOVER, CARD_H + CARD_HOVER);
-		else if (this.hover) ctx.drawImage(cardBackHImg, x, y, CARD_W, CARD_H);
+		else if(this.active) ctx.drawImage(cardBackAImg, x, y, CARD_W, CARD_H);
 		else ctx.drawImage(cardBackImg, x, y, CARD_W, CARD_H);
+		if (this.hover) ctx.drawImage(cardBackHImg, x, y, CARD_W, CARD_H);
+		if(this.skip) ctx.drawImage(skipImg, x+CARD_HOVER/2, y, CARD_W-CARD_HOVER, CARD_W-CARD_HOVER);
 	}
 
 	isHover(x, y) {

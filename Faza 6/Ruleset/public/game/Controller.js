@@ -1,10 +1,10 @@
 class Controller {
-	static controller = null;
+	static myController = null;
 
 	static getController(rules) {
-		if (Controller.controller == null && rules != null)
-			Controller.controller = new Controller(rules);
-		return Controller.controller;
+		if (Controller.myController == null && rules != null)
+			Controller.myController = new Controller(rules);
+		return Controller.myController;
 	}
 
 	diff (diffMe, diffBy) {return diffMe.split(diffBy).join('');}
@@ -68,9 +68,10 @@ class Controller {
 			this.claimed=true;
 			this.turns_left=this.playsPerTurn;
 		}
-		
+		this.gm.updateActive(this.curPlayer);
+
 		draw(this.player.id, this.player.id, this.startingCards, this.deck.id);
-		setInterval(function() {update()}, 200);
+		setInterval(function() {update()}, 100);
 	}
 
 	addGM(gm) {
@@ -193,6 +194,7 @@ class Controller {
 
 	updateMe(data) {
 		this.curPlayer = data.curPlayer;
+		this.gm.updateActive(this.curPlayer);
 		for (let i = 0; i < numPlayers; i++)
 			if (i == this.player.index) continue
 		else this.players[i].cardCount = data.cardCounts[i];
@@ -305,10 +307,14 @@ class Controller {
 
 	handleClaimed(idUser) {
 		this.curPlayer=this.idMap[idUser].index;
+		this.gm.updateActive(this.curPlayer);
 	}
 
 	async handleEndTurn() {
+		if (!this.myTurn()) for (let e=0; e<this.enemyPlayers.length; e++)
+		if (this.enemyPlayers[e].index == this.curPlayer) this.gm.enemyCards[(this.enemyPlayers[e].index-this.player.index + this.enemyPlayers.length) % (this.enemyPlayers.length+1)].setSkip(false);
 		this.curPlayer=(this.curPlayer+this.numPlayers+this.order)%this.numPlayers;
+		this.gm.updateActive(this.curPlayer);
 		if (this.curPlayer==this.player.index && this.skip) {
 			if (await claimTurn(this.player.id, 'null')) {
 				this.endTurn();
@@ -320,6 +326,9 @@ class Controller {
 		if (idUser != this.player.id) {
 			this.idMap[idUser].cardCount--;
 			this.ac.place();
+			let xy = this.gm.getEnemyCenter((this.idMap[idUser].index-this.player.index + this.enemyPlayers.length) % (this.enemyPlayers.length+1));
+			let cardInfo = this.ruleset.parseCard(card);
+			this.gm.playAnimation(new CardSprite(cardInfo.name, cardInfo.suit), xy.x, xy.y);
 			if (this.winCon == 1 && this.idMap[idUser].cardCount==0) this.endGame(idUser);
 		}
 		this.discard.top_card=this.ruleset.parseCard(card);
@@ -328,6 +337,9 @@ class Controller {
 
 	handleSkip(idUserThrown, idUserAffected) {
 		if (idUserAffected == this.player.id) this.markSkip();
+		else {
+			this.gm.enemyCards[(this.idMap[idUserAffected].index-this.player.index + this.enemyPlayers.length) % (this.enemyPlayers.length+1)].setSkip(true);
+		}
 	}
 
 	async handleDrawUntil(idUserThrown, idUserAffected, card, matchCode) {

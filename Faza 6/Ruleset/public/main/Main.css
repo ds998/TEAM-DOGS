@@ -1,4 +1,9 @@
 /* Version: 1.0 */
+body {
+    min-width:  660;
+    min-height: 690;
+}
+
 @keyframes onLoad {
     from {
         opacity: 0;
@@ -89,4 +94,11 @@
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
+}
+
+#byTeamDogs {
+    width:250px;
+    position: absolute;
+    bottom: 5px;
+    right:5px;
 }

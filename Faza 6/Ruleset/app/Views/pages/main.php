@@ -120,6 +120,9 @@
             </div>
         </div>
 -->
+
+    <img id='byTeamDogs' src="<?php echo base_url('assets/navbar/teamDOGS.png'); ?>">
+
     </container>
     <script src="<?php echo base_url('main/Main.js'); ?>"></script>
     <script src="<?php echo base_url('base/Base.js'); ?>"></script>
