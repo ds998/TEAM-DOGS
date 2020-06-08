@@ -1,0 +1,366 @@
+{
+  "id": "fea49dfd-53e2-4b71-9c16-3cb20e29d2d5",
+  "version": "2.0",
+  "name": "PROJECT",
+  "url": "http://localhost:8080/index.php/Controller/lobby/10",
+  "tests": [{
+    "id": "b756002f-6a7c-403d-9da3-90bfff03d65d",
+    "name": "deljenje_spilova_test",
+    "commands": [{
+      "id": "45d93709-d94a-4b08-bf02-d5f213853862",
+      "comment": "",
+      "command": "open",
+      "target": "/UserController/share_a_deck/4",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dd3d76f6-4cfc-4cbe-b573-a64004039ab7",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "786x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9fe12dac-e234-4b50-a29c-c0dd509f95a6",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=share_textbox", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c94bca82-3fcf-48a8-9d94-8903d51bf4f7",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=share_textbox", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "ajkbdhibadkb"
+    }, {
+      "id": "dcf5687e-2d8c-4d06-ac36-a71c13286a77",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=share_textbox", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "f384715c-0221-48bf-98bb-ffe923aa86b0",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=share_textbox", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "515c62ce-d9ed-4404-b46b-09f7cec8b15b",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=share_textbox", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "name"
+    }, {
+      "id": "f1b195e1-b52b-4a9d-b24d-5da650bcf976",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=share_textbox", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "aeb16c9a-39e4-4fd8-a845-aab3b0f75424",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=share_textbox", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "19906e8f-f6ab-4495-a0fd-39bc0c9a22e5",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=share_textbox", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "name2"
+    }, {
+      "id": "1eaa108e-fc90-4b24-bcba-39c145fce681",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=share_textbox", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "0a41d147-4303-4bea-aa45-1ce3aea327eb",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "37041b26-1588-41cd-97c1-8165d6c943ae",
+    "name": "pregled_lobbya_test",
+    "commands": [{
+      "id": "6cfd3294-6de9-49dc-8fbe-f6d21bc179a9",
+      "comment": "",
+      "command": "open",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "528d8cc3-be88-4448-8fa4-a800671b31ee",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "785274b3-0f97-464b-b051-e98297004bde",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cd9be5ca-b633-48ff-96c9-3acae00252d7",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=lobby3",
+      "targets": [
+        ["linkText=lobby3", "linkText"],
+        ["css=#lobby3 > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'lobby3')]", "xpath:link"],
+        ["xpath=//div[@id='lobby3']/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/join_lobby/9']", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'lobby3')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fb550385-f4f7-4caf-b582-31b39cd532d0",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Exit",
+      "targets": [
+        ["linkText=Exit", "linkText"],
+        ["css=.exitButton > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Exit')]", "xpath:link"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/all_lobbies']", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Exit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "54fff543-a786-4562-a277-9f5a2a1730e8",
+      "comment": "",
+      "command": "click",
+      "target": "name=search_textbox",
+      "targets": [
+        ["name=search_textbox", "name"],
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@name='search_textbox']", "xpath:attributes"],
+        ["xpath=//div[@id='searchForm']/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "08de6be0-8cc1-4512-85d1-c8d272274d2b",
+      "comment": "",
+      "command": "type",
+      "target": "name=search_textbox",
+      "targets": [
+        ["name=search_textbox", "name"],
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@name='search_textbox']", "xpath:attributes"],
+        ["xpath=//div[@id='searchForm']/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lobby4"
+    }, {
+      "id": "9fde3810-3e34-42c3-82d5-b752f7b30e27",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=search_textbox",
+      "targets": [
+        ["name=search_textbox", "name"],
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@name='search_textbox']", "xpath:attributes"],
+        ["xpath=//div[@id='searchForm']/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }]
+  }, {
+    "id": "de3f6d8d-0f77-406d-af89-b8403d1dfb99",
+    "name": "prikljucivanje_lobbyu_test",
+    "commands": [{
+      "id": "b9ce6937-16af-4b7f-b8f1-58fc3a64ceaa",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/index.php/Controller/join_lobby/9",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "87a2dc67-459c-46df-b482-76165ad14d99",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "788x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fd899239-eb1b-436a-a51e-46cf6763df16",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Join",
+      "targets": [
+        ["linkText=Join", "linkText"],
+        ["css=.joinButton > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Join')]", "xpath:link"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/joining_lobby/9']", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Join')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "9972f488-e0f9-4cca-a625-4499c17e8d31",
+    "name": "prikljucivanje_lobbyu_test2",
+    "commands": []
+  }, {
+    "id": "39dbec35-eda7-4daf-8e71-763c6e82b455",
+    "name": "lobby_test",
+    "commands": [{
+      "id": "a8a9cecb-3688-4ba5-a2f3-ae48c7699799",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/index.php/Controller/lobby/9",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "daf39ac3-8d5e-4411-b6a3-3b080674f2bd",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "788x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0e1c207e-9863-4d0e-9ebd-3c8fb1a82a9c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Exit",
+      "targets": [
+        ["linkText=Exit", "linkText"],
+        ["css=.btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Exit')]", "xpath:link"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/exit_lobby/9']", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Exit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "62e63da2-7804-4ffa-b873-8a268aa88e42",
+    "name": "lobby_test2",
+    "commands": [{
+      "id": "cd46b4cd-5384-40da-8fcc-b1028fcda359",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/index.php/Controller/lobby/10",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ab7fc724-faba-4606-9404-f00d67fba24b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "788x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9f597208-1761-4e0c-a8df-c967f1ae954c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Start The Game",
+      "targets": [
+        ["linkText=Start The Game", "linkText"],
+        ["css=.gameButton > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Start The Game')]", "xpath:link"],
+        ["xpath=//a[@href='http://localhost:8080/Controller/game/10']", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Start The Game')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3f22fb6a-bfc2-4539-9e0d-1c333523cb58",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Exit",
+      "targets": [
+        ["linkText=Exit", "linkText"],
+        ["css=.exitButton > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Exit')]", "xpath:link"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/exit_lobby/10']", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Exit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "c38f56a5-feb4-428d-a7f9-50eeddeabe1d",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["b756002f-6a7c-403d-9da3-90bfff03d65d"]
+  }],
+  "urls": ["http://localhost:8080/"],
+  "plugins": []
+}
