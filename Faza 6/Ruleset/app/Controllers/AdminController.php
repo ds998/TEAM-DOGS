@@ -8,6 +8,7 @@ namespace App\Controllers;
 use App\Models\AdminModel;
 use App\Models\UserModel;
 use App\Models\HDecksModel;
+use App\Models\DeckModel;
 /**
 * UserController – klasa koja sadrzi funkcije za kategoriju Administrator
 * 
