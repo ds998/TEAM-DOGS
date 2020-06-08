@@ -1,0 +1,15 @@
+/* Version: 1.0 */
+
+.login-area {
+  padding-top: 50px;
+  padding-left: 50px;
+}
+
+#needAccount {
+  padding-left: 50px;
+}
+
+#register_link{
+  color: var(--text-highlight);
+  text-decoration: none;
+}

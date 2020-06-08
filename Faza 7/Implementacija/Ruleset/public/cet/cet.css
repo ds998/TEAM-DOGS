@@ -1,0 +1,21 @@
+#display_messages {
+    background-color: transparent;
+    color: var(--default-text-color);
+    height:90%;
+}
+
+#enter_message_area {
+    width: 100%;
+    border-radius: 0;
+}
+
+#chat_div {
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 60%;
+}
+
+#text_area_div {
+    height: 10%;
+}

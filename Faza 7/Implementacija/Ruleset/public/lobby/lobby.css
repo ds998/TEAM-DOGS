@@ -1,0 +1,51 @@
+.container-fluid{
+    height:90%;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.table {
+    text-align:center;
+    background-color: transparent;
+    color: var(--main-brand-color);
+    cursor: default;
+    width:350px;
+    margin-left:auto;
+    margin-right:auto;
+    border:1px solid;
+}
+.table tbody{
+    display:block;
+    overflow-y:auto;
+    max-height:200px;
+}
+.table tbody::-webkit-scrollbar {
+    width: 3px;
+}
+.table tbody::-webkit-scrollbar-track {
+    background: transparent;
+}
+.table tbody::-webkit-scrollbar-thumb {
+   background: var(--main-brand-color);
+   border-radius: 10px;
+}
+tr{
+    width:100%;
+    display:table;
+    table-layout:auto;
+}
+.gameButton{
+    margin-top:30px;
+}   
+.exitButton{
+    margin-top:30px;
+}
+#lobby_title{
+    margin-bottom:100px;
+    color:var(--main-brand-color);
+}
+#errors{
+    padding-top:5px;
+    color:#e06377;
+}

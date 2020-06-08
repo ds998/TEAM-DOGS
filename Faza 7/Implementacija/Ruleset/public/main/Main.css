@@ -1,0 +1,104 @@
+/* Version: 1.0 */
+body {
+    min-width:  660;
+    min-height: 690;
+}
+
+@keyframes onLoad {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes onPopup {
+    from {
+        opacity: 0;
+        transform: translateY(-3px);
+    }
+    to {
+        transform: translateY(-0px);
+        opacity: 1;
+    }
+}
+
+@keyframes rock {
+    25% {transform: rotate(-12deg);}
+    75% {transform: rotate(12deg);}
+}
+
+#main_id {
+    display: flex;
+    justify-content: space-evenly;
+    animation: onLoad 0.75s;
+}
+
+#highlighted_div {
+    padding-top: 100px;
+}
+
+#table_title {
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--default-text-color);
+    padding-top: 20px;
+    padding-left: 60px;
+}
+
+#buttons_div {
+    padding-top: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hd_image:hover {
+    animation: rock 1.2s infinite;
+    animation-timing-function: linear;
+}
+.welcome_popup {
+    display: none;
+    position: fixed;
+    bottom: 10%;
+    right: 10%;
+    left: 10%;
+    top: 10%;
+    border: 1px solid var(--main-brand-color);
+    border-radius: 10px;
+    background-color: var(--main-bg-color);
+    z-index: 9;
+    animation: onPopup 1s;
+    overflow: hidden;
+}
+
+#popup_contain {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#popup_contain h1 {
+    color: var(--main-brand-color);
+}
+
+#popup_contain p {
+    color: var(--default-text-color);
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+#byTeamDogs {
+    width:250px;
+    position: absolute;
+    bottom: 5px;
+    right:5px;
+}

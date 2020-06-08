@@ -1,0 +1,39 @@
+.row{
+    height:90%;
+}
+.left{
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+.right{
+    overflow-x:hidden;
+    overflow-y:scroll;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+.right::-webkit-scrollbar {
+    width: 10px;
+}
+.right::-webkit-scrollbar-track {
+    background: transparent;
+}
+.right::-webkit-scrollbar-thumb {
+   background: var(--thumb-color);
+   border-radius: 10px;
+}
+#searchForm{
+    padding-top:30%;
+}
+.search_button{
+    padding-top:15px;
+}
+.menuButton{
+    padding-top:80%;
+}
+.lobby_button{
+    margin-top:150px;
+}

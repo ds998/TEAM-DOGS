@@ -1,0 +1,160 @@
+/* * {
+    box-sizing: border-box;
+}   */
+
+.welcome_popup {
+    display: block;
+    position: fixed;
+    bottom: 10%;
+    right: 10%;
+    left: 10%;
+    top: 10%;
+    border: 1px solid var(--main-brand-color);
+    border-radius: 10px;
+    background-color: var(--main-bg-color);
+    z-index: 9;
+    animation: onPopup 1s;
+    overflow: auto;
+}
+
+#deckPopup {
+    display: relative;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    overflow: hidden;
+    color: var(--default-text-color);
+    float: left;
+    min-height: 610px !important;
+}
+
+#testTest {
+    position: relative;
+    height: auto;
+    overflow: auto;
+}
+.baton{
+    position: absolute;
+}
+
+#deckTitleDiv {
+    margin: auto;
+    text-align: center;
+    height: 15%;
+    width: 100%;
+}
+
+#deckTitleDiv h1 {
+    font-size: 20vi;
+}
+
+#deckInfoCol {
+    padding-right: 10px;
+    width: 30%;
+    float: left;
+}
+
+#deckDescription {
+    width: 100%;
+}
+
+#deckCardsTable {
+    width: 20%;
+    height: 80%;
+    float: left;
+}
+
+#deckRuleButtonCol {
+    padding-left: 10px;
+    width: 50%;
+    float: left;
+}
+
+#deckRulesTable {
+    width: 100%;
+    max-height: 70%;
+}
+
+.cardName {
+    text-align: center;
+    width: 30%;
+}
+
+#cardRowHeader {
+    text-align: center;
+    width: 30%;
+}
+
+.suit {
+    height: 20px;
+}
+
+.redSuit {
+    filter: invert(80%) sepia(78%) saturate(3407%) hue-rotate(323deg) brightness(103%) contrast(93%);
+}
+
+.blackSuit {
+    filter: invert(71%) sepia(13%) saturate(271%) hue-rotate(160deg) brightness(92%) contrast(86%);
+}
+
+label {
+    color: var(--main-brand-color);
+}
+
+.dataTables_info {
+    color: var(--main-brand-color);
+}
+
+th,
+td {
+    border-color: var(--text-table-color) !important;
+}
+
+table> ::-webkit-scrollbar {
+    width: 6px;
+}
+
+table> ::-webkit-scrollbar-track {
+    padding-left: -12px;
+    background-color: rgba(255, 255, 255, 0.199);
+}
+
+table> ::-webkit-scrollbar-thumb {
+    background-color: var(--main-brand-color);
+}
+
+table> ::-webkit-scrollbar-thumb:hover {
+    background: var(--hover-brand-color);
+}
+
+.table {
+    background-color: var(--table-color);
+    color: var(--text-table-color);
+    cursor: default;
+    border-radius: 4px;
+    border-color: var(--text-table-color);
+    border: 2px solid var(--text-table-color);
+}
+
+table {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+thead {
+    flex: 0 0 auto;
+}
+
+tbody {
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+}
