@@ -1,0 +1,367 @@
+{
+  "id": "4d4c9019-e91d-40e1-91f2-a00df2d23be9",
+  "version": "2.0",
+  "name": "Lozinka - test",
+  "url": "http://localhost:8080/Controller",
+  "tests": [{
+    "id": "87f1ea09-9dd0-482f-a214-c76691b68eb4",
+    "name": "Test sa skoro svim ishodima osim uspesnog i sa popunjenim lobby-em",
+    "commands": [{
+      "id": "f0035998-ee01-4e15-80f0-8a6990d7a92d",
+      "comment": "",
+      "command": "open",
+      "target": "/Controller",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "90d83f5d-3494-47a2-928d-5326e32867bd",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1456x876",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8c163ae9-52d6-421d-bc24-4394768f701c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Join Lobby",
+      "targets": [
+        ["linkText=Join Lobby", "linkText"],
+        ["css=.btn:nth-child(7)", "css:finder"],
+        ["xpath=//a[contains(text(),'Join Lobby')]", "xpath:link"],
+        ["xpath=//div[@id='buttons_div']/a[3]", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/all_lobbies']", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Join Lobby')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dd4f43bc-cb61-4618-ba81-b2c08b3dc883",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Skroz nov",
+      "targets": [
+        ["linkText=Skroz nov", "linkText"],
+        ["css=#Skroz\\ nov > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Skroz nov')]", "xpath:link"],
+        ["xpath=//div[@id='Skroz nov']/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/join_lobby/1']", "xpath:href"],
+        ["xpath=//div[2]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Skroz nov')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "80f58210-c4aa-4a05-9a47-58b7afac3bb3",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Join",
+      "targets": [
+        ["linkText=Join", "linkText"],
+        ["css=.joinButton > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Join')]", "xpath:link"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/joining_lobby/1']", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Join')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "821db773-7db1-4974-ae82-d78c6f23d21a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "11136a29-8637-4148-98ad-5af636b0f5ef",
+      "comment": "",
+      "command": "click",
+      "target": "id=lobbyPassword",
+      "targets": [
+        ["id=lobbyPassword", "id"],
+        ["name=lobby_password", "name"],
+        ["css=#lobbyPassword", "css:finder"],
+        ["xpath=//input[@id='lobbyPassword']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "19612b41-6827-4c71-a9b9-c8a12b1338e7",
+      "comment": "",
+      "command": "type",
+      "target": "id=lobbyPassword",
+      "targets": [
+        ["id=lobbyPassword", "id"],
+        ["name=lobby_password", "name"],
+        ["css=#lobbyPassword", "css:finder"],
+        ["xpath=//input[@id='lobbyPassword']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "fdsfdsdsffddfssddsfdfsdf"
+    }, {
+      "id": "a159a18a-f442-41e1-9111-39d630495d70",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "378c2d46-cd52-44df-b2c2-9e589c3a7b0e",
+      "comment": "",
+      "command": "click",
+      "target": "id=lobbyPassword",
+      "targets": [
+        ["id=lobbyPassword", "id"],
+        ["name=lobby_password", "name"],
+        ["css=#lobbyPassword", "css:finder"],
+        ["xpath=//input[@id='lobbyPassword']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f2b47655-f0f0-4578-9992-065bea84c90e",
+      "comment": "",
+      "command": "type",
+      "target": "id=lobbyPassword",
+      "targets": [
+        ["id=lobbyPassword", "id"],
+        ["name=lobby_password", "name"],
+        ["css=#lobbyPassword", "css:finder"],
+        ["xpath=//input[@id='lobbyPassword']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "velelepno"
+    }, {
+      "id": "a198b436-e55c-46a3-a661-da9fcf29965e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "f73f0bcf-fbf7-40f6-96ee-1423afefcb2d",
+    "name": "Test sa ishodom \"Lobby popunjen\"",
+    "commands": [{
+      "id": "1983acaf-8e04-4c6c-96c7-1dd6267812d3",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/Controller",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ade9c41d-d6cc-45a0-b4be-c76733a74db9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1456x876",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "33f7263a-9408-4ee2-a0c8-6b40a5a8e66f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Join Lobby",
+      "targets": [
+        ["linkText=Join Lobby", "linkText"],
+        ["css=.btn:nth-child(7)", "css:finder"],
+        ["xpath=//a[contains(text(),'Join Lobby')]", "xpath:link"],
+        ["xpath=//div[@id='buttons_div']/a[3]", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/all_lobbies']", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Join Lobby')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "11f77dc6-748f-4a9e-9dc2-b5ed7ac2788a",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Skroz nov",
+      "targets": [
+        ["linkText=Skroz nov", "linkText"],
+        ["css=#Skroz\\ nov > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Skroz nov')]", "xpath:link"],
+        ["xpath=//div[@id='Skroz nov']/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/join_lobby/1']", "xpath:href"],
+        ["xpath=//div[2]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Skroz nov')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fbe5de80-21b0-449a-be7b-74fbc78626a6",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Join",
+      "targets": [
+        ["linkText=Join", "linkText"],
+        ["css=.joinButton > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Join')]", "xpath:link"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/joining_lobby/1']", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Join')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b05809e-2b50-4b2a-aed8-11620908d154",
+      "comment": "",
+      "command": "click",
+      "target": "id=lobbyPassword",
+      "targets": [
+        ["id=lobbyPassword", "id"],
+        ["name=lobby_password", "name"],
+        ["css=#lobbyPassword", "css:finder"],
+        ["xpath=//input[@id='lobbyPassword']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d8e1f618-c27e-4da2-bf4a-87a02593ace5",
+      "comment": "",
+      "command": "type",
+      "target": "id=lobbyPassword",
+      "targets": [
+        ["id=lobbyPassword", "id"],
+        ["name=lobby_password", "name"],
+        ["css=#lobbyPassword", "css:finder"],
+        ["xpath=//input[@id='lobbyPassword']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "velelepno"
+    }, {
+      "id": "3089eca5-3c23-4f99-afa7-4f08a7cd96e0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "facc96b4-fb95-4519-9684-693bf4d092ae",
+    "name": "Test sa uspesnim ishodom",
+    "commands": [{
+      "id": "525b67f5-333d-4421-a8ee-d6bb03492064",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/Controller",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ecb76dd8-4120-44b4-bfc8-cf4d33ade18c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1456x876",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e5fb857f-2d6f-42a4-bc57-5f27b5b45d12",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Join Lobby",
+      "targets": [
+        ["linkText=Join Lobby", "linkText"],
+        ["css=.btn:nth-child(7)", "css:finder"],
+        ["xpath=//a[contains(text(),'Join Lobby')]", "xpath:link"],
+        ["xpath=//div[@id='buttons_div']/a[3]", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/all_lobbies']", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Join Lobby')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1fcb13fb-019d-4f83-af82-cd559720e28f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Skroz nov",
+      "targets": [
+        ["linkText=Skroz nov", "linkText"],
+        ["css=#Skroz\\ nov > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Skroz nov')]", "xpath:link"],
+        ["xpath=//div[@id='Skroz nov']/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/join_lobby/1']", "xpath:href"],
+        ["xpath=//div[2]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Skroz nov')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fed70ff8-a722-4290-aa30-5d5956d34d73",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Join",
+      "targets": [
+        ["linkText=Join", "linkText"],
+        ["css=.joinButton > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Join')]", "xpath:link"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/joining_lobby/1']", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Join')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "20b55521-fc6e-44d5-96ba-4e7d825353a1",
+      "comment": "",
+      "command": "click",
+      "target": "id=lobbyPassword",
+      "targets": [
+        ["id=lobbyPassword", "id"],
+        ["name=lobby_password", "name"],
+        ["css=#lobbyPassword", "css:finder"],
+        ["xpath=//input[@id='lobbyPassword']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f07bfd28-a099-44ba-953d-aacf88764160",
+      "comment": "",
+      "command": "type",
+      "target": "id=lobbyPassword",
+      "targets": [
+        ["id=lobbyPassword", "id"],
+        ["name=lobby_password", "name"],
+        ["css=#lobbyPassword", "css:finder"],
+        ["xpath=//input[@id='lobbyPassword']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "velelepno"
+    }, {
+      "id": "4cbf3bdd-b2e2-4474-8a6f-d41ad3238ed0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "37ddd5b7-7f79-44d6-8bff-f3e42d602236",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["87f1ea09-9dd0-482f-a214-c76691b68eb4"]
+  }],
+  "urls": ["http://localhost:8080/"],
+  "plugins": []
+}

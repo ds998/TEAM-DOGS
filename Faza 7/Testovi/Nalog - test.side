@@ -1,0 +1,520 @@
+{
+  "id": "77d562a1-bf94-45c0-874f-5ff2c1ba4f92",
+  "version": "2.0",
+  "name": "Nalog - test",
+  "url": "http://localhost:8080/Controller",
+  "tests": [{
+    "id": "ac2f6cd0-077b-4ea8-863e-9e45c9f38bfa",
+    "name": "Test - nalog za gosta",
+    "commands": [{
+      "id": "21f052d5-9f9b-4b81-9ac7-96643f34464d",
+      "comment": "",
+      "command": "open",
+      "target": "/Controller",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "057ab4a5-7783-4878-b6ad-afc08dbddc02",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1456x876",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1f10e9bf-f10b-4ed7-a93f-436035fee1d9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler-icon",
+      "targets": [
+        ["css=.navbar-toggler-icon", "css:finder"],
+        ["xpath=//span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bec074a9-67ca-46e8-95c7-dfba4a40e7b2",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav-item:nth-child(1) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='navbarElements']/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/login_page']", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "cfdab601-5e2e-4816-9a46-964941e2e4b5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler",
+      "targets": [
+        ["css=.navbar-toggler", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1dde4be5-fe42-4ac0-800a-95ac191eb53f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Register",
+      "targets": [
+        ["linkText=Register", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Register')]", "xpath:link"],
+        ["xpath=//div[@id='navbarElements']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/register']", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Register')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "92edc0ea-ef24-4963-88cd-87a02433c17e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler",
+      "targets": [
+        ["css=.navbar-toggler", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ee1423a6-ac25-47cf-8ace-a0f665beed7d",
+      "comment": "",
+      "command": "click",
+      "target": "id=logoRuleImage",
+      "targets": [
+        ["id=logoRuleImage", "id"],
+        ["css=#logoRuleImage", "css:finder"],
+        ["xpath=//img[@alt='Logo']", "xpath:img"],
+        ["xpath=//img[@id='logoRuleImage']", "xpath:attributes"],
+        ["xpath=//img", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "616abb86-78b3-4ee0-97bd-d62e09fac3c9",
+    "name": "Test - nalog za korisnika",
+    "commands": [{
+      "id": "24db658e-007a-428c-99ff-3c9bce82b21e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/Controller",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9668fe83-a9b7-4f66-b7a7-59b66b8445ad",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1456x876",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ee31a4c8-446e-4948-8d17-e4bc9b70dd0c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler-icon",
+      "targets": [
+        ["css=.navbar-toggler-icon", "css:finder"],
+        ["xpath=//span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7291aa33-4cf5-4c1d-a0a8-993001d603ee",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav-item:nth-child(1) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='navbarElements']/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/login_page']", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9311df78-5fb1-4893-8de8-8a40f7f4d2e9",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=user_name", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ed2c9507-d4c5-4446-85bf-c122988b815a",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=user_name", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lmaoJAO"
+    }, {
+      "id": "745b0851-e754-4da9-84e7-eb94c90f0bd3",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputPassword",
+      "targets": [
+        ["id=inputPassword", "id"],
+        ["name=user_password", "name"],
+        ["css=#inputPassword", "css:finder"],
+        ["xpath=//input[@id='inputPassword']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9c008d37-c3eb-4797-8d25-6bf2fda47755",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputPassword",
+      "targets": [
+        ["id=inputPassword", "id"],
+        ["name=user_password", "name"],
+        ["css=#inputPassword", "css:finder"],
+        ["xpath=//input[@id='inputPassword']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "12345678"
+    }, {
+      "id": "9ed699e4-274f-46c3-b6b9-a90459d2175c",
+      "comment": "",
+      "command": "click",
+      "target": "name=login_submit_button",
+      "targets": [
+        ["name=login_submit_button", "name"],
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@name='login_submit_button']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "55497162-bbf8-497b-b5ec-628bd08ae461",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler",
+      "targets": [
+        ["css=.navbar-toggler", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "67c8fea5-5607-4870-819a-678401bad2f5",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Saved Decks",
+      "targets": [
+        ["linkText=Saved Decks", "linkText"],
+        ["css=.nav-item:nth-child(3) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Saved Decks')]", "xpath:link"],
+        ["xpath=//div[@id='navbarElements']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/UserController/listUserDecks']", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Saved Decks')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "09e6fc72-55aa-4d50-ba2c-e5b64597ab94",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler-icon",
+      "targets": [
+        ["css=.navbar-toggler-icon", "css:finder"],
+        ["xpath=//span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7d851bb-6305-4b3d-9ac2-2ee1f5701358",
+      "comment": "",
+      "command": "click",
+      "target": "id=logoSetImage",
+      "targets": [
+        ["id=logoSetImage", "id"],
+        ["css=#logoSetImage", "css:finder"],
+        ["xpath=(//img[@alt='Logo'])[2]", "xpath:img"],
+        ["xpath=//img[@id='logoSetImage']", "xpath:attributes"],
+        ["xpath=//img[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4a3fba05-8c3c-4041-b6f5-780f24359703",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler-icon",
+      "targets": [
+        ["css=.navbar-toggler-icon", "css:finder"],
+        ["xpath=//span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e091a23a-5bcb-4dcd-93f0-5b72ff003d77",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=.nav-item:nth-child(6) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//div[@id='navbarElements']/ul/li[6]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/UserController/logout']", "xpath:href"],
+        ["xpath=//li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "27f7082b-d096-4991-bd53-796bb8f6047c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler-icon",
+      "targets": [
+        ["css=.navbar-toggler-icon", "css:finder"],
+        ["xpath=//span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d6991793-18a2-4834-afc4-2aeb8053c44a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler-icon",
+      "targets": [
+        ["css=.navbar-toggler-icon", "css:finder"],
+        ["xpath=//span", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "a2b4f721-9851-4839-954a-713e9d8ff7ba",
+    "name": "Test - nalog za administratora",
+    "commands": [{
+      "id": "fc28e8c7-72bb-4711-81dc-8ed2f28bc909",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/Controller",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fc5f14d8-5c91-4903-afc5-433f043bde5a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1456x876",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d0694aa9-9a6d-49b6-bf93-cae013efed1c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler",
+      "targets": [
+        ["css=.navbar-toggler", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2d360c1f-03e5-43e2-857d-0b26915d79a9",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav-item:nth-child(1) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='navbarElements']/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/Controller/login_page']", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4cb57d28-09c2-4795-a9d6-a7df633d7e59",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=user_name", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "978e8581-b527-42a0-8887-ee67d065112a",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputUsername",
+      "targets": [
+        ["id=inputUsername", "id"],
+        ["name=user_name", "name"],
+        ["css=#inputUsername", "css:finder"],
+        ["xpath=//input[@id='inputUsername']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "choda"
+    }, {
+      "id": "2d6336a8-f7d8-4623-8e77-67e3eadc4d06",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputPassword",
+      "targets": [
+        ["id=inputPassword", "id"],
+        ["name=user_password", "name"],
+        ["css=#inputPassword", "css:finder"],
+        ["xpath=//input[@id='inputPassword']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "998700c3-4581-4a1f-bb0a-f7555a0aa679",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputPassword",
+      "targets": [
+        ["id=inputPassword", "id"],
+        ["name=user_password", "name"],
+        ["css=#inputPassword", "css:finder"],
+        ["xpath=//input[@id='inputPassword']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "redbaron"
+    }, {
+      "id": "14a00846-441c-49c9-a1e2-f8fe6553f870",
+      "comment": "",
+      "command": "click",
+      "target": "name=login_submit_button",
+      "targets": [
+        ["name=login_submit_button", "name"],
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@name='login_submit_button']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "edb7a81a-ad02-4afb-8f91-16db62eb1f6b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler",
+      "targets": [
+        ["css=.navbar-toggler", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4719b3cb-cf2c-4d39-a585-8e0d11f3096b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Saved Decks",
+      "targets": [
+        ["linkText=Saved Decks", "linkText"],
+        ["css=.nav-item:nth-child(3) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Saved Decks')]", "xpath:link"],
+        ["xpath=//div[@id='navbarElements']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/AdminController/listUserDecks']", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Saved Decks')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "010c2285-380d-416c-aed0-3e15ff59ba92",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler-icon",
+      "targets": [
+        ["css=.navbar-toggler-icon", "css:finder"],
+        ["xpath=//span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a3384c3c-bd68-4269-b4c6-da67a884dc98",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Choose Highlighted Decks",
+      "targets": [
+        ["linkText=Choose Highlighted Decks", "linkText"],
+        ["css=.nav-item:nth-child(5) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Choose Highlighted Decks')]", "xpath:link"],
+        ["xpath=//div[@id='navbarElements']/ul/li[5]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/AdminController/changeHD']", "xpath:href"],
+        ["xpath=//li[5]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Choose Highlighted Decks')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "18ef498b-00be-4351-ab77-8db914cbf6bc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler-icon",
+      "targets": [
+        ["css=.navbar-toggler-icon", "css:finder"],
+        ["xpath=//span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bff56904-0ab9-4a89-93f0-2aa5761970bb",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Choose Admin",
+      "targets": [
+        ["linkText=Choose Admin", "linkText"],
+        ["css=.nav-item:nth-child(4) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Choose Admin')]", "xpath:link"],
+        ["xpath=//div[@id='navbarElements']/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/AdminController/registerAdmin']", "xpath:href"],
+        ["xpath=//li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Choose Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "35c4bb75-9e91-489a-ba59-caa0da4be938",
+      "comment": "",
+      "command": "click",
+      "target": "css=.navbar-toggler-icon",
+      "targets": [
+        ["css=.navbar-toggler-icon", "css:finder"],
+        ["xpath=//span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0f46d38c-ae02-4527-afa5-7f32e1d09603",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=.nav-item:nth-child(6) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//div[@id='navbarElements']/ul/li[6]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost:8080/index.php/AdminController/logout']", "xpath:href"],
+        ["xpath=//li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "dbc162ed-03b2-4143-b50b-22362d530af3",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["ac2f6cd0-077b-4ea8-863e-9e45c9f38bfa"]
+  }],
+  "urls": ["http://localhost:8080/"],
+  "plugins": []
+}
