@@ -98,7 +98,7 @@ class UserController extends Controller
     public function decklab()
     {
         $controller = $this->session->get('controller');
-        if($this->request->getVar('deckDecription')){
+        if($this->request->getVar('deckDecription' && $this->request->getVar('cards'))){
             $desc  = $this->request->getVar('deckDecription');
             $cards = $this->request->getVar('cards');
             $suits = $this->request->getVar('suits');
