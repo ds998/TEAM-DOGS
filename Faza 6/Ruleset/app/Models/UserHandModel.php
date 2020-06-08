@@ -74,6 +74,8 @@ class UserHandModel extends Model
             {
                 $temp = $temp.$card;
             }
+            $stringEnv = "'";
+            $temp = $stringEnv.$temp.$stringEnv;
             $qveri = $this->db->query("UPDATE user_hand SET cards = $temp WHERE idUser = $idUser;");
         }
 
