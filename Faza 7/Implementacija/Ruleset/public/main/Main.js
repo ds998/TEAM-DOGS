@@ -29,74 +29,38 @@ $(document).ready(function () {
         }
     })
 
-    var deck_image_1 = document.getElementById("deck_1");
-    var deck_image_2 = document.getElementById("deck_2");
-    var deck_image_3 = document.getElementById("deck_3");
-    var deck_image_4 = document.getElementById("deck_4");
-    var deck_image_5 = document.getElementById("deck_5");
-    var deck_image_6 = document.getElementById("deck_6");
-    var deck_image_7 = document.getElementById("deck_7");
-    var deck_image_8 = document.getElementById("deck_8");
-    var deck_image_9 = document.getElementById("deck_9");
+    
+        var deck_images = document.getElementsByClassName("hd_image");
 
-    function title_start_1()  {
-        document.getElementById('table_title').innerHTML = "HIGHLIGHTED DECK 1";
-    }
+        deck_images[0].addEventListener('mouseenter', function(){title_start(deck_images[0].id)});
+        deck_images[1].addEventListener('mouseenter', function(){title_start(deck_images[1].id)});
+        deck_images[2].addEventListener('mouseenter', function(){title_start(deck_images[2].id)});
+        deck_images[3].addEventListener('mouseenter', function(){title_start(deck_images[3].id)});
+        deck_images[4].addEventListener('mouseenter', function(){title_start(deck_images[4].id)});
+        deck_images[5].addEventListener('mouseenter', function(){title_start(deck_images[5].id)});
+        deck_images[6].addEventListener('mouseenter', function(){title_start(deck_images[6].id)});
+        deck_images[7].addEventListener('mouseenter', function(){title_start(deck_images[7].id)});
+        deck_images[8].addEventListener('mouseenter', function(){title_start(deck_images[8].id)});
+        deck_images[0].addEventListener('mouseleave', title_end);
+        deck_images[1].addEventListener('mouseleave', title_end);
+        deck_images[2].addEventListener('mouseleave', title_end);
+        deck_images[3].addEventListener('mouseleave', title_end);
+        deck_images[4].addEventListener('mouseleave', title_end);
+        deck_images[5].addEventListener('mouseleave', title_end);
+        deck_images[6].addEventListener('mouseleave', title_end);
+        deck_images[7].addEventListener('mouseleave', title_end);
+        deck_images[8].addEventListener('mouseleave', title_end);
+    
 
-    function title_start_2()  {
-        document.getElementById('table_title').innerHTML = "HIGHLIGHTED DECK 2";
-    }
+    
 
-    function title_start_3()  {
-        document.getElementById('table_title').innerHTML = "HIGHLIGHTED DECK 3";
-    }
-
-    function title_start_4()  {
-        document.getElementById('table_title').innerHTML = "HIGHLIGHTED DECK 4";
-    }
-
-    function title_start_5()  {
-        document.getElementById('table_title').innerHTML = "HIGHLIGHTED DECK 5";
-    }
-
-    function title_start_6()  {
-        document.getElementById('table_title').innerHTML = "HIGHLIGHTED DECK 6";
-    }
-
-    function title_start_7()  {
-        document.getElementById('table_title').innerHTML = "HIGHLIGHTED DECK 7";
-    }
-
-    function title_start_8()  {
-        document.getElementById('table_title').innerHTML = "HIGHLIGHTED DECK 8";
-    }
-
-    function title_start_9()  {
-        document.getElementById('table_title').innerHTML = "HIGHLIGHTED DECK 9";
+    function title_start(str)  {
+        document.getElementById('table_title').innerHTML = str;
     }
 
     function title_end() {
         document.getElementById('table_title').innerHTML = "";
     }
-
-    deck_image_1.addEventListener('mouseenter', title_start_1);
-    deck_image_2.addEventListener('mouseenter', title_start_2);
-    deck_image_3.addEventListener('mouseenter', title_start_3);
-    deck_image_4.addEventListener('mouseenter', title_start_4);
-    deck_image_5.addEventListener('mouseenter', title_start_5);
-    deck_image_6.addEventListener('mouseenter', title_start_6);
-    deck_image_7.addEventListener('mouseenter', title_start_7);
-    deck_image_8.addEventListener('mouseenter', title_start_8);
-    deck_image_9.addEventListener('mouseenter', title_start_9);
-    deck_image_1.addEventListener('mouseleave', title_end);
-    deck_image_2.addEventListener('mouseleave', title_end);
-    deck_image_3.addEventListener('mouseleave', title_end);
-    deck_image_4.addEventListener('mouseleave', title_end);
-    deck_image_5.addEventListener('mouseleave', title_end);
-    deck_image_6.addEventListener('mouseleave', title_end);
-    deck_image_7.addEventListener('mouseleave', title_end);
-    deck_image_8.addEventListener('mouseleave', title_end);
-    deck_image_9.addEventListener('mouseleave', title_end);
 
     function popup() {
         setTimeout(time_popup,1000);
@@ -110,5 +74,5 @@ $(document).ready(function () {
         document.getElementById("main_popup").style.display = "none";
     }
 
-    window.addEventListener('load', popup);
+    //window.addEventListener('load', popup);
 });
